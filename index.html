@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>תואר ראשון בממשל - מסלול מצטיינים באסטרטגיה וקבלת החלטות | שנה ראשונה - סימסטר א׳</title>
     
-    <!-- טעינת גופן Noto Sans Hebrew -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- אייקונים (עבור כפתור הפתיחה) -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
     <style>
@@ -35,7 +33,7 @@
 
         /* --- מצב לילה (מופעל על ידי JS או הגדרות מערכת) --- */
         
-        /* 1. זיהוי הגדרות מערכת */
+        /* 1. דריסה של מצב בהיר אם מערכת ההפעלה במצב כהה */
         @media (prefers-color-scheme: dark) {
             :root {
                 --bg: #333333; /* רקע אפור כהה חדש */
@@ -50,20 +48,11 @@
             }
         }
         
-        /* 2. הפעלה ידנית (דריסה) - מצב לילה */
-        :root.dark-mode {
-            --bg: #333333; /* רקע אפור כהה חדש */
-            --surface: #444444; /* רקע כרטיסייה אפור חדש */
-            --text: #eeeeee;
-            --muted: #bbbbbb;
-            --primary: #4b9bff;
-            --border: #555555; /* גבול אפור חדש */
-            --highlight: #2a3a52;
-            --shadow: 0 0 0 1px var(--border);
-            --header-bg: rgba(51, 51, 51, .8); /* רקע כותרת אפור שקוף חדש */
-        }
-
-        /* 3. הפעלה ידנית (דריסה) - מצב בהיר */
+        /* 2. דריסה ידנית (אם המשתמש לוחץ על כפתור ה-Toggle) */
+        /* קלאסים אלו ניתנים על ידי JS ודוחפים את הגדרות ה-theme הרצויות */
+        /* אם קלאס זה נמצא, הוא דורס את הגדרות המדיה קווארי (כפי שתוכנן) */
+        
+        /* דריסה ידנית - מצב בהיר */
         :root.light-mode {
             --bg: #f6f8fa;
             --surface: #ffffff;
@@ -75,6 +64,9 @@
             --shadow: 0 10px 30px rgba(0, 0, 0, .06);
             --header-bg: rgba(255, 255, 255, .8);
         }
+        
+        /* דריסה ידנית - מצב כהה (הסרנו את הכפילות, הפתרון ב-JS יסמוך על המדיה קווארי אם לא נשמר מצב) */
+        /* אם המשתמש לוחץ על כפתור, ה-JS יחיל dark-mode והמערכת תיקח את ההגדרות של prefers-color-scheme: dark */
 
 
         /* --- איפוס בסיסי ועיצוב גלובלי --- */
@@ -278,6 +270,7 @@
         }
         
         :root.dark-mode .course-card:hover {
+            /* השתמש ב-CSS Variable שנוצר בעת דריסת מצב כהה */
             box-shadow: 0 0 0 2px var(--primary); 
         }
 
@@ -301,7 +294,7 @@
             transition: color 0.3s;
         }
 
-        /* --- כפתור החלפת מצב (Toggle) --- */
+        /* --- כפתור החלפת מצב (Toggle) - אוחדו הסלקטורים ב-JS --- */
         .theme-switch-wrapper {
             display: flex;
             align-items: center;
@@ -315,7 +308,8 @@
             height: 28px; 
         }
 
-        .theme-switch input {
+        /* הכפתור ה-checkbox הוסר מה-HTML עבור עמודי המשנה, וה-ID אוחד ל-theme-toggle */
+        #theme-toggle {
             opacity: 0;
             width: 0;
             height: 0;
@@ -345,21 +339,24 @@
             border-radius: 50%;
         }
 
-        input:checked + .slider {
+        #theme-toggle:checked + .slider {
             background-color: var(--primary);
         }
 
-        input:checked + .slider:before {
+        #theme-toggle:checked + .slider:before {
             transform: translateX(22px); 
         }
         
-        :root.dark-mode .slider {
-            background-color: #555; /* רקע כפתור במצב לילה */
+        :root.dark-mode .slider,
+        @media (prefers-color-scheme: dark) {
+            .slider {
+                background-color: #555; /* רקע כפתור במצב לילה */
+            }
         }
-        
+
+
         /* -------------------------------------------
         --- עיצובים ספציפיים לעמודי קורס ---
-        (מבוסס על 'פורמט לעמוד קורס.html')
         -------------------------------------------
         */
 
@@ -450,7 +447,7 @@
             line-height: 1.5; /* שינוי: גובה שורה הדוק יותר */
         }
 
-        /* --- [חדש] כפתור ורשימת חומרי קריאה --- */
+        /* --- כפתור ורשימת חומרי קריאה --- */
         .reading-toggle-btn {
             background-color: var(--highlight);
             color: var(--primary-ink);
@@ -469,24 +466,26 @@
             background-color: var(--border);
         }
 
-        :root.dark-mode .reading-toggle-btn {
-            background-color: #2a3a52;
-            color: #a3c7ff;
-            border-color: #555;
+        :root.dark-mode .reading-toggle-btn,
+        @media (prefers-color-scheme: dark) {
+            .reading-toggle-btn {
+                background-color: #2a3a52;
+                color: #a3c7ff;
+                border-color: #555;
+            }
         }
         
-        :root.dark-mode .reading-toggle-btn:hover {
-            background-color: #3e5880;
+        :root.dark-mode .reading-toggle-btn:hover,
+        @media (prefers-color-scheme: dark) {
+            .reading-toggle-btn:hover {
+                background-color: #3e5880;
+            }
         }
 
         .reading-toggle-btn .icon {
             margin-left: var(--s1);
             transition: transform 0.2s ease-out;
             display: inline-block;
-        }
-
-        .reading-toggle-btn.open .icon {
-            transform: rotate(90deg);
         }
 
         .reading-list-collapsible {
@@ -634,14 +633,7 @@
 </head>
 <body>
 
-    <!-- ====================================================================== -->
-    <!-- 
-        עמוד ראשי (page-main)
-        מבוסס על 'דף אתר ראשי - סימסטר א׳.html' המקורי
-    -->
-    <!-- ====================================================================== -->
     <div id="page-main" class="page-container active">
-        <!-- כותרת עליונה -->
         <header class="site-header">
             <div class="nav">
                 <div class="brand">
@@ -649,10 +641,9 @@
                     <h1>תואר ראשון בממשל - מסלול מצטיינים באסטרטגיה וקבלת החלטות | שנה ראשונה - סימסטר א׳</h1>
                 </div>
                 
-                <!-- כפתור החלפת מצב -->
                 <div class="theme-switch-wrapper">
-                    <label class="theme-switch" for="theme-toggle-main">
-                        <input type="checkbox" id="theme-toggle-main" class="theme-toggle-input" />
+                    <label class="theme-switch" for="theme-toggle">
+                        <input type="checkbox" id="theme-toggle" class="theme-toggle-input" />
                         <span class="slider"></span>
                     </label>
                 </div>
@@ -664,14 +655,10 @@
             <section id="courses">
                 <h2>הקורסים שלי (סמסטר א')</h2>
                 
-                <!-- רשימת הקורסים -->
                 <ul class="course-list">
                     
-                    <!-- 4 נ"ז -->
-
                     <li>
                         <article class="course-card">
-                            <!-- קישור תוקן -->
                             <h3><a href="#course-5620">מבוא ללימודי אסטרטגיה</a></h3>
                             <div class="course-card-details">
                                 <p><span>מרצה:</span>
@@ -686,7 +673,6 @@
 
                     <li>
                         <article class="course-card">
-                            <!-- קישור תוקן -->
                             <h3><a href="#course-3746">מבוא ללימודי ביטחון ולוחמה בטרור</a></h3>
                             <div class="course-card-details">
                                 <p><span>מרצים:</span>
@@ -702,7 +688,6 @@
                     
                     <li>
                         <article class="course-card">
-                            <!-- קישור תוקן -->
                             <h3><a href="#course-3985">מבוא למנהל ומדיניות ציבורית</a></h3>
                             <div class="course-card-details">
                                 <p><span>מרצים:</span>
@@ -719,7 +704,6 @@
 
                     <li>
                         <article class="course-card">
-                            <!-- קישור תוקן -->
                             <h3><a href="#course-5542">תיאוריות פוליטיות</a></h3>
                             <div class="course-card-details">
                                 <p><span>מרצה:</span>
@@ -732,11 +716,8 @@
                         </article>
                     </li>
 
-                    <!-- 3 נ"ז -->
-
                     <li>
                         <article class="course-card">
-                            <!-- קישור תוקן -->
                             <h3><a href="#course-3986">מושגי יסוד בממשל ופוליטיקה</a></h3>
                             <div class="course-card-details">
                                 <p><span>מרצים:</span>
@@ -753,11 +734,8 @@
                         </article>
                     </li>
 
-                    <!-- 2 נ"ז -->
-
                     <li>
                         <article class="course-card">
-                            <!-- קישור תוקן -->
                             <h3><a href="#course-6953">הציונות המודרנית לאור מגילת העצמאות</a></h3>
                             <div class="course-card-details">
                                 <p><span>מרצה:</span>
@@ -772,7 +750,6 @@
 
                     <li>
                         <article class="course-card">
-                            <!-- קישור תוקן -->
                             <h3><a href="#course-kriaa-ve-ktiva">מיומנויות כתיבה וקריאה אקדמית</a></h3>
                             <div class="course-card-details">
                                 <p><span>מרצה:</span>
@@ -787,7 +764,6 @@
 
                     <li>
                         <article class="course-card">
-                            <!-- קישור תוקן -->
                             <h3><a href="#course-6954">מנהיגות חדשנות ויזמות</a></h3>
                             <div class="course-card-details">
                                 <p><span>מרצה:</span>
@@ -802,7 +778,6 @@
 
                     <li>
                         <article class="course-card">
-                            <!-- קישור תוקן -->
                             <h3><a href="#course-5544">שיטות מחקר</a></h3>
                             <div class="course-card-details">
                                 <p><span>מרצה:</span>
@@ -819,32 +794,20 @@
             </section>
             
         </main>
-    </div> <!-- /סוף #page-main -->
-
-    
-    <!-- ====================================================================== -->
-    <!-- 
-        עמוד קורס: מבוא ללימודי אסטרטגיה (5620)
-        *** תוכן מעודכן ***
-    -->
-    <!-- ====================================================================== -->
-    <div id="page-course-5620" class="page-container">
-        <!-- כותרת עליונה -->
+    </div> <div id="page-course-5620" class="page-container">
         <header class="site-header">
             <div class="nav">
                 <div class="brand">
                     <span class="dot" aria-hidden="true"></span>
                     <h1>
-                        <!-- קישור חזרה לדף הראשי -->
                         <a href="#main">חזרה לאתר הראשי</a> / 
                         מבוא ללימודי אסטרטגיה
                     </h1>
                 </div>
                 
-                <!-- כפתור החלפת מצב -->
                 <div class="theme-switch-wrapper">
-                    <label class="theme-switch" for="theme-toggle-5620">
-                        <input type="checkbox" id="theme-toggle-5620" class="theme-toggle-input" />
+                    <label class="theme-switch" for="theme-toggle">
+                         <input type="checkbox" id="theme-toggle" class="theme-toggle-input" />
                         <span class="slider"></span>
                     </label>
                 </div>
@@ -852,19 +815,15 @@
         </header>
 
         <main class="container">
-            <!-- ניווט כרטיסיות (Tabs) -->
             <nav class="tab-navigation">
                 <button class="tab-btn active" data-tab="overview">סקירה ומערך שיעורים</button>
                 <button class="tab-btn" data-tab="lessons">סיכומי שיעורים</button>
             </nav>
 
-            <!-- תוכן הכרטיסיות -->
             <div class="tab-content">
 
-                <!-- כרטיסייה 1: סקירה ומערך שיעורים -->
                 <section id="overview" class="tab-pane active">
                     
-                    <!-- סקירה כללית של הקורס -->
                     <article class="page-card">
                         <h3>סקירה כללית</h3>
                         
@@ -880,7 +839,6 @@
                         </ul>
                     </article>
 
-                    <!-- מבנה הציון -->
                     <article class="page-card">
                         <h3>מבנה ציון הקורס</h3>
                         <p>הציון בקורס יורכב מהמרכיבים הבאים (A+ Grading):</p>
@@ -902,13 +860,12 @@
                         </div>
                     </article>
 
-                    <!-- מערך שיעורים -->
                     <article class="page-card">
                         <h3>מערך שיעורים מתוכנן (לפי הסילבוס)</h3>
                         <ol class="lesson-list">
                             <li>
                                 <strong>שיעור 1: What is Strategy? Clausewitz and his legacy</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <ul>
                                         <li>Clausewitz, On War, Book I, ch. 1, 2, 3; Book III, ch 1; Book VIII, ch 6.</li>
@@ -919,7 +876,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 2: Thucydides and the Timeless Wisdom on War</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <ul>
                                         <li>Robert Gilpin, "The Theory of Hegemonic War," Journal of Interdisciplinary History, Vol. 18, No. 4 (Spring 1988), 591-613.</li>
@@ -929,7 +886,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 3: Geopolitics and Grand Strategy</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <ul>
                                         <li>Freedman, Strategy: A History, pp. 115-126.</li>
@@ -939,7 +896,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 4: Land Power</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <ul>
                                         <li>John Mearsheimer, "Assessing the Conventional Balance," International Security, Spring 1990.</li>
@@ -949,7 +906,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 5: Sea Power</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <ul>
                                         <li>Julian Corbett, Some Principles of Maritime Strategy (London: Brassey's, 1996), pp. 15-38.</li>
@@ -959,7 +916,7 @@
                             </li>
                              <li>
                                 <strong>שיעור 6: Air, Space and Cyber Power</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <ul>
                                         <li>Freedman, Strategy: A History, pp. 101-114 (Air); pp. 509-528 (Cyber).</li>
@@ -969,7 +926,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 7: Irregular warfare and COIN</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <ul>
                                         <li>Freedman, Strategy: A History, pp. 161-175; 366-382.</li>
@@ -979,7 +936,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 8: Nuclear strategy</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <ul>
                                         <li>Freedman, Strategy: A History, pp. 219-252.</li>
@@ -989,7 +946,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 9: Intelligence - Theory and Practice</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <ul>
                                         <li>"The intelligence cycle and the search for information," in Loch Johnson, Handbook of Intelligence Studies (Routledge, 2009), pp. 105-148.</li>
@@ -1000,7 +957,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 10: Net Assessment - History, Tools and Methodology</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <ul>
                                         <li>Paul Bracken, "Net Assessment: A Practical Guide," Parameters (Spring 2006), pp. 90-100.</li>
@@ -1009,7 +966,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 11: Strategic Culture</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <ul>
                                         <li>Jeffrey S. Lantis and Darryl Howlett, "Strategic Culture," in Strategy (2007), pp. 82-99.</li>
@@ -1021,7 +978,6 @@
 
                 </section>
 
-                <!-- כרטיסייה 2: סיכומי שיעורים -->
                 <section id="lessons" class="tab-pane">
                     
                     <article class="page-card">
@@ -1030,9 +986,7 @@
                         
                         <ul class="lesson-grid">
                             
-                            <!-- כרטיס שיעור לדוגמה -->
                             <li>
-                                <!-- שנה את הקישור לדף הסיכום (בעתיד) -->
                                 <a href="#lesson-5620-1" class="lesson-card">
                                     <h4>שיעור 1: What is Strategy?</h4>
                                     <div class="lesson-card-details">
@@ -1041,25 +995,13 @@
                                     </div>
                                 </a>
                             </li>
-                            <!-- סוף כרטיס דוגמה -->
-
-                        </ul>
+                            </ul>
                     </article>
 
                 </section>
             </div>
         </main>
-    </div> <!-- /סוף #page-course-5620 -->
-
-
-    <!-- ====================================================================== -->
-    <!-- 
-        עמוד קורס: מבוא ללימודי ביטחון ולוחמה בטרור (3746)
-        *** תוכן מעודכן ***
-    -->
-    <!-- ====================================================================== -->
-    <div id="page-course-3746" class="page-container">
-        <!-- כותרת עליונה -->
+    </div> <div id="page-course-3746" class="page-container">
         <header class="site-header">
             <div class="nav">
                 <div class="brand">
@@ -1070,8 +1012,8 @@
                     </h1>
                 </div>
                 <div class="theme-switch-wrapper">
-                    <label class="theme-switch" for="theme-toggle-3746">
-                        <input type="checkbox" id="theme-toggle-3746" class="theme-toggle-input" />
+                    <label class="theme-switch" for="theme-toggle">
+                        <input type="checkbox" id="theme-toggle" class="theme-toggle-input" />
                         <span class="slider"></span>
                     </label>
                 </div>
@@ -1098,7 +1040,6 @@
                                 <span class="percentage">100%</span>
                             </li>
                         </ul>
-                        <!-- הוספת פירוט הציון -->
                         <p style="color: var(--muted); margin-top: var(--s3);">
                             העבודה תוגש בזוגות.<br>
                             הנחיות מדויקות תועלנה לאתר הקורס.
@@ -1113,7 +1054,7 @@
                         <ol class="lesson-list">
                             <li>
                                 <strong>שיעור 1: מבוא: מהם לימודי ביטחון?</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1123,7 +1064,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 2: לימודי ביטחון: תיאוריות מרכזיות (חלק א')</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1133,7 +1074,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 3: לימודי ביטחון: תיאוריות מרכזיות (חלק ב')</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1143,7 +1084,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 4: אסטרטגיה: מושגי יסוד</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1153,7 +1094,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 5: המלחמה (חלק א'): מדוע נלחמים?</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1163,7 +1104,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 6: המלחמה (חלק ב'): כיצד נלחמים?</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1173,7 +1114,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 7: הרתעה</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1183,7 +1124,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 8: בקרת נשק</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1193,7 +1134,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 9: בריתות וביטחון קולקטיבי</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1203,7 +1144,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 10: מודיעין</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1213,7 +1154,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 11: הטרור - הגדרה ומאפיינים</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1227,7 +1168,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 12: מבוא ללוחמה בטרור</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1237,7 +1178,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 13: אסטרטגיית הטרור - "היגיון" ו"אפקטיביות"</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1251,14 +1192,14 @@
                             </li>
                             <li>
                                 <strong>שיעור 14-18: [נושאים לא פורטו בסילבוס]</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <p>אין חומרי קריאה ייעודיים לשיעורים אלו בסילבוס.</p>
                                 </div>
                             </li>
                             <li>
                                 <strong>שיעור 19: סוגיית ירושלים</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1273,7 +1214,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 20: אסטרטגיית הטרור - פיגועי התאבדות</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1283,7 +1224,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 21: שנה לנשיאות טראמפ</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1293,7 +1234,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 22: איום הג'האד הגלובאלי</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1323,16 +1264,7 @@
                 </section>
             </div>
         </main>
-    </div> <!-- /סוף #page-course-3746 -->
-
-
-    <!-- ====================================================================== -->
-    <!-- 
-        עמוד קורס: מושגי יסוד בממשל ופוליטיקה (3986)
-        *** תוכן מעודכן ***
-    -->
-    <!-- ====================================================================== -->
-    <div id="page-course-3986" class="page-container">
+    </div> <div id="page-course-3986" class="page-container">
         <header class="site-header">
             <div class="nav">
                 <div class="brand">
@@ -1343,8 +1275,8 @@
                     </h1>
                 </div>
                 <div class="theme-switch-wrapper">
-                    <label class="theme-switch" for="theme-toggle-3986">
-                        <input type="checkbox" id="theme-toggle-3986" class="theme-toggle-input" />
+                    <label class="theme-switch" for="theme-toggle">
+                        <input type="checkbox" id="theme-toggle" class="theme-toggle-input" />
                         <span class="slider"></span>
                     </label>
                 </div>
@@ -1399,7 +1331,7 @@
                         <ol class="lesson-list">
                            <li>
                                 <strong>שיעור 1 (פרונטלי): מהו מדע? מהו מדע המדינה?</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1412,7 +1344,7 @@
                            </li>
                            <li>
                                 <strong>שיעור 2 (למידה-עצמית): מושגי יסוד</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1423,7 +1355,7 @@
                            </li>
                            <li>
                                 <strong>שיעור 3 (פרונטלי): הגלובליזציה והשפעתה על הממשל</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1438,7 +1370,7 @@
                            </li>
                             <li>
                                 <strong>שיעור 4 (למידה-עצמית): לאומיות</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1450,7 +1382,7 @@
                            </li>
                            <li>
                                 <strong>שיעור 5 (פרונטלי): לאומיות כאידאולוגיה</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1461,7 +1393,7 @@
                            </li>
                            <li>
                                 <strong>שיעור 6 (למידה-עצמית): דיקטטורות</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1472,7 +1404,7 @@
                            </li>
                            <li>
                                 <strong>שיעור 7 (פרונטלי): הרחבה משטרים דיקטטוריים</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1482,7 +1414,7 @@
                            </li>
                            <li>
                                 <strong>שיעור 8 (למידה-עצמית): דמוקרטיות</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1492,7 +1424,7 @@
                            </li>
                            <li>
                                 <strong>שיעור 9 (פרונטלי): הרחבה משטרים דמוקרטיים</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1504,7 +1436,7 @@
                            </li>
                            <li>
                                 <strong>שיעור 10 (למידה-עצמית): מפלגות וקבוצות אינטרס</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1514,7 +1446,7 @@
                            </li>
                            <li>
                                 <strong>שיעור 11 (פרונטלי): ממדינה וביורוקרטיה לחדשנות בממשל</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1526,7 +1458,7 @@
                            </li>
                            <li>
                                 <strong>שיעור 12 (למידה-עצמית): קונפליקט הבירוקרטיה והדמוקרטיה</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1542,7 +1474,7 @@
                            </li>
                            <li>
                                 <strong>שיעור 13 (פרונטלי): חדשנות בתפיסות בממשל / תדריך עבודה מסכמת</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1577,16 +1509,7 @@
                 </section>
             </div>
         </main>
-    </div> <!-- /סוף #page-course-3986 -->
-
-    
-    <!-- ====================================================================== -->
-    <!-- 
-        עמוד קורס: מבוא למנהל ומדיניות ציבורית (3985)
-        *** תוכן מעודכן ***
-    -->
-    <!-- ====================================================================== -->
-    <div id="page-course-3985" class="page-container">
+    </div> <div id="page-course-3985" class="page-container">
         <header class="site-header">
             <div class="nav">
                 <div class="brand">
@@ -1597,8 +1520,8 @@
                     </h1>
                 </div>
                 <div class="theme-switch-wrapper">
-                    <label class="theme-switch" for="theme-toggle-3985">
-                        <input type="checkbox" id="theme-toggle-3985" class="theme-toggle-input" />
+                    <label class="theme-switch" for="theme-toggle">
+                        <input type="checkbox" id="theme-toggle" class="theme-toggle-input" />
                         <span class="slider"></span>
                     </label>
                 </div>
@@ -1660,7 +1583,7 @@
                         <ol class="lesson-list">
                             <li>
                                 <strong>שיעור 1: מבוא: מהי מדיניות ציבורית</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1670,7 +1593,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 2: עיצוב מדיניות והצדקות למדיניות ציבורית</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1680,7 +1603,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 3: תהליכים, שחקנים ומוסדות בזירת המדיניות</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1691,7 +1614,7 @@
                             <li><strong>שיעור 4: הרצאת אורח</strong></li>
                             <li>
                                 <strong>שיעור 5: גישות תיאורטיות: תאוריית האינטרס הציבורי</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1701,7 +1624,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 6: גישות תיאורטיות: תאוריית הבחירה הציבורית</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1711,7 +1634,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 7: הגישה המוסדית ומדיניות ציבורית</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1721,7 +1644,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 8: גישות של כלכלה פוליטית וגלובליזציה</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1731,7 +1654,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 9: כלי מדיניות</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1742,7 +1665,7 @@
                             <li><strong>שיעור 10: הצגת עבודות</strong></li>
                             <li>
                                 <strong>שיעור 11: יישום מדיניות, ניהול תוכניות וכשלי יישום</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1753,7 +1676,7 @@
                             <li><strong>שיעור 12: הרצאת אורח</strong></li>
                             <li>
                                 <strong>שיעור 13: הערכת המדיניות</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1764,7 +1687,7 @@
                             <li><strong>שיעור 14: הצגת עבודות</strong></li>
                             <li>
                                 <strong>שיעור 15: המנהל הציבורי: מטרות ותיחום</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1774,7 +1697,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 16: פוליטיקה ומנהל</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1784,7 +1707,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 17: הארגון הבירוקרטי</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1794,7 +1717,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 18: ניהול ציבורי</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1804,7 +1727,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 19: קבלת החלטות</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1814,7 +1737,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 20: תרבות ארגונים ואתיקה</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1824,7 +1747,7 @@
                             </li>
                              <li>
                                 <strong>שיעור 21: תקצוב ציבורי, פיקוח ביקורת ובקרה</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1835,7 +1758,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 22: רגולציה</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1846,7 +1769,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 23: מנהל ציבורי בעידן ה-AI: איך מנווטים נכון</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1867,7 +1790,7 @@
                         <p>כאן יופיעו קישורים לסיכומים מפורטים של כל שיעור לאחר שהוא התקיים.</p>
                         <ul class="lesson-grid">
                              <li>
-                                <a href="#lesson-3985-1" class="lesson-card">
+                                <a href="מבוא למנהל ומדיניות ציבורית שיעור 3.html" class="lesson-card">
                                     <h4>שיעור 1: [שם השיעור]</h4>
                                     <div class="lesson-card-details">
                                         <p><span>תאריך:</span> [XX.XX.XX]</p>
@@ -1880,15 +1803,7 @@
                 </section>
             </div>
         </main>
-    </div> <!-- /סוף #page-course-3985 -->
-
-    <!-- ====================================================================== -->
-    <!-- 
-        עמוד קורס: תיאוריות פוליטיות (5542)
-        *** תוכן מעודכן ***
-    -->
-    <!-- ====================================================================== -->
-    <div id="page-course-5542" class="page-container">
+    </div> <div id="page-course-5542" class="page-container">
         <header class="site-header">
             <div class="nav">
                 <div class="brand">
@@ -1899,8 +1814,8 @@
                     </h1>
                 </div>
                 <div class="theme-switch-wrapper">
-                    <label class="theme-switch" for="theme-toggle-5542">
-                        <input type="checkbox" id="theme-toggle-5542" class="theme-toggle-input" />
+                    <label class="theme-switch" for="theme-toggle">
+                        <input type="checkbox" id="theme-toggle" class="theme-toggle-input" />
                         <span class="slider"></span>
                     </label>
                 </div>
@@ -1949,7 +1864,7 @@
                         <ol class="lesson-list">
                             <li>
                                 <strong>שיעור 1: יסודות הדמוקרטיה והפוליטיקה בפוליס היוונית</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1962,7 +1877,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 2: הוגי האמנה החברתית וראשית ההגות הליברלית</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1975,7 +1890,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 3: כוח, מוסר וריאליזם פוליטי</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1985,7 +1900,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 4: תועלנות ודאונטולוגיה</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -1997,7 +1912,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 5: מרקסיזם, מדינה ומגדר</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -2009,7 +1924,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 6: פוסט מודרניזם וביופוליטיקה</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -2021,7 +1936,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 7: העל אדם ומות האלוהים</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -2031,7 +1946,7 @@
                             </li>
                              <li>
                                 <strong>שיעור 8: צדק כהוגנות</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -2042,13 +1957,13 @@
                             </li>
                              <li>
                                 <strong>שיעור 9: פלורליזם, חירות ואחריות בעולם המודרני</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
                                         <li>Gandhi Mahatma (1945) Non-Violence</li>
                                         <li>חנה ארדנט, אייכמן בירושלים - דו"ח על הבנאליות של הרוע (2000)</li>
-                                        <li>קרל יאספרס - מירון רוני, קרל יאספרס: מהעצמיות אל ההוויה (2006)</li>
+                                        <li>קרל יאספרס - מירון רוני, קרל יאספרס: מהעצמיות אל ההוויה (20וג)</li>
                                     </ul>
                                 </div>
                             </li>
@@ -2074,15 +1989,7 @@
                 </section>
             </div>
         </main>
-    </div> <!-- /סוף #page-course-5542 -->
-
-    <!-- ====================================================================== -->
-    <!-- 
-        עמוד קורס: שיטות מחקר (5544)
-        *** תוכן מעודכן ***
-    -->
-    <!-- ====================================================================== -->
-    <div id="page-course-5544" class="page-container">
+    </div> <div id="page-course-5544" class="page-container">
         <header class="site-header">
             <div class="nav">
                 <div class="brand">
@@ -2093,8 +2000,8 @@
                     </h1>
                 </div>
                 <div class="theme-switch-wrapper">
-                    <label class="theme-switch" for="theme-toggle-5544">
-                        <input type="checkbox" id="theme-toggle-5544" class="theme-toggle-input" />
+                    <label class="theme-switch" for="theme-toggle">
+                        <input type="checkbox" id="theme-toggle" class="theme-toggle-input" />
                         <span class="slider"></span>
                     </label>
                 </div>
@@ -2173,15 +2080,7 @@
                 </section>
             </div>
         </main>
-    </div> <!-- /סוף #page-course-5544 -->
-
-    <!-- ====================================================================== -->
-    <!-- 
-        עמוד קורס: הציונות המודרנית לאור מגילת העצמאות (6953)
-        *** תוכן מעודכן ***
-    -->
-    <!-- ====================================================================== -->
-    <div id="page-course-6953" class="page-container">
+    </div> <div id="page-course-6953" class="page-container">
         <header class="site-header">
             <div class="nav">
                 <div class="brand">
@@ -2192,8 +2091,8 @@
                     </h1>
                 </div>
                 <div class="theme-switch-wrapper">
-                    <label class="theme-switch" for="theme-toggle-6953">
-                        <input type="checkbox" id="theme-toggle-6953" class="theme-toggle-input" />
+                    <label class="theme-switch" for="theme-toggle">
+                        <input type="checkbox" id="theme-toggle" class="theme-toggle-input" />
                         <span class="slider"></span>
                     </label>
                 </div>
@@ -2222,7 +2121,6 @@
                                 <span class="percentage">100%</span>
                             </li>
                         </ul>
-                        <!-- הוספת פירוט הציון -->
                         <p style="color: var(--muted); margin-top: var(--s3);">
                             הנחיות מפורטות יועלו לאתר הקורס בהמשך הסמסטר.
                         </p>
@@ -2278,16 +2176,7 @@
                 </section>
             </div>
         </main>
-    </div> <!-- /סוף #page-course-6953 -->
-
-
-    <!-- ====================================================================== -->
-    <!-- 
-        עמוד קורס: מנהיגות חדשנות ויזמות (6954)
-        *** תוכן מעודכן ***
-    -->
-    <!-- ====================================================================== -->
-    <div id="page-course-6954" class="page-container">
+    </div> <div id="page-course-6954" class="page-container">
         <header class="site-header">
             <div class="nav">
                 <div class="brand">
@@ -2298,8 +2187,8 @@
                     </h1>
                 </div>
                 <div class="theme-switch-wrapper">
-                    <label class="theme-switch" for="theme-toggle-6954">
-                        <input type="checkbox" id="theme-toggle-6954" class="theme-toggle-input" />
+                    <label class="theme-switch" for="theme-toggle">
+                        <input type="checkbox" id="theme-toggle" class="theme-toggle-input" />
                         <span class="slider"></span>
                     </label>
                 </div>
@@ -2347,7 +2236,7 @@
                         <ol class="lesson-list">
                             <li>
                                 <strong>שיעור 1 (28/10/2025): מבוא לחשיבה מדעית ותהליך המחקר</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -2357,7 +2246,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 2 (4/11/2025): סקירת ספרות וניסוח שאלת המחקר</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -2368,7 +2257,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 3 (11/11/2025): פרדיגמות, תיאוריות, השערות</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -2379,7 +2268,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 4 (18/11/2025): משתנים: המשגה, תפעול, מדידה</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -2390,7 +2279,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 5 (24/11/2025 - בזום): מודלים תיאורטיים וקשרים בין המשתנים</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -2400,7 +2289,7 @@
                             </li>
                              <li>
                                 <strong>שיעור 6 (2/12/2025): מערכי מחקר השונים והתאמתם לשאלת המחקר</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -2410,7 +2299,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 7 (9/12/2025): דגימה</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -2420,7 +2309,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 8 (16/12/2025): שיטות מחקר איכותניות א': חקר מקרה, מחקר השוואתי, מחקר אתנוגרפי</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -2430,7 +2319,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 9 (23/12/2024): איסוף נתונים למחקר איכותני: ראיון, שאלון איכותני, מעקב תהליך, מחקר ארכיוני, ניתוח תוכן</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -2439,8 +2328,8 @@
                                 </div>
                             </li>
                             <li>
-                                <strong>שיעור 10 (30/12/2025): שיטות כמותניות: מחקר מתאמי, סיבתי וניסויי</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <strong>שיעור 10 (30/12/2025): שיטות כמותיות: מחקר מתאמי, סיבתי וניסויי</strong>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -2450,7 +2339,7 @@
                             </li>
                             <li>
                                 <strong>שיעור 11 (6/1/2025): איסוף נתונים למחקר כמותני: שאלונים וסקרים, ניסויים</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <h5>קריאת חובה:</h5>
                                     <ul>
@@ -2461,22 +2350,21 @@
                             </li>
                             <li>
                                 <strong>שיעור 12 (13/1/2025): מערך מחקר התנסות בכתיבה - סיכום ותרגול</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <p>אין חומרי קריאה לשיעור זה.</p>
                                 </div>
                             </li>
                             <li>
                                 <strong>שיעור 13 (20/1/2025): בינה מלאכותית בשירות שיטות מחקר, סיכום הקורס</strong>
-                                <button class="reading-toggle-btn">הצג/הסתר חומרי קריאה <span class="icon">&gt;</span></button>
+                                <button class="reading-toggle-btn" data-text-show="הצג חומרי קריאה" data-text-hide="הסתר חומרי קריאה">הצג חומרי קריאה <span class="icon">&gt;</span></button>
                                 <div class="reading-list-collapsible">
                                     <p>אין חומרי קריאה לשיעור זה.</p>
                                 </div>
                             </li>
                         </ol>
                     </article>
-                    <!-- [נמחק] הסרת רשימת קריאה כללית -->
-                </section>
+                    </section>
                 <section id="lessons" class="tab-pane">
                     <article class="page-card">
                         <h3>סיכומי שיעורים</h3>
@@ -2496,15 +2384,7 @@
                 </section>
             </div>
         </main>
-    </div> <!-- /סוף #page-course-6954 -->
-
-    <!-- ====================================================================== -->
-    <!-- 
-        עמוד קורס: קריאה וכתיבה אקדמית (kriaa-ve-ktiva)
-        *** תוכן מעודכן ***
-    -->
-    <!-- ====================================================================== -->
-    <div id="page-course-kriaa-ve-ktiva" class="page-container">
+    </div> <div id="page-course-kriaa-ve-ktiva" class="page-container">
         <header class="site-header">
             <div class="nav">
                 <div class="brand">
@@ -2515,8 +2395,8 @@
                     </h1>
                 </div>
                 <div class="theme-switch-wrapper">
-                    <label class="theme-switch" for="theme-toggle-kriaa">
-                        <input type="checkbox" id="theme-toggle-kriaa" class="theme-toggle-input" />
+                    <label class="theme-switch" for="theme-toggle">
+                        <input type="checkbox" id="theme-toggle" class="theme-toggle-input" />
                         <span class="slider"></span>
                     </label>
                 </div>
@@ -2607,7 +2487,7 @@
                                 <strong>שיעור 13: עבודה אקדמית: שיטת המחקר, תוצאות וסיכום</strong>
                             </li>
                         </ol>
-                        <button class="reading-toggle-btn">הצג/הסתר ביבליוגרפיה כללית <span class="icon">&gt;</span></button>
+                        <button class="reading-toggle-btn" data-text-show="הצג ביבליוגרפיה כללית" data-text-hide="הסתר ביבליוגרפיה כללית">הצג ביבליוגרפיה כללית <span class="icon">&gt;</span></button>
                         <div class="reading-list-collapsible">
                             <h5>קריאת חובה:</h5>
                             <ul>
@@ -2640,76 +2520,59 @@
                 </section>
             </div>
         </main>
-    </div> <!-- /סוף #page-course-kriaa-ve-ktiva -->
-
-
-    <!-- 
-    ======================================================================
-    --- סקריפטים (בסוף ה-body) ---
-    ======================================================================
-    -->
-    
-    <!-- סקריפט מצב כהה/בהיר -->
-    <script>
+    </div> <script>
         (function() {
-            const themeToggles = document.querySelectorAll('.theme-toggle-input');
+            // אוחדו כל כפתורי ה-toggle לכפתור אחד ב-HTML
+            const themeToggle = document.getElementById('theme-toggle');
             const rootEl = document.documentElement; 
             
             function applyTheme(theme) {
-                if (theme === 'dark') {
-                    rootEl.classList.add('dark-mode');
-                    rootEl.classList.remove('light-mode');
-                } else {
-                    rootEl.classList.add('light-mode');
-                    rootEl.classList.remove('dark-mode');
-                }
+                // שמור את הבחירה
                 localStorage.setItem('theme', theme);
                 
-                // סנכרון כל הכפתורים
-                const isChecked = (theme === 'dark');
-                themeToggles.forEach(toggle => {
-                    if (toggle.checked !== isChecked) {
-                        toggle.checked = isChecked;
-                    }
-                });
+                // החל את הקלאס המתאים
+                if (theme === 'dark') {
+                    rootEl.classList.remove('light-mode');
+                    rootEl.classList.add('dark-mode');
+                } else if (theme === 'light') {
+                    rootEl.classList.remove('dark-mode');
+                    rootEl.classList.add('light-mode');
+                } else {
+                    // הסר דריסה ידנית ואפשר למערכת להחליט (prefers-color-scheme)
+                    rootEl.classList.remove('dark-mode', 'light-mode');
+                }
+                
+                // סנכרן את מצב ה-checkbox על פי התוצאה הסופית
+                const finalThemeIsDark = rootEl.classList.contains('dark-mode') || 
+                                         (!rootEl.classList.contains('light-mode') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+                if (themeToggle) {
+                    themeToggle.checked = finalThemeIsDark;
+                }
             }
 
-            themeToggles.forEach(toggle => {
-                toggle.addEventListener('change', function() {
+            if (themeToggle) {
+                themeToggle.addEventListener('change', function() {
+                    // אם מסומן -> dark, אחרת -> light
                     applyTheme(this.checked ? 'dark' : 'light');
                 });
-            });
+            }
 
             // בדיקה בטעינה ראשונית
             const savedTheme = localStorage.getItem('theme');
-            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            let initialTheme = 'light';
-
+            
+            // אם יש ערך שמור, השתמש בו
             if (savedTheme) {
-                initialTheme = savedTheme;
-            } else if (systemPrefersDark) {
-                initialTheme = 'dark';
+                applyTheme(savedTheme);
+            } else {
+                // אם אין, אפשר למערכת להחליט.
+                // הפונקציה applyTheme ללא פרמטר תסיר קלאסים
+                // וקוד ה-CSS יעשה את שלו.
+                applyTheme(null);
             }
-            
-            applyTheme(initialTheme);
-            
-            // שינוי: הוספת הקלאס לכפתור המקורי מהדף הראשי
-             const mainToggle = document.getElementById('theme-toggle');
-             if (mainToggle && !mainToggle.classList.contains('theme-toggle-input')) {
-                 mainToggle.classList.add('theme-toggle-input');
-                 mainToggle.addEventListener('change', function() {
-                    applyTheme(this.checked ? 'dark' : 'light');
-                 });
-                 // סנכרון ראשוני גם לכפתור הזה
-                 if (mainToggle.checked !== (initialTheme === 'dark')) {
-                    mainToggle.checked = (initialTheme === 'dark');
-                 }
-             }
             
         })();
     </script>
 
-    <!-- סקריפט ניווט בין עמודים (חדש) -->
     <script>
         function handleHashChange() {
             // קבל את ה-hash, ברירת מחדל ל-#main
@@ -2718,7 +2581,6 @@
 
             if (hash !== '#main') {
                 // המר #course-XXXX ל- page-course-XXXX
-                // או #lesson-XXXX-Y ל- page-lesson-XXXX-Y
                 pageId = `page-${hash.substring(1)}`; 
             }
 
@@ -2750,7 +2612,6 @@
         window.addEventListener('hashchange', handleHashChange);
     </script>
     
-    <!-- סקריפט להפעלת ה-Tabs (משודרג) -->
     <script>
         // פונקציה לאתחול מערכת טאבים ספציפית
         function initializeTabs(pageElement) {
@@ -2782,7 +2643,7 @@
             });
         }
         
-        // --- [חדש] פונקציה לאתחול כפתורי חומרי קריאה ---
+        // --- פונקציה לאתחול כפתורי חומרי קריאה (פשטנו את שינוי הטקסט) ---
         function initializeReadingToggles() {
             document.body.addEventListener('click', function(event) {
                 const toggleButton = event.target.closest('.reading-toggle-btn');
@@ -2792,20 +2653,25 @@
                 
                 // מצא את רשימת הקריאה שנמצאת מיד אחרי הכפתור
                 const collapsibleList = toggleButton.nextElementSibling;
+                const icon = toggleButton.querySelector('.icon');
                 
                 if (collapsibleList && collapsibleList.classList.contains('reading-list-collapsible')) {
                     // החלף את מצב הכפתור והרשימה
                     toggleButton.classList.toggle('open');
                     collapsibleList.classList.toggle('visible');
                     
-                    // שנה את הטקסט בכפתור
-                    const icon = toggleButton.querySelector('.icon');
-                    if (toggleButton.classList.contains('open')) {
-                        toggleButton.firstChild.nodeValue = 'הסתר חומרי קריאה ';
-                        if(icon) icon.style.transform = 'rotate(90deg)';
-                    } else {
-                        toggleButton.firstChild.nodeValue = 'הצג/הסתר חומרי קריאה ';
-                        if(icon) icon.style.transform = 'rotate(0deg)';
+                    // שינוי הטקסט והאייקון בצורה פשוטה יותר ע"י data-attributes
+                    const isOpen = toggleButton.classList.contains('open');
+                    const newText = isOpen ? toggleButton.getAttribute('data-text-hide') : toggleButton.getAttribute('data-text-show');
+                    
+                    // מוצאים את ה-text node הראשון ומעדכנים אותו
+                    const textNode = Array.from(toggleButton.childNodes).find(node => node.nodeType === 3); // Node.TEXT_NODE
+                    if (textNode) {
+                        textNode.nodeValue = newText + ' '; // הוסף רווח לפני האייקון
+                    }
+                    
+                    if(icon) {
+                        icon.style.transform = isOpen ? 'rotate(90deg)' : 'rotate(0deg)';
                     }
                 }
             });
@@ -2821,7 +2687,7 @@
             // הפעל את בקר הניווט הראשי
             handleHashChange();
             
-            // --- [חדש] הפעל את הכפתורים של חומרי הקריאה ---
+            // --- הפעל את הכפתורים של חומרי הקריאה ---
             initializeReadingToggles();
         });
     </script>
