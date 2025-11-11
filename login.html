@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>כניסה למערכת</title>
+    <!-- טעינת Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!--
+      טעינת הספריות של Firebase
+    -->
+    <script type="module">
+        // ייבוא הפונקציות שאנחנו צריכים
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+        // -----------------------------------------------------------------
+        // --- שלב 1: הדבק כאן את הגדרות ה-Firebase שלך ---
+        // -----------------------------------------------------------------
+        // זה הקוד שהתכוונת לצרף.
+        // תוכל למצוא אותו בלוח הבקרה של Firebase -> הגדרות פרויקט -> Config
+        
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyDqxxf434N0wnn6C6AglEEIaqj5TVtoYLQ",
+          authDomain: "memshalaa.firebaseapp.com",
+          projectId: "memshalaa",
+          storageBucket: "memshalaa.firebasestorage.app",
+          messagingSenderId: "324187090365",
+          appId: "1:324187090365:web:8e4956d0d1370b5aab36d4",
+          measurementId: "G-2QHJF3SSJQ"
+        };
+        // -----------------------------------------------------------------
+
+        // איתחול Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // --- לוגיקת כניסה מאובטחת ---
+        const loginForm = document.getElementById('loginForm');
+        const messageDiv = document.getElementById('message');
+        const loginButton = document.getElementById('loginButton');
+
+        loginForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // מניעת שליחה רגילה של הטופס
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // עדכון ממשק משתמש למצב טעינה
+            messageDiv.textContent = 'בודק פרטים מול השרת...';
+            messageDiv.className = 'text-center mb-4 text-gray-500 font-medium';
+            loginButton.disabled = true;
+            loginButton.textContent = 'טוען...';
+
+            // פונקציית הכניסה המאובטחת של Firebase
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // הצלחה!
+                    messageDiv.textContent = 'כניסה מוצלחת! מעביר אותך...';
+                    messageDiv.className = 'text-center mb-4 text-green-500 font-medium';
+                    
+                    // הפנייה לדף הניהול שלך (שנה את זה לשם הדף הרלוונטי)
+                    window.location.href = 'dashboard.html'; 
+                })
+                .catch((error) => {
+                    // כישלון
+                    console.error('שגיאת כניסה:', error.code);
+                    messageDiv.textContent = 'אימייל או סיסמה שגויים.';
+                    messageDiv.className = 'text-center mb-4 text-red-500 font-medium';
+                })
+                .finally(() => {
+                    // החזרת הכפתור למצב רגיל
+                    loginButton.disabled = false;
+                    loginButton.textContent = 'כניסה';
+                });
+        });
+
+    </script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap');
+        body {
+            font-family: 'Rubik', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">כניסה למערכת</h2>
+        
+        <div id="message" class="text-center mb-4"></div>
+
+        <form id="loginForm">
+            <div class="mb-4">
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-2">כתובת אימייל</label>
+                <input type="email" id="email" name="email" required
+                       class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm"
+                       placeholder="הכנס את האימייל שלך">
+            </div>
+
+            <div class="mb-6">
+                <label for="password" class="block text-sm font-medium text-gray-700 mb-2">סיסמה</label>
+                <input type="password" id="password" name="password" required
+                       class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm"
+                       placeholder="הכנס סיסמה">
+            </div>
+
+            <button type="submit" id="loginButton"
+                    class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-blue-700 transition">
+                כניסה
+            </button>
+        </form>
+    </div>
+
+</body>
+</html>
