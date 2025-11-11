@@ -629,6 +629,56 @@
         }
 
     </style>
+
+<!-- קוד הגנה של Firebase (להדביק ב-<head> של כל דף מוגן) -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    // 1. אותו Config בדיוק כמו בדף הכניסה
+    const firebaseConfig = {
+        apiKey: "AIzaSy... (העתק את שלך לכאן)",
+        authDomain: "your-project-id.firebaseapp.com",
+        projectId: "your-project-id",
+        storageBucket: "your-project-id.appspot.com",
+        messagingSenderId: "1234567890",
+        appId: "1:1234567890:web:abcdef123456"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // 2. ה"שומר": בודק אם המשתמש מחובר
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            // משתמש מחובר - הכל בסדר, הצג את הדף
+            console.log("משתמש מורשה:", user.email);
+            document.body.style.display = 'block'; // מציג את התוכן
+        } else {
+            // אין משתמש מחובר - זרוק אותו לדף הכניסה
+            window.location.href = 'login.html'; // הפנייה לדף הכניסה
+        }
+    });
+</script>
+
+<!-- 
+  טריק למניעת "הבהוב": 
+  הוסף את זה ל-CSS שלך או כתג <style> ב-<head>
+-->
+<style>
+    body { 
+        display: none; /* הסתר את הדף עד שהבדיקה תסתיים */
+    }
+</style>
+
+**מה הקוד הזה עושה?**
+1.  טוען את Firebase.
+2.  בודק את מצב האימות *לפני* שהדף נטען.
+3.  אם המשתמש לא מחובר (`user` הוא `null`), הוא מיד מפנה אותו בחזרה ל-`login.html`.
+4.  אם המשתמש מחובר, הוא מציג את הדף כרגיל (באמצעות `document.body.style.display = 'block';`).
+
+זה הכל! עכשיו יש לך מערכת כניסה פשוטה ומאובטחת לאתר הסטטי שלך.
+        
 </head>
 <body>
 <div class="page-container active" id="page-main">
