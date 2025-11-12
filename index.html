@@ -628,120 +628,75 @@
             display: block; /* העמוד הפעיל מוצג */
         }
 
-    /* === Minimal PDF controls (compact) – NO global overrides === */
-.sa-actions{display:flex;gap:8px;align-items:center}
-.sa-actions .sa-divider{width:1px;height:22px;background:#d0d5dd}
-.sa-btn{font:inherit;line-height:1;border:1px solid #d0d5dd;background:#ffffff;color:#0f172a;padding:6px 8px;border-radius:10px;cursor:pointer;display:inline-flex;gap:6px;align-items:center;font-size:12px}
-.sa-btn.primary{background:#0ea5e9;color:#00131d;border-color:transparent}
-.sa-btn svg{width:14px;height:14px;display:block}
-
-/* Print sheet ONLY (for contrast & size) */
-#print-sheet{display:none;max-width:800px;margin-inline:auto;background:#ffffff;color:#111111}
-#print-sheet h1{font-size:20px;margin:0 0 8px}
-#print-sheet h2{font-size:16px;margin:18px 0 8px}
-#print-sheet .sa-sec{background:#ffffff;border:1px solid #000000;border-radius:10px;padding:12px}
-@media print{
-  body{print-color-adjust:exact;-webkit-print-color-adjust:exact}
-  body.sa-printing>*:not(#print-sheet){display:none !important}
-  #print-sheet{display:block}
-  #print-sheet, #print-sheet *{color:#111111 !important}
-  html{font-size:66.6667% !important}
+    /* === SA Controls – clean header controls (v14) === */
+.sa-actions{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  direction:ltr;
+  flex-wrap:wrap;
 }
-/* floating widget on pages without header slot */
-.sa-widget{position:fixed;inset-inline-end:16px;inset-block-start:16px;z-index:9999}
-.sa-widget .sa-actions{background:#ffffff;border:1px solid #d0d5dd;border-radius:12px;padding:6px 8px}
-/* */
-.sa-actions{display:flex;gap:8px;align-items:center;direction:ltr} /* enforce visual order: theme | divider | print | download */
-.sa-actions .sa-divider{width:1px;height:22px;background:#d0d5dd}
-.sa-btn{font:inherit;line-height:1;border:1px solid #d0d5dd;background:#ffffff;color:#0f172a;padding:6px 8px;border-radius:10px;cursor:pointer;display:inline-flex;gap:6px;align-items:center;font-size:12px}
-.sa-btn.primary{background:#0ea5e9;color:#00131d;border-color:transparent}
-.sa-btn svg{width:14px;height:14px;display:block}
-/* icon-only buttons: hide labels */
-.sa-btn .lbl{display:none}
-
-/* robust black-on-white for generated sheet in both flows */
-#print-sheet{background:#ffffff !important;color:#111111 !important}
-#print-sheet *{color:#111111 !important}
-@media print{
-  html{font-size:66.6667% !important}
-  body{print-color-adjust:exact;-webkit-print-color-adjust:exact}
-  body.sa-printing>*:not(#print-sheet){display:none !important}
-  #print-sheet{display:block}
+.sa-actions .sa-divider{
+  width:1px;
+  height:24px;
+  background:#d0d5dd;
 }
-
-/* Theme toggle via whole-page filter (works desktop & mobile) */
-html.sa-dark{ filter: invert(1) hue-rotate(180deg); }
-html.sa-dark img, html.sa-dark video, html.sa-dark canvas, html.sa-dark svg image{ filter: invert(1) hue-rotate(180deg); }
-html.sa-light{ filter:none; }
-.sa-widget{position:fixed;inset-inline-end:16px;inset-block-start:16px;z-index:9999}
-.sa-widget .sa-actions{background:#ffffff;border:1px solid #d0d5dd;border-radius:12px;padding:6px 8px}
-/* */
-.sa-actions{display:flex;gap:10px;align-items:center;direction:ltr}
-.sa-actions .sa-divider{width:1px;height:22px;background:#d0d5dd}
-.sa-btn{font:inherit;line-height:1;border:1px solid #d0d5dd;background:#ffffff;color:#0f172a;
-  padding:8px 10px;border-radius:10px;cursor:pointer;display:inline-flex;gap:8px;align-items:center;font-size:13px}
-.sa-btn.primary{background:#0ea5e9;color:#00131d;border-color:transparent}
-.sa-btn svg{width:16px;height:16px;display:block}
-.sa-btn .lbl{display:none} /* icon-only */
-
-/* Strong black-on-white inside the print sheet */
-#print-sheet{background:#ffffff !important;color:#111111 !important}
-#print-sheet *{color:#111111 !important;-webkit-text-fill-color:#111111 !important}
-
-/* Print behavior */
-@media print{
-  html{font-size:66.6667% !important}
-  body{print-color-adjust:exact;-webkit-print-color-adjust:exact}
-  body.sa-printing>*:not(#print-sheet){display:none !important}
-  #print-sheet{display:block}
+.sa-btn{
+  font:inherit;
+  line-height:1;
+  border:1px solid #d0d5dd;
+  background:#ffffff;
+  color:#0f172a;
+  padding:10px 12px;
+  border-radius:12px;
+  cursor:pointer;
+  display:inline-flex;
+  gap:10px;
+  align-items:center;
+  font-size:15px;
 }
-
-/* Floating widget (always available, incl. homepage) */
-.sa-widget{position:fixed;inset-inline-end:16px;inset-block-start:16px;z-index:9999}
-.sa-widget .sa-actions{background:#ffffff;border:1px solid #d0d5dd;border-radius:12px;padding:6px 8px;box-shadow:0 2px 10px rgba(0,0,0,.12)}
-/* */
-.sa-actions{display:flex;gap:12px;align-items:center;direction:ltr} /* visual order: theme | divider | print */
-.sa-actions .sa-divider{width:1px;height:24px;background:#d0d5dd}
-.sa-btn{font:inherit;line-height:1;border:1px solid #d0d5dd;background:#ffffff;color:#0f172a;
-  padding:10px 12px;border-radius:12px;cursor:pointer;display:inline-flex;gap:10px;align-items:center;font-size:15px}
-.sa-btn.primary{background:#0ea5e9;color:#00131d;border-color:transparent}
-.sa-btn svg{width:20px;height:20px;display:block}
-.sa-btn .lbl{display:none} /* icon-only */
-
-/* Strong black-on-white inside the print sheet */
-#print-sheet{background:#ffffff !important;color:#111111 !important}
-#print-sheet *{color:#111111 !important;-webkit-text-fill-color:#111111 !important}
-@media print{
-  html{font-size:66.6667% !important}
-  body{print-color-adjust:exact;-webkit-print-color-adjust:exact}
-  body.sa-printing>*:not(#print-sheet){display:none !important}
-  #print-sheet{display:block}
+.sa-btn.primary{
+  background:#0ea5e9;
+  color:#00131d;
+  border-color:transparent;
 }
-/* === SA Controls – v7 (header-only, responsive, clean) === */
-.sa-actions{display:flex;gap:12px;align-items:center;direction:ltr;flex-wrap:wrap}
-.sa-actions .sa-divider{width:1px;height:24px;background:#d0d5dd}
-.sa-btn{font:inherit;line-height:1;border:1px solid #d0d5dd;background:#ffffff;color:#0f172a;
-  padding:10px 12px;border-radius:12px;cursor:pointer;display:inline-flex;gap:10px;align-items:center;font-size:15px}
-.sa-btn.primary{background:#0ea5e9;color:#00131d;border-color:transparent}
-.sa-btn svg{width:20px;height:20px;display:block}
-.sa-btn .lbl{display:none} /* icon-only */
-
-/* collapse nicely on phones */
+.sa-btn svg{
+  width:20px;
+  height:20px;
+  display:block;
+}
 @media (max-width:640px){
   .sa-actions{gap:8px}
   .sa-actions .sa-divider{height:20px}
   .sa-btn{padding:8px 10px;font-size:14px}
   .sa-btn svg{width:18px;height:18px}
 }
-
-/* Strong black-on-white inside the print sheet */
-#print-sheet{background:#ffffff !important;color:#111111 !important}
-#print-sheet *{color:#111111 !important;-webkit-text-fill-color:#111111 !important}
+/* dark mode effect for html.sa-dark */
+html.sa-dark{
+  filter: invert(1) hue-rotate(180deg);
+  background:#000;
+}
+html.sa-dark img,
+html.sa-dark video,
+html.sa-dark canvas,
+html.sa-dark svg image{
+  filter: invert(1) hue-rotate(180deg);
+}
+/* print sheet base */
+#print-sheet{
+  background:#ffffff !important;
+  color:#111111 !important;
+}
+#print-sheet *{
+  color:#111111 !important;
+  -webkit-text-fill-color:#111111 !important;
+}
 @media print{
   html{font-size:66.6667% !important}
-  body{print-color-adjust:exact;-webkit-print-color-adjust:exact}
-  body.sa-printing>*:not(#print-sheet){display:none !important}
-  #print-sheet{display:block}
+  body{
+    print-color-adjust:exact;
+    -webkit-print-color-adjust:exact;
+  }
 }
 </style>
 
@@ -813,12 +768,7 @@ html.sa-light{ filter:none; }
 <span aria-hidden="true" class="dot"></span>
 <h1>תואר ראשון בממשל - מסלול מצטיינים באסטרטגיה וקבלת החלטות | שנה ראשונה - סימסטר א׳</h1>
 </div>
-<div class="theme-switch-wrapper">
-<label class="theme-switch" for="theme-toggle">
-<input class="theme-toggle-input" id="theme-toggle" type="checkbox"/>
-<span class="slider"></span>
-</label>
-</div>
+
 </div>
 </header>
 <main class="container">
@@ -962,12 +912,7 @@ html.sa-light{ filter:none; }
                         מבוא ללימודי אסטרטגיה
                     </h1>
 </div>
-<div class="theme-switch-wrapper">
-<label class="theme-switch" for="theme-toggle">
-<input class="theme-toggle-input" id="theme-toggle" type="checkbox"/>
-<span class="slider"></span>
-</label>
-</div>
+
 </div>
 </header>
 <main class="container">
@@ -1152,12 +1097,7 @@ html.sa-light{ filter:none; }
                         מבוא ללימודי ביטחון ולוחמה בטרור
                     </h1>
 </div>
-<div class="theme-switch-wrapper">
-<label class="theme-switch" for="theme-toggle">
-<input class="theme-toggle-input" id="theme-toggle" type="checkbox"/>
-<span class="slider"></span>
-</label>
-</div>
+
 </div>
 </header>
 <main class="container">
@@ -1415,12 +1355,7 @@ html.sa-light{ filter:none; }
                         מושגי יסוד בממשל ופוליטיקה
                     </h1>
 </div>
-<div class="theme-switch-wrapper">
-<label class="theme-switch" for="theme-toggle">
-<input class="theme-toggle-input" id="theme-toggle" type="checkbox"/>
-<span class="slider"></span>
-</label>
-</div>
+
 </div>
 </header>
 <main class="container">
@@ -1660,12 +1595,7 @@ html.sa-light{ filter:none; }
                         מבוא למנהל ומדיניות ציבורית
                     </h1>
 </div>
-<div class="theme-switch-wrapper">
-<label class="theme-switch" for="theme-toggle">
-<input class="theme-toggle-input" id="theme-toggle" type="checkbox"/>
-<span class="slider"></span>
-</label>
-</div>
+
 </div>
 </header>
 <main class="container">
@@ -1954,12 +1884,7 @@ html.sa-light{ filter:none; }
                         תיאוריות פוליטיות
                     </h1>
 </div>
-<div class="theme-switch-wrapper">
-<label class="theme-switch" for="theme-toggle">
-<input class="theme-toggle-input" id="theme-toggle" type="checkbox"/>
-<span class="slider"></span>
-</label>
-</div>
+
 </div>
 </header>
 <main class="container">
@@ -2140,12 +2065,7 @@ html.sa-light{ filter:none; }
                         שיטות מחקר
                     </h1>
 </div>
-<div class="theme-switch-wrapper">
-<label class="theme-switch" for="theme-toggle">
-<input class="theme-toggle-input" id="theme-toggle" type="checkbox"/>
-<span class="slider"></span>
-</label>
-</div>
+
 </div>
 </header>
 <main class="container">
@@ -2231,12 +2151,7 @@ html.sa-light{ filter:none; }
                         הציונות המודרנית לאור מגילת העצמאות
                     </h1>
 </div>
-<div class="theme-switch-wrapper">
-<label class="theme-switch" for="theme-toggle">
-<input class="theme-toggle-input" id="theme-toggle" type="checkbox"/>
-<span class="slider"></span>
-</label>
-</div>
+
 </div>
 </header>
 <main class="container">
@@ -2327,12 +2242,7 @@ html.sa-light{ filter:none; }
                         מנהיגות חדשנות ויזמות
                     </h1>
 </div>
-<div class="theme-switch-wrapper">
-<label class="theme-switch" for="theme-toggle">
-<input class="theme-toggle-input" id="theme-toggle" type="checkbox"/>
-<span class="slider"></span>
-</label>
-</div>
+
 </div>
 </header>
 <main class="container">
@@ -2535,12 +2445,7 @@ html.sa-light{ filter:none; }
                         מיומנויות כתיבה וקריאה אקדמית
                     </h1>
 </div>
-<div class="theme-switch-wrapper">
-<label class="theme-switch" for="theme-toggle">
-<input class="theme-toggle-input" id="theme-toggle" type="checkbox"/>
-<span class="slider"></span>
-</label>
-</div>
+
 </div>
 </header>
 <main class="container">
@@ -3002,134 +2907,98 @@ window.__mountLessonsForCourse = async function(courseId){
     return results;
   };
 })();
-</script><div id="print-sheet" aria-hidden="true" style="display:none"></div>
-
-
-
-
-
+</script><div id="print-sheet" aria-hidden="true"></div>
 
 <script>
-// === SA Controls – v9 (toggle-only cleanup; header controls only) ===
+// === SA header controls (v14: simple, no Google changes) ===
 (function(){
-  const $  = (s,c=document)=>c.querySelector(s);
-  const $$ = (s,c=document)=>Array.from(c.querySelectorAll(s));
-
-  // --- Remove ONLY legacy theme toggles in header ---
-  function removeLegacyToggles(){
-    const header = document.querySelector('.site-header') || document.querySelector('header') || document;
-    const badSel = [
-      '.theme-toggle','.toggle','.dark-mode-toggle','.switch',
-      '#toggleTheme','#darkMode','#theme','#__themeToggle','input[type="checkbox"].toggle','label.toggle'
-    ].join(',');
-    $$(badSel, header).forEach(el=> el.remove());
-    // extra: inputs that look like toggles
-    $$('input[type="checkbox"]', header).forEach(inp=>{
-      const id=(inp.id||'').toLowerCase(), cls=(inp.className||'').toLowerCase();
-      if(/toggle|theme|dark|light/.test(id+cls)) inp.remove();
-    });
-  }
-
-  function collectTabs(root){
-    const res = [];
-    const btns = $$('.tab-navigation .tab-btn', root);
-    if(btns.length){
-      btns.forEach((btn,i)=>{
-        const key=btn.getAttribute('data-tab');
-        const panel = key ? root.querySelector('.tab-pane#'+CSS.escape(key)) : null;
-        if(panel){ res.push({title: btn.textContent.trim()||`חלק ${i+1}`, panel}); }
-      });
-      return res;
+  function onReady(fn){
+    if(document.readyState === 'loading'){
+      document.addEventListener('DOMContentLoaded', fn);
+    } else {
+      fn();
     }
-    const panes = $$('.tab-pane', root);
-    if(panes.length){
-      panes.forEach((panel,i)=> res.push({title: panel.querySelector('h2,h3,h4')?.textContent?.trim()||`חלק ${i+1}`, panel}));
-      return res;
+  }
+
+  var SUN  = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4V1h0v3zm0 19v-3h0v3zM4 12H1v0h3zm22 0h-3v0h3zM5.64 5.64L3.51 3.51l0 0 2.13 2.13zM20.49 20.49l-2.13-2.13 0 0 2.13 2.13zM18.36 5.64l2.13-2.13 0 0-2.13 2.13zM3.51 20.49l2.13-2.13 0 0-2.13 2.13zM12 7a5 5 0 100 10 5 5 0 000-10z" fill="currentColor"/></svg>';
+  var MOON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 0111.21 3 7 7 0 1021 12.79z" fill="currentColor"/></svg>';
+  var PRINT= '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 8H5a3 3 0 0 0-3 3v6h4v4h12v-4h4v-6a3 3 0 0 0-3-3zm-4 11H9v-3h6zm1-15H8v3h8z" fill="currentColor"/></svg>';
+
+  function setupHeader(headerNav){
+    if(!headerNav) return;
+    // avoid duplicates
+    if(headerNav.querySelector('.sa-actions')) return;
+
+    // create buttons bar
+    var bar = document.createElement('div');
+    bar.className = 'sa-actions';
+
+    var themeBtn = document.createElement('button');
+    themeBtn.type = 'button';
+    themeBtn.className = 'sa-btn';
+    themeBtn.title = 'מצב יום/לילה';
+
+    var divider = document.createElement('div');
+    divider.className = 'sa-divider';
+
+    var printBtn = document.createElement('button');
+    printBtn.type = 'button';
+    printBtn.className = 'sa-btn primary';
+    printBtn.title = 'הדפס';
+    printBtn.innerHTML = PRINT;
+
+    bar.appendChild(themeBtn);
+    bar.appendChild(divider);
+    bar.appendChild(printBtn);
+
+    headerNav.appendChild(bar);
+
+    var root = document.documentElement;
+    function isDark(){ return root.classList.contains('sa-dark'); }
+    function icon(){ return isDark() ? MOON : SUN; }
+
+    // initial state from localStorage
+    var pref = null;
+    try { pref = localStorage.getItem('sa-theme'); } catch(e){}
+    if(pref === 'dark'){
+      root.classList.add('sa-dark');
+    } else {
+      root.classList.remove('sa-dark');
     }
-    const main = root.querySelector('main') || root.body;
-    res.push({title:'תוכן העמוד', panel: main});
-    return res;
-  }
+    themeBtn.innerHTML = icon();
 
-  function titleFrom(root){
-    const t = (root.querySelector('.brand h1')?.textContent || document.title || '').trim();
-    return t || 'עמוד';
-  }
-
-  function buildSheet(root){
-    const sheet = document.getElementById('print-sheet');
-    sheet.innerHTML=''; sheet.setAttribute('aria-hidden','false');
-    sheet.style.background='#fff'; sheet.style.color='#111';
-    const h1 = document.createElement('h1'); h1.textContent = titleFrom(root); sheet.appendChild(h1);
-    collectTabs(root).forEach(({title,panel},i)=>{
-      const sec = document.createElement('section'); sec.className='sa-sec';
-      const h2 = document.createElement('h2'); h2.textContent = title || `חלק ${i+1}`; sec.appendChild(h2);
-      const node = panel.cloneNode(true);
-      node.querySelectorAll?.('[data-print-hide]')?.forEach(el=>el.remove());
-      node.querySelectorAll?.('details')?.forEach(d=> d.open = true);
-      node.querySelectorAll?.('[role=tabpanel]')?.forEach(p=> p.removeAttribute('aria-hidden'));
-      node.style.display='block'; node.removeAttribute('aria-hidden');
-      const first=node.querySelector('h1,h2'); if(first && first.textContent.trim()===h2.textContent.trim()){ first.remove(); }
-      sec.appendChild(node); sheet.appendChild(sec);
+    themeBtn.addEventListener('click', function(){
+      var dark = root.classList.toggle('sa-dark');
+      themeBtn.innerHTML = dark ? MOON : SUN;
+      try { localStorage.setItem('sa-theme', dark ? 'dark' : 'light'); } catch(e){}
     });
-    return sheet;
-  }
 
-  function doPrint(root){
-    const sheet = buildSheet(root);
-    document.body.classList.add('sa-printing');
-    sheet.style.display='block';
-    window.print();
-  }
-  window.addEventListener('afterprint', ()=>{
-    document.body.classList.remove('sa-printing');
-    const sheet=document.getElementById('print-sheet');
-    if(sheet){ sheet.setAttribute('aria-hidden','true'); sheet.style.display='none'; sheet.innerHTML=''; }
-  });
-
-  function makeBar(){
-    const bar = document.createElement('div'); bar.className='sa-actions';
-    // theme button (icon only). We keep this minimal and self-contained.
-    const theme = document.createElement('button'); theme.className='sa-btn'; theme.id='saTheme'; theme.type='button'; theme.title='מצב יום/לילה';
-    theme.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 0111.21 3 7 7 0 1021 12.79z" fill="currentColor"/></svg>';
-    const divider = document.createElement('div'); divider.className='sa-divider';
-    const printBtn = document.createElement('button'); printBtn.className='sa-btn primary'; printBtn.id='saPrint'; printBtn.type='button'; printBtn.title='הדפס';
-    printBtn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 8H5a3 3 0 0 0-3 3v6h4v4h12v-4h4v-6a3 3 0 0 0-3-3zm-4 11H9v-3h6zm1-15H8v3h8z" fill="currentColor"/></svg>';
-    bar.appendChild(theme); bar.appendChild(divider); bar.appendChild(printBtn);
-    return {bar, theme, printBtn};
-  }
-
-  // Minimal theme toggle: flip class on <html> and switch icon (no external changes).
-  function initThemeButton(btn){
-    function get(){ return document.documentElement.classList.contains('sa-dark') ? 'dark' : 'light'; }
-    const SUN  = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4V1h0v3zm0 19v-3h0v3zM4 12H1v0h3zm22 0h-3v0h3zM5.64 5.64L3.51 3.51l0 0 2.13 2.13zM20.49 20.49l-2.13-2.13 0 0 2.13 2.13zM18.36 5.64l2.13-2.13 0 0-2.13 2.13zM3.51 20.49l2.13-2.13 0 0-2.13 2.13zM12 7a5 5 0 100 10 5 5 0 000-10z" fill="currentColor"/></svg>';
-    const MOON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 0111.21 3 7 7 0 1021 12.79z" fill="currentColor"/></svg>';
-    function icon(){ return (get()==='light') ? SUN : MOON; }
-    btn.addEventListener('click', ()=>{
-      document.documentElement.classList.toggle('sa-dark');
-      btn.innerHTML = icon();
-      try{ localStorage.setItem('sa-theme', get()); }catch(e){}
-    });
-    let t = 'light';
-    try{ t = localStorage.getItem('sa-theme') || t; }catch(e){}
-    document.documentElement.classList.toggle('sa-dark', t==='dark');
-    btn.innerHTML = icon();
-  }
-
-  function mountHeaderControls(){
-    removeLegacyToggles();
-    const navs = document.querySelectorAll('.site-header .nav');
-    navs.forEach(nav=>{
-      if(nav.querySelector('.sa-actions')) return;
-      const {bar, theme, printBtn} = makeBar();
-      nav.appendChild(bar);
-      const page = nav.closest('.page-container') || document;
-      initThemeButton(theme);
-      printBtn.addEventListener('click', ()=> doPrint(page));
+    // Print: עבור פשטות כרגע משתמשים ב-window.print על העמוד כפי שהוא
+    printBtn.addEventListener('click', function(){
+      window.print();
     });
   }
 
-  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', mountHeaderControls); } else { mountHeaderControls(); }
+  function init(){
+    // לכל header של קורס יש .site-header .nav בתוך .page-container
+    var navs = document.querySelectorAll('.site-header .nav, header .nav');
+    if(!navs.length){
+      // ניסיון fallback – למשל דף ראשי ללא .nav
+      var header = document.querySelector('.site-header') || document.querySelector('header');
+      if(header){
+        var nav = document.createElement('div');
+        nav.className = 'nav';
+        header.appendChild(nav);
+        setupHeader(nav);
+        return;
+      }
+    }
+    for(var i=0; i<navs.length; i++){
+      setupHeader(navs[i]);
+    }
+  }
+
+  onReady(init);
 })();
 </script>
 
