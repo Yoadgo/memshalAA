@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <!-- 
+    ================================================================
+    מטא-תגיות חובה לזיהוי אוטומטי
+    ================================================================
+    -->
+    <meta name="lesson-title" content="הרצאה – אגף השכר והסכמי עבודה">
+    <meta name="lesson-date" content="06.11.2025">
+    <meta name="lesson-teacher" content="אפי מלכין">
+    <meta name="lesson-summary" content="השיעור עסק בתפקידיו, מבנהו והשפעתו של אגף השכר והסכמי עבודה במשרד האוצר, תוך ניתוח כלכלי של קביעת השכר במגזר הציבורי וסקירת הסכמי השכר האחרונים במשק.">
+    <!-- 
+    ================================================================
+    סוף מטא-תגיות חובה
+    ================================================================
+    -->
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מנהל ומדינית ציבורי - הרצאה - 06.11.2025 - סיכום</title>
+
+    <!-- קוד הגנה של Firebase (מתוך sec.html) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+        // 1. אותו Config בדיוק כמו בדף הכניסה
+        const firebaseConfig = {
+          apiKey: "AIzaSyDqxxf434N0wnn6C6AglEEIaqj5TVtoYLQ",
+          authDomain: "memshalaa.firebaseapp.com",
+          projectId: "memshalaa",
+          storageBucket: "memshalaa.firebasestorage.app",
+          messagingSenderId: "324187090365",
+          appId: "1:324187090365:web:8e4956d0d1370b5aab36d4",
+          measurementId: "G-2QHJF3SSJQ"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // 2. ה"שומר" - בודק אם יש משתמש מחובר
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // משתמש מחובר - הכל בסדר, מציגים את הדף
+                console.log("משתמש מורשה:", user.email);
+                
+                // --- אופציונלי: עדכון UI ---
+                const userInfo = document.getElementById('userInfo');
+                const loginLink = document.getElementById('loginLink');
+                const logoutButton = document.getElementById('logoutButton');
+
+                if (userInfo) userInfo.innerText = `מחובר כ: ${user.email}`;
+                if (loginLink) loginLink.style.display = 'none';
+                if (logoutButton) logoutButton.style.display = 'block';
+                // -------------------------
+
+                document.body.style.display = 'block'; // מציג את הגוף רק אחרי אימות
+            } else {
+                // אין משתמש מחובר - זרוק אותו לדף הכניסה
+                window.location.href = 'login.html'; 
+            }
+        });
+        
+        // פונקציית התנתקות גלובלית
+        window.logout = function() {
+            signOut(auth).then(() => {
+                window.location.href = 'login.html'; 
+            });
+        }
+    </script>
+    
+    <!-- הסתרת הדף עד שהבדיקה מסתיימת כדי למנוע הבהוב -->
+    <style> 
+        body { display: none; } 
+        /* הסתרת כפתור התנתקות כברירת מחדל */
+        #logoutButton { display: none; } 
+    </style>
+    
+    <!-- שימוש בגופנים וסמלים (כמו ב-sample1) -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <style>
+        /* --- מערכת עיצוב (מבוסס על 'sample1.html') --- */
+        :root {
+            /* ערכי ברירת מחדל (מצב בהיר) */
+            --bg: #f6f8fa; /* רקע דף בהיר */
+            --surface: #ffffff; /* רקע כרטיסייה לבן */
+            --text: #202124;
+            --muted: #5f6368;
+            --primary: #3b82f6; 
+            --primary-ink: #174ea6;
+            --border: #e5e7eb;
+            --highlight: #e8f0fe;
+            --shadow: 0 10px 30px rgba(0, 0, 0, .06);
+            --header-bg: rgba(255, 255, 255, .8);
+            
+            /* מידות רווח */
+            --s1: 8px;
+            --s2: 12px;
+            --s3: 16px;
+            --s4: 24px;
+            --s5: 36px;
+            --content-width: 980px;
+
+            /* צבעים סמנטיים (עבור הדגשות תוכן) */
+            --highlight-yellow-bg: #fff9c4;
+            --highlight-yellow-border: #fdd835;
+            --highlight-blue-bg: #e0f7fa;
+            --highlight-blue-border: #00bcd4;
+            --highlight-green-bg: #e8f5e9;
+            --highlight-green-border: #4caf50;
+            --highlight-red-bg: #ffebee;
+            --highlight-red-border: #f44336;
+            --highlight-orange-bg: #fff3e0;
+            --highlight-orange-border: #ff9800;
+        }
+
+        /* --- מצב לילה (מופעל על ידי JS או הגדרות מערכת) --- */
+        
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #333333; 
+                --surface: #444444; 
+                --text: #eeeeee;
+                --muted: #bbbbbb;
+                --primary: #4b9bff;
+                --border: #555555; 
+                --highlight: #2a3a52;
+                --shadow: 0 0 0 1px var(--border);
+                --header-bg: rgba(51, 51, 51, .8); 
+
+                /* צבעים סמנטיים (מצב כהה) */
+                --highlight-yellow-bg: #4f4b23;
+                --highlight-yellow-border: #fdd835;
+                --highlight-blue-bg: #1a4a52;
+                --highlight-blue-border: #00bcd4;
+                --highlight-green-bg: #1e4620;
+                --highlight-green-border: #4caf50;
+                --highlight-red-bg: #5d1c18;
+                --highlight-red-border: #f44336;
+                --highlight-orange-bg: #593815;
+                --highlight-orange-border: #ff9800;
+            }
+        }
+        
+        /* דריסה ידנית - מצב בהיר */
+        :root.light-mode {
+            --bg: #f6f8fa;
+            --surface: #ffffff;
+            --text: #202124;
+            --muted: #5f6368;
+            --primary: #3b82f6; 
+            --border: #e5e7eb;
+            --highlight: #e8f0fe;
+            --shadow: 0 10px 30px rgba(0, 0, 0, .06);
+            --header-bg: rgba(255, 255, 255, .8);
+
+            --highlight-yellow-bg: #fff9c4;
+            --highlight-yellow-border: #fdd835;
+            --highlight-blue-bg: #e0f7fa;
+            --highlight-blue-border: #00bcd4;
+            --highlight-green-bg: #e8f5e9;
+            --highlight-green-border: #4caf50;
+            --highlight-red-bg: #ffebee;
+            --highlight-red-border: #f44336;
+            --highlight-orange-bg: #fff3e0;
+            --highlight-orange-border: #ff9800;
+        }
+        
+        /* דריסה ידנית - מצב כהה (מתוך lesson_header_template.html) */
+        html.sa-dark,
+        :root.dark-mode {
+            --bg: #333333; 
+            --surface: #444444; 
+            --text: #eeeeee;
+            --muted: #bbbbbb;
+            --primary: #4b9bff;
+            --border: #555555; 
+            --highlight: #2a3a52;
+            --shadow: 0 0 0 1px var(--border);
+            --header-bg: rgba(51, 51, 51, .8); 
+
+            --highlight-yellow-bg: #4f4b23;
+            --highlight-yellow-border: #fdd835;
+            --highlight-blue-bg: #1a4a52;
+            --highlight-blue-border: #00bcd4;
+            --highlight-green-bg: #1e4620;
+            --highlight-green-border: #4caf50;
+            --highlight-red-bg: #5d1c18;
+            --highlight-red-border: #f44336;
+            --highlight-orange-bg: #593815;
+            --highlight-orange-border: #ff9800;
+        }
+
+
+        /* --- איפוס בסיסי ועיצוב גלובלי --- */
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Noto Sans Hebrew", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            font-weight: 400; 
+            line-height: 1.7;
+            text-align: right; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* --- טיפוגרפיה --- */
+        
+        h1, h2, h3, h4, h5, h6 {
+            margin-top: 0;
+            margin-bottom: var(--s3);
+            font-weight: 600; 
+        }
+        
+        h1 { 
+            font-size: 1.0rem; 
+            font-weight: 600;
+            margin: 0;
+            line-height: 1.4; 
+            color: var(--text); /* ודא שכותרת ההדר מקבלת צבע טקסט */
+        }
+        h2 { 
+            font-size: 1.75rem; 
+            text-align: center; 
+            margin-bottom: var(--s5); 
+        }
+        h3 { 
+            font-size: 1.25rem; 
+            margin: 0 0 var(--s2) 0;
+            padding-bottom: var(--s2);
+            border-bottom: 1px solid var(--border);
+            transition: border-color 0.3s;
+        }
+        
+        h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-top: var(--s4);
+            margin-bottom: var(--s2);
+        }
+        
+        h5 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-top: var(--s3);
+            margin-bottom: var(--s1);
+        }
+
+        p {
+            margin-top: 0;
+            margin-bottom: var(--s3); 
+        }
+        
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.2s, background-color 0.2s;
+        }
+        
+        h1 a {
+            color: var(--text);
+            transition: color 0.3s;
+        }
+        
+        h1 a:hover {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+        
+        ul, ol {
+            padding-right: var(--s4); 
+        }
+        
+        ul li, ol li {
+            margin-bottom: var(--s2);
+            padding-right: var(--s2);
+        }
+        
+        /* סגנון להערות שוליים */
+        sup {
+            font-size: 0.75em;
+            vertical-align: super;
+            margin-right: 2px;
+            color: var(--primary);
+            font-weight: 600;
+            line-height: 0; 
+        }
+
+        sup a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        sup a:hover {
+            text-decoration: underline;
+        }
+        
+        figure {
+            margin: var(--s3) 0;
+            padding: 0;
+            text-align: center;
+        }
+        
+        figcaption {
+            font-size: 0.9rem;
+            color: var(--muted);
+            margin-top: var(--s1);
+        }
+
+        /* --- מבנה וקומפוננטות --- */
+        
+        /* כותרת עליונה (מבוסס lesson_header_template.html) */
+        .site-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: var(--header-bg);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: blur(10px);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        
+        .site-header .brand h1 {
+            margin: 0;
+            font-size: 1.0rem; /* התאמה ל-sample1 */
+        }
+        
+        .nav {
+             /* המיכל לכפתורים, יקבל עיצוב מכפתורי הפעולה */
+        }
+
+        /* קונטיינר ראשי */
+        .container {
+            max-width: var(--content-width);
+            margin: 0 auto;
+            padding: var(--s5) var(--s4);
+        }
+        
+        /* =====================================================
+        סגנונות כפתורי הדר (מ-lesson_header_template.html)
+        =====================================================
+        */
+        .sa-actions {
+          display: flex;
+          gap: 12px;
+          align-items: center;
+          direction: ltr;
+          flex-wrap: wrap;
+        }
+        .sa-actions .sa-divider {
+          width: 1px;
+          height: 24px;
+          background: #d0d5dd;
+        }
+        .sa-btn {
+          font: inherit;
+          line-height: 1;
+          border: 1px solid #d0d5dd;
+          background: #ffffff;
+          color: #0f172a;
+          padding: 10px 12px;
+          border-radius: 12px;
+          cursor: pointer;
+          display: inline-flex;
+          gap: 10px;
+          align-items: center;
+          font-size: 15px;
+        }
+        .sa-btn.primary {
+          background: #0ea5e9;
+          color: #00131d;
+          border-color: transparent;
+        }
+        .sa-btn svg {
+          width: 20px;
+          height: 20px;
+          display: block;
+        }
+        .sa-btn .lbl {
+          display: none; /* אייקונים בלבד, ללא טקסט */
+        }
+        @media (max-width: 640px) {
+          .sa-actions {
+            gap: 8px;
+          }
+          .sa-actions .sa-divider {
+            height: 20px;
+          }
+          .sa-btn {
+            padding: 8px 10px;
+            font-size: 14px;
+          }
+          .sa-btn svg {
+            width: 18px;
+            height: 18px;
+          }
+        }
+
+        /* מצב כהה (מ-lesson_header_template.html) - ישולב עם מערכת העיצוב */
+        html.sa-dark {
+            /* שימוש במשתני CSS במקום פילטר גס */
+            --bg: #333333; 
+            --surface: #444444; 
+            --text: #eeeeee;
+            --muted: #bbbbbb;
+            --primary: #4b9bff;
+            --border: #555555; 
+            --highlight: #2a3a52;
+            --shadow: 0 0 0 1px var(--border);
+            --header-bg: rgba(51, 51, 51, .8); 
+
+            --highlight-yellow-bg: #4f4b23;
+            --highlight-yellow-border: #fdd835;
+            --highlight-blue-bg: #1a4a52;
+            --highlight-blue-border: #00bcd4;
+            --highlight-green-bg: #1e4620;
+            --highlight-green-border: #4caf50;
+            --highlight-red-bg: #5d1c18;
+            --highlight-red-border: #f44336;
+            --highlight-orange-bg: #593815;
+            --highlight-orange-border: #ff9800;
+        }
+        
+        /* התאמת כפתורי ההדר למצב כהה */
+        html.sa-dark .sa-btn {
+            background: var(--surface);
+            color: var(--text);
+            border-color: var(--border);
+        }
+        html.sa-dark .sa-btn.primary {
+            background: var(--primary);
+            color: var(--surface);
+            border-color: transparent;
+        }
+        html.sa-dark .sa-divider {
+            background: var(--border);
+        }
+        /* סוף סגנונות הדר */
+
+
+        /* -------------------------------------------
+        --- עיצובים ספציפיים לעמוד סיכום שיעור (מ-sample1) ---
+        -------------------------------------------
+        */
+
+        /* --- עיצוב כרטיסיות (Tabs) --- */
+        .tab-navigation {
+            display: flex;
+            gap: var(--s1);
+            border-bottom: 2px solid var(--border);
+            margin-bottom: var(--s4);
+            transition: border-color 0.3s;
+            flex-wrap: wrap; /* מאפשר גלישה במכשירים צרים */
+        }
+
+        .tab-btn {
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--muted);
+            background: none;
+            border: none;
+            padding: var(--s2) var(--s3);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: color 0.3s, border-color 0.3s;
+            margin-bottom: -2px; /* כדי שהגבול התחתון יחפוף */
+            white-space: nowrap; /* מונע שבירת שורה בכפתור */
+        }
+
+        .tab-btn:hover {
+            color: var(--text);
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-pane {
+            display: none; /* מוסתר כברירת מחדל */
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-pane.active {
+            display: block; /* מוצג כשהוא פעיל */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* --- כרטיס תוכן פנימי (לרקע, ציון וכו') --- */
+        .page-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            box-shadow: var(--shadow);
+            padding: var(--s4);
+            margin-bottom: var(--s4);
+            transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+        
+        .page-card h3:first-child {
+            margin-top: 0;
+        }
+
+        /* --- סגנון לכרטיס פרטי השיעור (טאב 1) --- */
+        .lesson-details-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 1.1rem;
+        }
+        .lesson-details-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: var(--s2) 0;
+            border-bottom: 1px dashed var(--border);
+            flex-wrap: wrap;
+        }
+        .lesson-details-list li:last-child {
+            border-bottom: none;
+        }
+        .lesson-details-list strong {
+            color: var(--muted);
+            margin-left: var(--s4);
+            flex-shrink: 0;
+        }
+        .lesson-details-list span {
+            font-weight: 500;
+        }
+
+        /* --- Accordion Styles (New) --- */
+        .accordion details {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px; 
+            margin-bottom: var(--s2);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        
+        .accordion details[open] {
+            box-shadow: var(--shadow);
+        }
+
+        .accordion summary {
+            padding: var(--s3) var(--s4);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            list-style: none; /* Remove default marker */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .accordion summary::-webkit-details-marker {
+            display: none; /* Hide for Chrome */
+        }
+        
+        .accordion summary::marker {
+             display: none; /* Hide for Firefox */
+        }
+
+        .accordion summary:after {
+            content: '\f078'; /* Font Awesome chevron-down */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-size: 0.9rem;
+            color: var(--muted);
+            transition: transform 0.2s ease-out;
+            margin-right: auto; /* דוחף את החץ שמאלה (RTL) */
+            padding-right: var(--s2);
+        }
+
+        .accordion details[open] summary:after {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            padding: 0 var(--s4) var(--s4) var(--s4);
+            border-top: 1px solid var(--border);
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .accordion-content p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .accordion-content > *:first-child {
+            margin-top: var(--s3);
+        }
+        
+        /* --- Highlight Styles (New) --- */
+        .example-highlight,
+        .external-highlight,
+        .verification-success,
+        .verification-fail,
+        .personal-impression,
+        .reading-material,
+        .external-addition,
+        .example-bad,
+        .example-good {
+            padding: var(--s3);
+            border-radius: 8px;
+            margin-top: var(--s3);
+            margin-bottom: var(--s3);
+        }
+        
+        .example-highlight p:last-child,
+        .external-highlight p:last-child,
+        .verification-success p:last-child,
+        .verification-fail p:last-child,
+        .personal-impression p:last-child,
+        .reading-material p:last-child,
+        .external-addition p:last-child,
+        .example-bad p:last-child,
+        .example-good p:last-child {
+            margin-bottom: 0;
+        }
+
+        .example-highlight {
+            background-color: var(--highlight-yellow-bg); 
+            border-right: 4px solid var(--highlight-yellow-border); 
+        }
+        
+        .external-highlight {
+            background-color: var(--highlight-blue-bg); 
+            border-right: 4px solid var(--highlight-blue-border); 
+        }
+        
+        .verification-success, .example-good {
+            background-color: var(--highlight-green-bg); 
+            border-right: 4px solid var(--highlight-green-border); 
+            color: var(--text); /* ודא שהטקסט קריא */
+        }
+        
+        .verification-fail, .example-bad {
+            background-color: var(--highlight-red-bg); 
+            border-right: 4px solid var(--highlight-red-border); 
+            color: var(--text); /* ודא שהטקסט קריא */
+        }
+
+        /* סגנונות לטאב 5 - רשמים */
+        .personal-impression {
+            background-color: var(--highlight-blue-bg); 
+            border-right: 4px solid var(--highlight-blue-border); 
+        }
+        .reading-material {
+            background-color: var(--highlight-orange-bg); 
+            border-right: 4px solid var(--highlight-orange-border); 
+        }
+        .external-addition {
+            background-color: var(--highlight-green-bg); 
+            border-right: 4px solid var(--highlight-green-border); 
+        }
+        
+        
+        /* --- רשימת הערות ומונחים (טאב 3) --- */
+        #tab-sources ol {
+            padding-right: 20px;
+        }
+        #tab-sources li {
+            margin-bottom: 8px;
+        }
+        #tab-sources li::marker {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        /* --- טבלאות (עבור מטריצה) --- */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--s3) 0;
+            font-size: 0.95rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .data-table th, .data-table td {
+            border: 1px solid var(--border);
+            padding: var(--s2);
+            text-align: right;
+        }
+        
+        .data-table th {
+            background-color: var(--highlight);
+            font-weight: 600;
+        }
+        
+        .data-table tr:nth-child(even) {
+            background-color: var(--surface);
+        }
+        .data-table tr:nth-child(odd) {
+            background-color: var(--bg);
+        }
+        
+        .data-table ul {
+            padding-right: 20px;
+            margin: 0;
+        }
+        .data-table li {
+            padding-right: 0;
+            margin-bottom: 4px;
+        }
+        
+        /* התאמת צבעים למצב כהה */
+        html.sa-dark .data-table tr:nth-child(even) {
+            background-color: var(--surface);
+        }
+        html.sa-dark .data-table tr:nth-child(odd) {
+            background-color: var(--bg);
+        }
+
+    </style>
+</head>
+<body>
+
+    <!--
+    תבנית הדר (מ-lesson_header_template.html)
+    הטקסט של h1 הוחלף
+    -->
+    <header class="site-header" role="banner">
+        <div class="brand">
+            <h1>מנהל ומדינית ציבורי | הרצאה: אגף השכר והסכמי עבודה</h1>
+        </div>
+        <div class="nav"><!-- כאן יופיעו כפתורי מצב יום/לילה והדפסה --></div>
+    </header>
+
+    <main class="container" role="main">
+        <nav class="tab-navigation" aria-label="ניווט בסיכום השיעור">
+            <button class="tab-btn active" data-tab="overview" role="tab" aria-selected="true" aria-controls="tab-overview">סקירה כללית</button>
+            <button class="tab-btn" data-tab="content" role="tab" aria-selected="false" aria-controls="tab-content">תוכן השיעור</button>
+            <button class="tab-btn" data-tab="qa" role="tab" aria-selected="false" aria-controls="tab-qa">שאלות ודיון</button>
+            <button class="tab-btn" data-tab="sources" role="tab" aria-selected="false" aria-controls="tab-sources">מקורות והערות</button>
+            <button class="tab-btn" data-tab="impressions" role="tab" aria-selected="false" aria-controls="tab-impressions">רשמים נוספים</button>
+            <!-- טאב מטלה לא נוצר כיוון שלא זוהתה מטלה בשיעור זה -->
+        </nav>
+
+        <div class="tab-content">
+
+            <!-- ======================= -->
+            <!-- טאב 1: סקירה כללית -->
+            <!-- ======================= -->
+            <section id="tab-overview" class="tab-pane active" role="tabpanel" aria-labelledby="tab-overview">
+                
+                <article class="page-card" aria-labelledby="details-heading">
+                    <h3 id="details-heading">פרטי השיעור</h3>
+                    <ul class="lesson-details-list">
+                        <li>
+                            <strong>נושא:</strong>
+                            <span>אגף השכר והסכמי עבודה במשרד האוצר</span>
+                        </li>
+                        <li>
+                            <strong>מרצה:</strong>
+                            <span>אפי מלכין (הממונה על השכר והסכמי עבודה)</span>
+                        </li>
+                        <li>
+                            <strong>תאריך:</strong>
+                            <span>06.11.2025</span>
+                        </li>
+                        <li>
+                            <strong>שעה (מוערכת):</strong>
+                            <span>15:43 - 17:08 ⚠️</span>
+                        </li>
+                    </ul>
+                </article>
+
+                <article class="page-card" aria-labelledby="summary-heading">
+                    <h3 id="summary-heading">תקציר ונושאים מרכזיים</h3>
+                    
+                    <h4>תקציר</h4>
+                    <p>הרצאת פתיחה מאת אפי מלכין, הממונה על השכר במשרד האוצר. ההרצאה סקרה את תפקידי האגף, הרציונל הכלכלי לקיומו, והאתגרים הייחודיים בקביעת שכר במגזר הציבורי. המרצה ניתח את ההבדלים בין השוק הפרטי לציבורי, הסביר מדוע המגזר הציבורי אינו פועל לפי מודל ביקוש והיצע פשוט, והדגים כיצד גורמים כמו "הון גבוה" (לפי מודל קוב-דאגלס) משפיעים על כוח המיקוח והשכר במגזרים כמו הנמלים וחברת החשמל. בהמשך, הוצגו אתגרים דמוגרפיים ייחודיים לישראל (כמו ילודה גבוהה) והשפעתם על הביקוש למורים, ונסקרו הסכמי השכר המרכזיים האחרונים במשק (מורים, פסיכולוגים, הסכם מסגרת ורופאים) כניתוחי מקרה.</p>
+                    
+                    <h4>נושאים מרכזיים שעלו</h4>
+                    <ul>
+                        <li>הצגת אגף השכר והסכמי עבודה ותפקידיו.</li>
+                        <li>הגדרת השירות הציבורי והיקפו (כ-800 מעסיקים, כ-20% מכוח העבודה).</li>
+                        <li>הרציונל הכלכלי לקיומו של הממונה על השכר (ניתוח כשלי שוק).</li>
+                        <li>ההבדל בין גופים עסקיים/תחרותיים ללא-עסקיים/לא-תחרותיים במגזר הציבורי.</li>
+                        <li>ניתוח תפקידי האגף: קביעת מדיניות (מונופסון<sup><a href="#term-1">1</a></sup>), ניהול מו"מ, אכיפה (חריגות שכר) ועוד.</li>
+                        <li>ניתוח כלכלי של קביעת שכר:
+                            <ul>
+                                <li>שוק פרטי: מודל ביקוש והיצע.</li>
+                                <li>שוק ציבורי: קביעת שכר אקסוגנית<sup><a href="#term-2">2</a></sup> (תוצאת מו"מ).</li>
+                                <li>מודל קוב-דאגלס<sup><a href="#term-3">3</a></sup> להסברת שכר גבוה במגזרים עתירי הון.</li>
+                            </ul>
+                        </li>
+                        <li>דוגמאות לרפורמות מוצלחות (נמלים, רשות השידור, חברת החשמל).</li>
+                        <li>אתגרים כלכליים ודמוגרפיים (פער שכר ציבורי-פרטי, הוצאה ממשלתית נמוכה, ילודה גבוהה).</li>
+                        <li>ניתוחי מקרה: הסכם המורים 2022, הסכם הפסיכולוגים 2025, הסכם המסגרת 2023, הסכם הרופאים 2024.</li>
+                        <li>דיון בסוגיות: פנסיה תקציבית, מוטיבציה ושחיתות בשירות הציבורי.</li>
+                    </ul>
+                </article>
+
+            </section>
+
+            <!-- ======================= -->
+            <!-- טאב 2: תוכן השיעור -->
+            <!-- ======================= -->
+            <section id="tab-content" class="tab-pane" role="tabpanel" aria-labelledby="tab-content">
+                
+                <div class="accordion">
+                    
+                    <details open>
+                        <summary>הצגת אגף השכר וחשיבות המגזר הציבורי</summary>
+                        <div class="accordion-content">
+                            <p>המרצה, אפי מלכין, פתח בהסבר על תפקידו כממונה על השכר והסכמי עבודה במשרד האוצר. הוא הדגיש את החשיבות הקריטית של מגזר ציבורי חזק ומתפקד, במיוחד בהקשר של אירועי חירום (כמו ה-7 באוקטובר, שהוזכר כאירוע המדגיש את חשיבות המשילות).</p>
+                            <p>האגף מפקח על שכרם של כ-800,000 עובדים בלמעלה מ-800 גופים (מעסיקים), הכוללים משרדי ממשלה, אוניברסיטאות, קופות חולים, רשויות מקומיות, חברות ממשלתיות ועוד.</p>
+                        </div>
+                    </details>
+                    
+                    <details>
+                        <summary>מהו השירות הציבורי?</summary>
+                        <div class="accordion-content">
+                            <p>המרצה הגדיר את השירות הציבורי בחמישה תחומים עיקריים (לפי שקף 4):</p>
+                            <ol>
+                                <li><strong>מוצרים ציבוריים:</strong> שירותים שהמדינה מספקת לכולם, כמו תשתיות (כבישים), ביטחון לאומי ותחבורה ציבורית.</li>
+                                <li><strong>בריאות ורווחה:</strong> שירותי רפואה וסעד.</li>
+                                <li><strong>חינוך:</strong> מערכת החינוך הפורמלית, מהגנים ועד ההשכלה הגבוהה.</li>
+                                <li><strong>ביטחון (פנים):</strong> משטרה, שירות בתי הסוהר (שב"ס), כבאות ושירותי מודיעין.</li>
+                                <li><strong>מטה:</strong> תפקידי הליבה של הממשל - רגולציה, קביעת מדיניות, תכנון, אכיפה ופיקוח.</li>
+                            </ol>
+                            <p>המגזר הציבורי בישראל מהווה כ-20% מכלל כוח העבודה במשק.</p>
+                        </div>
+                    </details>
+                    
+                    <details>
+                        <summary>הרציונל הכלכלי: למה צריך ממונה על השכר?</summary>
+                        <div class="accordion-content">
+                            <p>המרצה הסביר מדוע המגזר הציבורי אינו יכול להתנהל כמו שוק פרטי רגיל, וסובל מ"כשלי שוק" מובנים (מבוסס על שקף 7):</p>
+                            <ul>
+                                <li><strong>אין מנגנון ריסון טבעי:</strong> בשוק הפרטי, עסק שמשלם יותר מדי פושט רגל ("אין מחזור עסקים ופשיטות רגל" במגזר הציבורי).</li>
+                                <li><strong>"כיסים עמוקים":</strong> לממשלה תמיד יש יכולת לממן תוספות שכר (גם אם זה על חשבון דברים אחרים), מה שמחליש את עמדתה במו"מ.</li>
+                                <li><strong>מו"מ במגרש הפוליטי:</strong> לחצים פוליטיים משפיעים על הסכמי השכר, בניגוד לשיקולים כלכליים טהורים.</li>
+                                <li><strong>כוח ארגוני העובדים:</strong> לוועדי עובדים חזקים (כמו ההסתדרות) יש כוח רב, והם מנהלים מו"מ מול "בעל בית" (המדינה) שאינו בעלים פרטי המונע משיקולי רווח והפסד.</li>
+                                <li><strong>ייחודיות וקשיחות:</strong> קשה להשוות תפקידים (כמו חוקר משטרה) לסקטור הפרטי, ויש קשיחות בפיטורים או ניוד עובדים.</li>
+                                <li><strong>שרשורים והצמדות:</strong> הסכם שכר במגזר אחד (למשל, אוניברסיטאות) "זולג" ומשפיע אוטומטית על מגזרים אחרים (למשל, תאגידים).</li>
+                            </ul>
+                            <p>תפקיד הממונה הוא לייצר את מנגנון הריסון החסר ולייצג את האינטרס הציבורי והכלכלי במו"מ אלו.</p>
+                        </div>
+                    </details>
+                    
+                    <details>
+                        <summary>סוגי הגופים במגזר הציבורי (מטריצת סיווג)</summary>
+                        <div class="accordion-content">
+                            <p>המרצה הציג מטריצה (שקף 8) המסווגת את הגופים הציבוריים לפי שני צירים: (1) עסקי או לא-עסקי; (2) תחרותי או לא-תחרותי.</p>
+                            
+                            <figure>
+                                <figcaption>סיווג גופי המגזר הציבורי לפי מודל עסקי ותחרותיות</figcaption>
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col"></th>
+                                            <th scope="col">תחרותי</th>
+                                            <th scope="col">לא תחרותי (מונופול)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">עסקי<br>(מטרת רווח)</th>
+                                            <td>
+                                                <ul>
+                                                    <li>רפאל</li>
+                                                    <li>התעשייה האווירית (IAI)</li>
+                                                </ul>
+                                            </td>
+                                            <td>
+                                                <ul>
+                                                    <li>חברת החשמל</li>
+                                                    <li>מקורות</li>
+                                                    <li>נמלי ים (אשדוד, חיפה)</li>
+                                                    <li>רכבת ישראל</li>
+                                                    <li>דואר ישראל</li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">לא עסקי<br>(מטרה ציבורית)</th>
+                                            <td>
+                                                <ul>
+                                                    <li>אוניברסיטאות</li>
+                                                    <li>תאגיד השידור (כאן)</li>
+                                                    <li>בנק ישראל (באופן יחסי)</li>
+                                                </ul>
+                                            </td>
+                                            <td>
+                                                <ul>
+                                                    <li>משרדי ממשלה</li>
+                                                    <li>רשויות מקומיות</li>
+                                                    <li>קופות חולים</li>
+                                                    <li>משטרה, שב"ס</li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </figure>
+                        </div>
+                    </details>
+                    
+                    <details>
+                        <summary>תפקידי אגף השכר</summary>
+                        <div class="accordion-content">
+                            <p>בהתבסס על הרציונל שהוצג, תפקידי האגף (שקף 9) כוללים:</p>
+                            <ul>
+                                <li><strong>קביעת מדיניות שכר:</strong> האגף הוא הגוף היחיד (מונופסון<sup><a href="#term-1">1</a></sup>) הקובע את מדיניות השכר הכוללת במגזר הציבורי.</li>
+                                <li><strong>ניהול משא ומתן:</strong> ייצוג הממשלה והמעסיקים הציבוריים במו"מ מול ארגוני העובדים (כמו ההסתדרות וארגוני המורים).</li>
+                                <li><strong>גיבוש ויישום רפורמות:</strong> קידום שינויים מבניים בשכר ובתנאי העסקה.</li>
+                                <li><strong>פיקוח, בקרה ואכיפה:</strong> התפקיד המרכזי של איתור וטיפול ב"חריגות שכר" (תשלומים שניתנו בניגוד לחוק או להסכם).</li>
+                                <li><strong>תכנון אסטרטגי:</strong> ניתוח ארוך טווח של שוק העבודה הציבורי.</li>
+                                <li><strong>ייעוץ לממשלה:</strong> מתן חוות דעת כלכליות לכנסת ולממשלה בנושאי העסקה ושכר.</li>
+                            </ul>
+                        </div>
+                    </details>
+                    
+                    <details>
+                        <summary>מודל כלכלי (1): ביקוש והיצע במגזר הציבורי</summary>
+                        <div class="accordion-content">
+                            <p>המרצה הסביר את ההבדל הבסיסי בקביעת שכר בין השוק הפרטי לציבורי (שקפים 12-13).</p>
+                            <ul>
+                                <li><strong>בשוק הפרטי:</strong> השכר נקבע ב"נקודת שיווי משקל" – המפגש בין עקומת הביקוש לעובדים (המעסיקים) לבין עקומת ההיצע (העובדים).</li>
+                                <li><strong>במגזר הציבורי:</strong> השכר אינו נקבע בשיווי משקל, אלא כ"תוספת אקסוגנית"<sup><a href="#term-2">2</a></sup> – תוצאה של משא ומתן קיבוצי.</li>
+                            </ul>
+                            <p>כאשר המו"מ קובע שכר (הקו הכחול בגרף) הגבוה משכר שיווי המשקל (הנקודה האדומה), נוצר מצב של "עודף עובדים" (יותר אנשים רוצים לעבוד בשכר זה) ו"חוסר ביקוש" (המעסיק הציבורי היה רוצה להעסיק פחות עובדים בשכר זה, אך אינו יכול בשל קשיחות).</p>
+                            
+                            <figure role="img" aria-label="גרף ביקוש והיצע המדגים קביעת שכר אקסוגנית במגזר הציבורי">
+                                <svg viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width:450px; background-color:var(--surface); border:1px solid var(--border); border-radius:8px;">
+                                    <title>גרף ביקוש והיצע בשוק העבודה הציבורי</title>
+                                    <desc>הגרף מראה שעקומת הביקוש (D) יורדת ועקומת ההיצע (S) עולה. נקודת שיווי המשקל היא במפגש ביניהן. קו 'תוספת שכר' אופקי נקבע מעל שיווי המשקל, ויוצר פער של עודף עובדים וחוסר ביקוש.</desc>
+                                    
+                                    <!-- צירים -->
+                                    <line x1="30" y1="200" x2="280" y2="200" stroke="var(--text)" stroke-width="2"></line> <!-- ציר X -->
+                                    <line x1="30" y1="200" x2="30" y2="20" stroke="var(--text)" stroke-width="2"></line> <!-- ציר Y -->
+                                    <text x="270" y="215" fill="var(--text)" font-size="10" text-anchor="middle">X</text>
+                                    <text x="15" y="25" fill="var(--text)" font-size="10" text-anchor="middle">P</text>
+                                    <text x="150" y="215" fill="var(--text)" font-size="10" text-anchor="middle">כמות עובדים</text>
+                                    <text x="15" y="110" fill="var(--text)" font-size="10" text-anchor="middle" transform="rotate(-90 15 110)">שכר</text>
+
+                                    <!-- עקומת ביקוש (D) -->
+                                    <line x1="50" y1="40" x2="260" y2="180" stroke="#f44336" stroke-width="2"></line>
+                                    <text x="265" y="185" fill="#f44336" font-size="10">D (ביקוש)</text>
+                                    
+                                    <!-- עקומת היצע (S) -->
+                                    <line x1="50" y1="180" x2="260" y2="40" stroke="#4caf50" stroke-width="2"></line>
+                                    <text x="265" y="35" fill="#4caf50" font-size="10">S (היצע)</text>
+                                    
+                                    <!-- נקודת שיווי משקל -->
+                                    <circle cx="155" cy="110" r="3" fill="#dc3545"></circle>
+                                    <line x1="155" y1="110" x2="30" y2="110" stroke="var(--muted)" stroke-width="1" stroke-dasharray="4 2"></line>
+                                    <line x1="155" y1="110" x2="155" y2="200" stroke="var(--muted)" stroke-width="1" stroke-dasharray="4 2"></line>
+                                    <text x="175" y="105" fill="var(--text)" font-size="9">שיווי משקל</text>
+
+                                    <!-- תוספת שכר אקסוגנית -->
+                                    <line x1="40" y1="70" x2="270" y2="70" stroke="var(--primary)" stroke-width="2.5"></line>
+                                    <text x="220" y="65" fill="var(--primary)" font-size="10" font-weight="bold">תוספת שכר</text>
+
+                                    <!-- פער -->
+                                    <line x1="100" y1="70" x2="100" y2="200" stroke="var(--muted)" stroke-width="1" stroke-dasharray="4 2"></line>
+                                    <line x1="210" y1="70" x2="210" y2="200" stroke="var(--muted)" stroke-width="1" stroke-dasharray="4 2"></line>
+                                    
+                                    <text x="80" y="85" fill="var(--text)" font-size="9">חוסר ביקוש</text>
+                                    <text x="230" y="85" fill="var(--text)" font-size="9">עודף עובדים</text>
+                                    
+                                </svg>
+                            </figure>
+                        </div>
+                    </details>
+                    
+                    <details>
+                        <summary>מודל כלכלי (2): פונקציית ייצור (קוב-דאגלס)</summary>
+                        <div class="accordion-content">
+                            <p>המרצה השתמש במודל קוב-דאגלס (שקף 14) כדי להסביר מדוע במגזרים עתירי הון (כמו נמלים, חברת חשמל) השכר גבוה, גם אם העובדים עצמם אינם בהכרח בעלי כישורים ייחודיים יותר.</p>
+                            <p>פונקציית הייצור הבסיסית היא: <strong>F(L,K) = L<sup>α</sup> * K<sup>1-α</sup></strong></p>
+                            <ul>
+                                <li><strong>F</strong> = התפוקה הכוללת (כמה המפעל/נמל מייצר)</li>
+                                <li><strong>L</strong> = עבודה (Labour) - כמות שעות העבודה.</li>
+                                <li><strong>K</strong> = הון (Capital) - כמות המכונות, המנופים, התשתיות.</li>
+                            </ul>
+                            <div class="example-highlight">
+                                <p><strong>דוגמה (הסבר המרצה):</strong> עובד נמל (L) המפעיל מנוף ענק (K גבוה מאוד) תורם לתפוקה שולית גבוהה מאוד. כל שעה שהמנוף הזה מושבת בגלל שביתה, העלות למשק (ה"הון" שעומד) היא עצומה. לעומת זאת, מורה (L) שה"הון" שלו הוא כיתה ולוח (K נמוך יחסית), התפוקה השולית המיידית שלו נמוכה יותר במונחים כלכליים.</p>
+                                <p><strong>מסקנה:</strong> במקומות עם הון (K) גבוה, כוח המיקוח של העובדים (L) חזק בצורה קיצונית, מכיוון שבטווח הקצר "אין עובדים תחליפיים" (שקף 14) והשבתת ההון יקרה מאוד. לכן, היסטורית, השכר במקומות אלו גבוה משמעותית. הגרף (שקף 15) מראה קורלציה חיובית ברורה בין "הון לעובד" (ציר X) ל"שכר ממוצע" (ציר Y) בחברות הממשלתיות.</p>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details>
+                        <summary>רפורמות מוצלחות כדוגמה ("כשהממשלה רוצה")</summary>
+                        <div class="accordion-content">
+                            <p>המרצה הציג (שקף 16) מספר דוגמאות לרפורמות מבניות משמעותיות שהממשלה הצליחה להעביר, כהוכחה לכך שניתן לחולל שינוי במגזר הציבורי:</p>
+                            <ul>
+                                <li><strong>הפרטת הנמלים (2004-2023):</strong> פתיחת נמל המפרץ (חיפה) ונמל הדרום (אשדוד) לתחרות פרטית.</li>
+                                <li><strong>סגירת רשות השידור (2015-2019):</strong> פירוק הגוף הישן והקמת תאגיד השידור "כאן" במקומו, במבנה יעיל יותר.</li>
+                                <li><strong>הרפורמה במשק החשמל (2007-2018):</strong> פיצול מונופול חברת החשמל והכנסת יצרנים פרטיים.</li>
+                                <li><strong>הפרטת תעש (2013-2018):</strong> מכירת התעשייה הצבאית.</li>
+                                <li><strong>רפורמת "אופק חדש" (2008-2011):</strong> רפורמה גדולה במבנה השכר של המורים.</li>
+                            </ul>
+                        </div>
+                    </details>
+                    
+                    <details>
+                        <summary>אתגרים מרכזיים: שכר, הוצאה ודמוגרפיה</summary>
+                        <div class="accordion-content">
+                            <p>המרצה הציג מספר גרפים (שקפים 17, 19) המדגישים את האתגרים הייחודיים של ישראל:</p>
+                            <ul>
+                                <li><strong>פער השכר הציבורי-פרטי:</strong> הגרף מראה כי השכר הממוצע במגזר הממשלתי (סגול) ובמגזר הציבורי הכללי (ירוק) עלה בקצב מהיר יותר מהשכר במגזר הפרטי (אדום) מאז שנת 2000.</li>
+                                <li><strong>הוצאה ממשלתית נמוכה:</strong> בניגוד לתפיסה הרווחת, ההוצאה הממשלתית בישראל כאחוז מהתמ"ג (כ-40%) נמוכה משמעותית מממוצע ה-OECD (כ-45%). ההוצאה האזרחית (ללא ביטחון) נמוכה אף יותר.</li>
+                                <li><strong>אתגר דמוגרפי (ילודה):</strong> מספר הילדים הממוצע לאישה בישראל (כ-2.9) הוא כמעט כפול מממוצע ה-OECD (כ-1.5). נתון זה "גורר ביקוש מוגבר למורים" ולשירותים ציבוריים נוספים, ומפעיל לחץ מתמיד על המערכת.</li>
+                                <li><strong>אבטלה נמוכה:</strong> שיעור האבטלה הנמוך (כ-6.4% ב-2024 לפי הגרף, נתון שכנראה מתייחס להגדרת אבטלה רחבה) מגביר את התחרות על עובדים מול השוק הפרטי.</li>
+                            </ul>
+                        </div>
+                    </details>
+
+                    <details>
+                        <summary>ניתוחי מקרה: הסכמי שכר אחרונים</summary>
+                        <div class="accordion-content">
+                            <p>המרצה סקר ארבעה הסכמי שכר גדולים שנחתמו לאחרונה, כדוגמאות לפעילות האגף:</p>
+                            
+                            <h4>הסכם הסתדרות המורים (2022)</h4>
+                            <p>הסכם זה התמקד בשיפור שכר למורים מתחילים ובהגברת הגמישות הניהולית (שקף 21):</p>
+                            <ul>
+                                <li><strong>שיפור שכר הבסיס:</strong> תוספת של 33% למורה מתחיל (מ-6,900 ל-9,000 ש"ח) ותוספת מתונה יותר של 7% למורה ותיק.</li>
+                                <li><strong>תמרוץ אוכלוסיות:</strong> מתן שכר גבוה יותר למנהלים וסגנים, וגמולים על תפקידים נוספים.</li>
+                                <li><strong>גמישות ניהולית:</strong> אפשרות ל-6% חוזים אישיים והגמשת גמול הניהול.</li>
+                                <li><strong>צמצום סכסוכי עבודה:</strong> התחייבות ל"שקט תעשייתי" עד 2027.</li>
+                                <li><strong>הדגשת פריון:</strong> סנכרון ימי החופשה (איסרו חג, ל"ג בעומר) לימי המשק (גשר בין כיפור לסוכות, פורים).</li>
+                            </ul>
+
+                            <h4>הסכם הפסיכולוגים (2025)</h4>
+                            <p>הסכם שנוצר בעקבות המלחמה והצורך הדחוף בחיזוק מערך בריאות הנפש (שקף 22):</p>
+                            <ul>
+                                <li><strong>רפורמה במבנה השכר:</strong> תוספת שכר ממוצעת של כ-40%.</li>
+                                <li><strong>תגמול על מומחיות:</strong> מתן תוספות משמעותיות על ותק והדרכה.</li>
+                                <li><strong>הסדרת מנגנון ההשתלמויות.</strong></li>
+                                <li><strong>תגמול ניהולי:</strong> תגמול בגין ניהול ואחריות מקצועית.</li>
+                                <li><strong>עידוד תפוקות:</strong> עידוד מעבר למשרות מלאות בשירות הציבורי.</li>
+                            </ul>
+
+                            <h4>הסכם המסגרת (2023)</h4>
+                            <p>ההסכם הרוחבי עם ההסתדרות הכללית, שחל על רוב עובדי המגזר הציבורי (שקף 23):</p>
+                            <ul>
+                                <li><strong>תוספות שכר:</strong> מענק חד-פעמי של 6,000 ש"ח, תוספת שקלית של 500 ש"ח (לטובת השכבות הנמוכות) ותוספת אחוזית של 6%.</li>
+                                <li><strong>קיצור שבוע העבודה:</strong> מעבר ל-40 שעות שבועיות (מ-42).</li>
+                                <li><strong>כלים ניהוליים למעסיקים.</strong></li>
+                                <li><strong>שקט ומיצוי תביעות עד 2027.</strong></li>
+                            </ul>
+
+                            <h4>הסכם הרופאים (2024)</h4>
+                            <p>הסכם שהתמקד בחיזוק הרפואה הציבורית (שקף 24):</p>
+                            <ul>
+                                <li><strong>תוספות שכר:</strong> תוספות לכלל הרופאים, למתמחים ולבעלי תפקידים (כמו מנהלי מחלקות).</li>
+                                <li><strong>חיזוק הפריפריה והמחסור:</strong> מתן תוספת לאומית לרופאים בפריפריה ובמקצועות במחסור.</li>
+                                <li><strong>מענה לרפואת הנפש:</strong> הגדרת תפקיד חדש "מרכז תות" (תומך טיפול) וחיזוק התחום הפסיכיאטרי.</li>
+                                <li><strong>שיפור הרפואה הדחופה:</strong> חיזוק שירותי רפואה דחופים (כגון אונקולוגיה).</li>
+                                <li><strong>איסור רווחים ע"ח תורים:</strong> איסור על רופאים להרוויח מקיצור תורים (שקילה וחתימה) על חשבון המערכת הציבורית.</li>
+                            </ul>
+                        </div>
+                    </details>
+                    
+                </div>
+            </section>
+
+            <!-- ======================= -->
+            <!-- טאב 3: שאלות ודיון -->
+            <!-- ======================= -->
+            <section id="tab-qa" class="tab-pane" role="tabpanel" aria-labelledby="tab-qa">
+                
+                <article class="page-card" aria-labelledby="qa-lecturer-heading">
+                    <h3 id="qa-lecturer-heading">שאלות המרצה (רטוריות)</h3>
+                    
+                    <h5 style="margin-top: var(--s3);">שאלה 1: למה צריך גוף ממשלתי שיתערב בקביעת השכר (הממונה על השכר)?</h5>
+                    <p><strong>תשובת המרצה (סיכום):</strong> מכיוון שבמגזר הציבורי קיימים "כשלי שוק" מובנים שאינם מאפשרים לשוק החופשי לפעול. הסיבות המרכזיות הן:</p>
+                    <ul>
+                        <li>לגופים ציבוריים אין איום פשיטת רגל, ולכן אין להם "בלם" טבעי לתוספות שכר.</li>
+                        <li>לממשלה יש "כיסים עמוקים" והיא יכולה תמיד לשלם (גם אם זה לא יעיל כלכלית).</li>
+                        <li>המו"מ מתנהל בזירה פוליטית, לא רק כלכלית.</li>
+                        <li>לוועדי העובדים אין "בעל בית" (כמו בעל מניות פרטי) שמונע משיקולי רווח והפסד, אלא הם פועלים מול פוליטיקאים או מנהלים ציבוריים.</li>
+                    </ul>
+                    
+                    <hr style="border: 0; border-top: 1px dashed var(--border); margin: var(--s4) 0;">
+                    
+                    <h5 style="margin-top: var(--s3);">שאלה 2: כיצד נקבע שכר במגזר הציבורי לעומת הפרטי?</h5>
+                    <div class="verification-success">
+                        <p><strong>תשובת המרצה:</strong> בשוק הפרטי, השכר נקבע בנקודת שיווי משקל של ביקוש והיצע. במגזר הציבורי, השכר נקבע באופן "אקסוגני" (חיצוני לשוק) – כתוצאה של הסכם קיבוצי או החלטה פוליטית. כתוצאה מכך, השכר שנקבע (הקו הכחול בגרף) הוא לרוב גבוה משכר שיווי המשקל, מה שיוצר "עודף עובדים" (אבטלה סמויה או רשימות המתנה ארוכות למשרות ציבוריות) וחוסר ביקוש (המעסיק היה רוצה להעסיק פחות בכזה שכר).</p>
+                    </div>
+
+                    <hr style="border: 0; border-top: 1px dashed var(--border); margin: var(--s4) 0;">
+                    
+                    <h5 style="margin-top: var(--s3);">שאלה 3: מדוע עובדים במגזרים עתירי הון (כמו נמלים או חברת חשמל) מרוויחים כל כך הרבה?</h5>
+                     <div class="verification-success">
+                        <p><strong>תשובת המרצה:</strong> התשובה טמונה במודל הכלכלי של קוב-דאגלס (פונקציית ייצור). התפוקה של העובד (L) נמדדת ביחס להון (K) שאיתו הוא עובד. בנמל, עובד אחד מפעיל מנוף (K) בשווי מיליונים, והשבתה של המנוף הזה גורמת לנזק כלכלי עצום (אוניות ממתינות, סחורות תקועות). בטווח הקצר, אין לעובד הזה תחליף (בשל חוקי עבודה והכשרה ייעודית). לכן, כוח המיקוח שלו במו"מ עצום, מה שמתורגם היסטורית לשכר גבוה מאוד.</p>
+                    </div>
+
+                </article>
+
+                <article class="page-card" aria-labelledby="qa-student-heading">
+                    <h3 id="qa-student-heading">שאלות משתתפים</h3>
+                    
+                    <h5>שאלה 1: (חלק 2, 27:38) הפונקציה (קוב-דאגלס) שהצגת ישנה. איך היא משווה בין נתב בנמל למורה, שהתרומה החברתית שלו אולי גבוהה יותר?</h5>
+                    <p><strong>תשובת המרצה (סיכום):</strong> המודל אכן ישן ובסיסי, אך הוא מסביר את הרציונל הכלכלי. המודל לא מודד "תרומה חברתית" אלא "תפוקה שולית" במונחי הון. ה"הון" (K) שנמצא בידי הנתב או עובד הנמל (אוניות, מנופים, סחורות) הוא עצום, והנזק הכלכלי המיידי מהשבתתו הוא במיליונים לשעה. ההון של מורה (כיתה, לוח) נמוך יותר במונחים כלכליים מיידיים. לכן, כוח המיקוח (הכלכלי, לא החברתי) של עובד הנמל בטווח הקצר חזק הרבה יותר, ובגלל זה היסטורית שכרם גבוה יותר.</p>
+                    
+                    <hr style="border: 0; border-top: 1px dashed var(--border); margin: var(--s4) 0;">
+
+                    <h5>שאלה 2: (חלק 3, 00:00) מה לגבי מוטיבציה של עובדים במגזר הציבורי (כמו משרד הביטחון) כשאין תגמול כספי, ואיך מתמודדים עם שחיתות?</h5>
+                    <p><strong>תשובת המרצה (סיכום):</strong></p>
+                    <ul>
+                        <li><strong>שחיתות:</strong> היא קיימת, אבל ככל שיש יותר אנשים איכותיים, פחות תלויים ופחות מושחתים במערכת, כך קשה יותר לגורמים חיצוניים להשתלט עליה. ככל שהמגזר הציבורי חלש יותר, קל יותר לשחיתות לחדור.</li>
+                        <li><strong>מוטיבציה:</strong> התגמול הוא לא רק כסף. הוא מגיע מעניין, מתחושת שליחות ומהשפעה. זה לא מתאים לכל אחד. מי שרוצה "להתאבד" על פרויקטים ולראות השפעה אמיתית, זה המקום. מי שרוצה לחזור הביתה ב-16:00 כל יום, זה פחות מתאים. המרצה השווה זאת לתחושת השליחות בשירות צבאי משמעותי.</li>
+                    </ul>
+
+                    <hr style="border: 0; border-top: 1px dashed var(--border); margin: var(--s4) 0;">
+
+                    <h5>שאלה 3: (חלק 3, 01:57) איך נקבע השכר שלך (הממונה על השכר) ושל עובדי האוצר?</h5>
+                    <p><strong>תשובת המרצה (סיכום):</strong></p>
+                    <ul>
+                        <li><strong>שכר הממונה:</strong> נקבע בהחלטת ממשלה והוא גנרי, צמוד לשכר מנכ"ל משרד ממשלתי.</li>
+                        <li><strong>שכר עובדי האוצר:</strong> נקבע בהסכמים קיבוציים רוחביים, בדיוק כמו שאר עובדי משרדי הממשלה. אין להם הסכם מיוחד.</li>
+                    </ul>
+
+                    <hr style="border: 0; border-top: 1px dashed var(--border); margin: var(--s4) 0;">
+
+                    <h5>שאלה 4: (חלק 3, 03:54) מה המדינה קיבלה בתמורה בהסכם המורים (2022)?</h5>
+                    <p><strong>תשובת המרצה (סיכום):</strong> המדינה קיבלה שלושה דברים מרכזיים:</p>
+                    <ol>
+                        <li><strong>שקט תעשייתי:</strong> התחייבות לאי-שביתות עד סוף 2027, שזה נכס כלכלי משמעותי.</li>
+                        <li><strong>גמישות ניהולית:</strong> אפשרות למנהלי בתי ספר להעניק חוזים אישיים ל-6% מהמורים, כדי לתגמל מורים מצטיינים.</li>
+                        <li><strong>סנכרון חופשות (פריון):</strong> התאמת ימי החופשה של המורים (איסרו חג, ל"ג בעומר) לחופשות המשק (ימי גשר בפורים ובין כיפור לסוכות), מהלך שמייצר תפוקה גדולה למשק כי הורים לא צריכים להישאר בבית.</li>
+                    </ol>
+
+                    <hr style="border: 0; border-top: 1px dashed var(--border); margin: var(--s4) 0;">
+
+                    <h5>שאלה 5: (חלק 3, 05:57) מה לגבי שכר השופטים ופנסיה תקציבית?</h5>
+                    <p><strong>תשובת המרצה (סיכום):</strong></p>
+                    <ul>
+                        <li><strong>שכר שופטים:</strong> לא נקבע על ידי אגף השכר, אלא על ידי ועדה ציבורית והמלצותיה מאושרות בוועדת הכספים.</li>
+                        <li><strong>פנסיה תקציבית:</strong> זהו מודל ישן שבו המדינה לא הפרישה כסף בצד לפנסיה, אלא משלמת אותה ישירות מהתקציב השוטף. המערכת הזו נסגרה למצטרפים חדשים בתחילת שנות ה-2000 (2002 בממשלה, 2004 בגופים אחרים). כיום, כ-70-80 אלף איש עדיין מקבלים פנסיה תקציבית.</li>
+                        <li><strong>הבהרה:</strong> לשופטים ופוליטיקאים (ח"כים, שרים) כיום *אין* פנסיה תקציבית מתוקף תפקידם, אלא פנסיה צוברת רגילה. אם לשופט יש פנסיה תקציבית, זה מתפקיד קודם בשירות המדינה (למשל, אם היה פרקליט לפני 2002).</li>
+                    </ul>
+
+                </article>
+                
+            </section>
+
+            <!-- ======================= -->
+            <!-- טאב 4: מקורות והערות -->
+            <!-- ======================= -->
+            <section id="tab-sources" class="tab-pane" role="tabpanel" aria-labelledby="tab-sources">
+                
+                <article class="page-card" aria-labelledby="external-sources-heading">
+                    <h3 id="external-sources-heading">מקורות חיצוניים</h3>
+                    <p>לא נעשה שימוש במקורות חיצוניים להכנת סיכום זה. כל התוכן מבוסס על הרצאתו של אפי מלכין.</p>
+                </article>
+                
+                <article class="page-card" aria-labelledby="terms-heading">
+                    <h3 id="terms-heading">הערות ומונחים</h3>
+                    <ol>
+                        <li id="term-1"><strong>מונופסון (Monopsony):</strong> מונח כלכלי המתאר מצב שוק שבו יש קונה יחיד (בניגוד למונופול, שבו יש מוכר יחיד). בהקשר זה, הממשלה היא ה"קונה" היחיד של שירותי עבודה מסוימים (כמו שוטרים או פקידי שומה), ולכן היא קובעת את מדיניות השכר.</li>
+                        <li id="term-2"><strong>אקסוגני (Exogenous):</strong> גורם שמוכתב מחוץ למודל. בהקשר זה, השכר במגזר הציבורי אינו נקבע על ידי כוחות השוק (ביקוש והיצע) אלא מוכתב "מבחוץ" על ידי הסכם קיבוצי או החלטה פוליטית.</li>
+                        <li id="term-3"><strong>פונקציית קוב-דאגלס (Cobb-Douglas):</strong> מודל כלכלי נפוץ המתאר את הקשר בין תפוקה (F) לבין הכמות המושקעת של עבודה (L) והון (K). המודל מסייע להסביר כיצד שילוב של מעט עובדים עם הרבה הון (כמו בנמלים) מייצר תפוקה שולית גבוהה לאותם עובדים.</li>
+                    </ol>
+                </article>
+
+            </section>
+
+            <!-- ======================= -->
+            <!-- טאב 5: רשמים נוספים -->
+            <!-- ======================= -->
+            <section id="tab-impressions" class="tab-pane" role="tabpanel" aria-labelledby="tab-impressions">
+                
+                <article class="page-card" aria-labelledby="impressions-heading">
+                    <h3 id="impressions-heading">רשמים אישיים</h3>
+                    <p><i>(טאב זה נותר ריק בכוונה. כאן תוכל/י להוסיף את הרשמים האישיים שלך מהשיעור, ניתוחים נוספים, או קישורים שברצונך לשמור.)</i></p>
+                </article>
+
+            </section>
+
+        </div>
+    </main>
+
+    <!--
+    סקריפט אחיד (מ-lesson_header_template.html)
+    נשאר כפי שהוא, לפני </body>.
+    -->
+    <script>
+    (function(){
+      const HEADER_SELECTOR = '.site-header .nav, header .nav, .site-header nav, header nav';
+
+      function makeBar(){
+        const ICON_PRINT = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 8H5a3 3 0 0 0-3 3v6h4v4h12v-4h4v-6a3 3 0 0 0-3-3zm-4 11H9v-3h6zm1-15H8v3h8z" fill="currentColor"/></svg>';
+        const ICON_SUN   = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4V1h0v3zm0 19v-3h0v3zM4 12H1v0h3zm22 0h-3v0h3zM5.64 5.64L3.51 3.51l0 0 2.13 2.13zM20.49 20.49l-2.13-2.13 0 0 2.13 2.13zM18.36 5.64l2.13-2.13 0 0-2.13 2.13zM3.51 20.49l2.13-2.13 0 0-2.13 2.13zM12 7a5 5 0 100 10 5 5 0 000-10z" fill="currentColor"/></svg>';
+        const ICON_MOON  = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 0111.21 3 7 7 0 1021 12.79z" fill="currentColor"/></svg>';
+
+        const bar = document.createElement('div');
+        bar.className = 'sa-actions';
+
+        const theme = document.createElement('button');
+        theme.className = 'sa-btn';
+        theme.type = 'button';
+        theme.title = 'מצב יום/לילה';
+        theme.dataset.sun = ICON_SUN;
+        theme.dataset.moon = ICON_MOON;
+
+        const divider = document.createElement('div');
+        divider.className = 'sa-divider';
+
+        const printBtn = document.createElement('button');
+        printBtn.className = 'sa-btn primary';
+        printBtn.type = 'button';
+        printBtn.title = 'הדפס';
+        printBtn.innerHTML = ICON_PRINT;
+
+        bar.appendChild(theme);
+        bar.appendChild(divider);
+        bar.appendChild(printBtn);
+
+        return {bar, theme, printBtn};
+      }
+
+      function initThemeButton(btn){
+        function isDark(){ return document.documentElement.classList.contains('sa-dark'); }
+        function icon(){ return isDark() ? btn.dataset.moon : btn.dataset.sun; }
+
+        btn.addEventListener('click', ()=>{
+          document.documentElement.classList.toggle('sa-dark');
+          document.documentElement.classList.toggle('light-mode', !isDark());
+          document.documentElement.classList.toggle('dark-mode', isDark());
+          btn.innerHTML = icon();
+          try{ localStorage.setItem('sa-theme', isDark() ? 'dark' : 'light'); }catch(e){}
+        });
+
+        let t = 'light';
+        try{ t = localStorage.getItem('sa-theme') || t; }catch(e){}
+        
+        if (t === 'dark') {
+            document.documentElement.classList.add('sa-dark', 'dark-mode');
+            document.documentElement.classList.remove('light-mode');
+        } else {
+            document.documentElement.classList.add('light-mode');
+            document.documentElement.classList.remove('sa-dark', 'dark-mode');
+        }
+        
+        btn.innerHTML = icon();
+      }
+
+      function injectButtons(){
+        let navs = document.querySelectorAll(HEADER_SELECTOR);
+        if(!navs.length){
+          const header = document.querySelector('.site-header') || document.querySelector('header');
+          if(header){
+            let aux = header.querySelector('.nav');
+            if(!aux){
+              aux = document.createElement('div');
+              aux.className = 'nav';
+              header.appendChild(aux);
+            }
+            navs = [aux];
+          }
+        }
+
+        navs.forEach(nav=>{
+          if(nav.querySelector('.sa-actions')) return;
+          const {bar, theme, printBtn} = makeBar();
+          nav.appendChild(bar);
+          initThemeButton(theme);
+          printBtn.addEventListener('click', ()=> window.print());
+        });
+      }
+
+      if(document.readyState === 'loading'){
+        document.addEventListener('DOMContentLoaded', injectButtons);
+      }else{
+        injectButtons();
+      }
+    })();
+    </script>
+    
+    <!-- סקריפט ניווט טאבים (מ-sample1) -->
+    <script>
+        (function() {
+            'usestrict';
+            
+            // --- בקר ניווט כרטיסיות (Tabs) ---
+            const tabContainer = document.querySelector('.tab-navigation');
+            
+            if (tabContainer) {
+                const tabButtons = tabContainer.querySelectorAll('.tab-btn');
+                const tabPanes = document.querySelectorAll('.tab-pane');
+
+                tabContainer.addEventListener('click', function(event) {
+                    const clickedButton = event.target.closest('.tab-btn');
+                    
+                    if (!clickedButton || clickedButton.classList.contains('active')) return;
+                    event.preventDefault();
+
+                    // הסר 'active' מכל הכפתורים והחלוניות
+                    tabButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                        btn.setAttribute('aria-selected', 'false');
+                    });
+                    tabPanes.forEach(pane => {
+                        pane.classList.remove('active');
+                    });
+
+                    // הוסף 'active' לכפתור ולחלונית שנבחרו
+                    clickedButton.classList.add('active');
+                    clickedButton.setAttribute('aria-selected', 'true');
+                    
+                    const tabId = clickedButton.getAttribute('data-tab');
+                    const activePane = document.getElementById(`tab-${tabId}`);
+                    if (activePane) {
+                        activePane.classList.add('active');
+                    }
+                });
+            }
+        })();
+    </script>
+
+</body>
+</html>
