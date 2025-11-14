@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <!-- 
+    ================================================================
+    תוכן שהוכנס מקובץ 'set.html' לפי ההנחיות
+    ================================================================
+    -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+        // 1. אותו Config בדיוק כמו בדף הכניסה
+        const firebaseConfig = {
+          apiKey: "AIzaSyDqxxf434N0wnn6C6AglEEIaqj5TVtoYLQ",
+          authDomain: "memshalaa.firebaseapp.com",
+          projectId: "memshalaa",
+          storageBucket: "memshalaa.firebasestorage.app",
+          messagingSenderId: "324187090365",
+          appId: "1:324187090365:web:8e4956d0d1370b5aab36d4",
+          measurementId: "G-2QHJF3SSJQ"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // 2. ה"שומר" - בודק אם יש משתמש מחובר
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // משתמש מחובר - הכל בסדר, מציגים את הדף
+                console.log("משתמש מורשה:", user.email);
+                
+                // --- אופציונלי: עדכון UI ---
+                const userInfo = document.getElementById('userInfo');
+                const loginLink = document.getElementById('loginLink');
+                const logoutButton = document.getElementById('logoutButton');
+
+                if (userInfo) userInfo.innerText = `מחובר כ: ${user.email}`;
+                if (loginLink) loginLink.style.display = 'none';
+                if (logoutButton) logoutButton.style.display = 'block';
+                // -------------------------
+
+                document.body.style.display = 'block'; // מציג את הגוף רק אחרי אימות
+            } else {
+                // אין משתמש מחובר - זרוק אותו לדף הכניסה
+                window.location.href = 'login.html'; 
+            }
+        });
+        
+        // פונקציית התנתקות גלובלית
+        window.logout = function() {
+            signOut(auth).then(() => {
+                window.location.href = 'login.html'; 
+            });
+        }
+    </script>
+    
+    <!-- הסתרת הדף עד שהבדיקה מסתיימת כדי למנוע הבהוב -->
+    <style> 
+        body { display: none; } 
+        /* הסתרת כפתור התנתקות כברירת מחדל */
+        #logoutButton { display: none; } 
+    </style>
+    <!-- 
+    ================================================================
+    סוף תוכן 'set.html'
+    ================================================================
+    -->
+
+    <!-- 
+    ================================================================
+    מטא-תגיות חובה לזיהוי אוטומטי
+    ================================================================
+    -->
+    <meta name='lesson-title' content='שיעור 3 – אקטואליה, מנהיגות, ומדינה ועם'>
+    <meta name='lesson-date' content='14.11.2025'>
+    <meta name='lesson-teacher' content='ליאור ומירב לשם גונן'>
+    <meta name='lesson-summary' content='דיון על המתודולוגיה של חקר אקטואליה, ושיחה אישית עם מירב לשם גונן על חווית השבי של בתה רומי ועל הקשר בין עם, מדינה וזהות.'>
+    <!-- 
+    ================================================================
+    סוף מטא-תגיות חובה
+    ================================================================
+    -->
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>הציונות המודרנית לאור מגילת העצמאות - שיעור 3 - 14.11.2025 - סיכום</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <style>
+        /* --- מערכת עיצוב מ-sample1.html (עבור תוכן הדף) --- */
+        :root {
+            /* ערכי ברירת מחדל (מצב בהיר) */
+            --bg: #f6f8fa;
+            --surface: #ffffff;
+            --text: #202124;
+            --muted: #5f6368;
+            --primary: #3b82f6; 
+            --primary-ink: #174ea6;
+            --border: #e5e7eb;
+            --highlight: #e8f0fe;
+            --shadow: 0 10px 30px rgba(0, 0, 0, .06);
+            --header-bg: rgba(255, 255, 255, .8);
+            
+            --s1: 8px; --s2: 12px; --s3: 16px; --s4: 24px; --s5: 36px;
+            --content-width: 980px;
+
+            --highlight-yellow-bg: #fff9c4;
+            --highlight-yellow-border: #fdd835;
+            --highlight-blue-bg: #e0f7fa;
+            --highlight-blue-border: #00bcd4;
+            --highlight-green-bg: #e8f5e9;
+            --highlight-green-border: #4caf50;
+            --highlight-red-bg: #ffebee;
+            --highlight-red-border: #f44336;
+            --highlight-orange-bg: #fff3e0;
+            --highlight-orange-border: #ff9800;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #333333; --surface: #444444; --text: #eeeeee;
+                --muted: #bbbbbb; --primary: #4b9bff; --border: #555555; 
+                --highlight: #2a3a52; --shadow: 0 0 0 1px var(--border);
+                --header-bg: rgba(51, 51, 51, .8); 
+
+                --highlight-yellow-bg: #4f4b23; --highlight-yellow-border: #fdd835;
+                --highlight-blue-bg: #1a4a52; --highlight-blue-border: #00bcd4;
+                --highlight-green-bg: #1e4620; --highlight-green-border: #4caf50;
+                --highlight-red-bg: #5d1c18; --highlight-red-border: #f44336;
+                --highlight-orange-bg: #593815; --highlight-orange-border: #ff9800;
+            }
+        }
+        
+        :root.light-mode {
+            --bg: #f6f8fa; --surface: #ffffff; --text: #202124;
+            --muted: #5f6368; --primary: #3b82f6; --border: #e5e7eb;
+            --highlight: #e8f0fe; --shadow: 0 10px 30px rgba(0, 0, 0, .06);
+            --header-bg: rgba(255, 255, 255, .8);
+
+            --highlight-yellow-bg: #fff9c4; --highlight-yellow-border: #fdd835;
+            --highlight-blue-bg: #e0f7fa; --highlight-blue-border: #00bcd4;
+            --highlight-green-bg: #e8f5e9; --highlight-green-border: #4caf50;
+            --highlight-red-bg: #ffebee; --highlight-red-border: #f44336;
+            --highlight-orange-bg: #fff3e0; --highlight-orange-border: #ff9800;
+        }
+        
+        :root.dark-mode {
+            --bg: #333333; --surface: #444444; --text: #eeeeee;
+            --muted: #bbbbbb; --primary: #4b9bff; --border: #555555; 
+            --highlight: #2a3a52; --shadow: 0 0 0 1px var(--border);
+            --header-bg: rgba(51, 51, 51, .8); 
+
+            --highlight-yellow-bg: #4f4b23; --highlight-yellow-border: #fdd835;
+            --highlight-blue-bg: #1a4a52; --highlight-blue-border: #00bcd4;
+            --highlight-green-bg: #1e4620; --highlight-green-border: #4caf50;
+            --highlight-red-bg: #5d1c18; --highlight-red-border: #f44336;
+            --highlight-orange-bg: #593815; --highlight-orange-border: #ff9800;
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: "Noto Sans Hebrew", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+            background-color: var(--bg); color: var(--text);
+            margin: 0; font-weight: 400; line-height: 1.7;
+            text-align: right; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        h1, h2, h3, h4, h5, h6 { margin-top: 0; margin-bottom: var(--s3); font-weight: 600; }
+        h1 { font-size: 1.0rem; font-weight: 600; margin: 0; line-height: 1.4; }
+        h2 { font-size: 1.75rem; text-align: center; margin-bottom: var(--s5); }
+        h3 { font-size: 1.25rem; margin: 0 0 var(--s2) 0; padding-bottom: var(--s2); border-bottom: 1px solid var(--border); transition: border-color 0.3s; }
+        h4 { font-size: 1.1rem; font-weight: 600; color: var(--text); margin-top: var(--s4); margin-bottom: var(--s2); }
+        h5 { font-size: 1rem; font-weight: 600; color: var(--text); margin-top: var(--s3); margin-bottom: var(--s1); }
+        p { margin-top: 0; margin-bottom: var(--s3); }
+        a { color: var(--primary); text-decoration: none; transition: color 0.2s, background-color 0.2s; }
+        ul, ol { padding-right: var(--s4); }
+        ul li, ol li { margin-bottom: var(--s2); padding-right: var(--s2); }
+        
+        sup {
+            font-size: 0.75em; vertical-align: super; margin-right: 2px;
+            color: var(--primary); font-weight: 600; line-height: 0; 
+        }
+        sup a { color: var(--primary); text-decoration: none; }
+        sup a:hover { text-decoration: underline; }
+
+        /* קונטיינר ראשי */
+        .container {
+            max-width: var(--content-width);
+            margin: 0 auto;
+            padding: var(--s5) var(--s4);
+        }
+        
+        /* --- עיצוב כרטיסיות (Tabs) --- */
+        .tab-navigation {
+            display: flex; gap: var(--s1);
+            border-bottom: 2px solid var(--border);
+            margin-bottom: var(--s4);
+            transition: border-color 0.3s;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            font-family: inherit; font-size: 1rem; font-weight: 500;
+            color: var(--muted); background: none; border: none;
+            padding: var(--s2) var(--s3); cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: color 0.3s, border-color 0.3s;
+            margin-bottom: -2px; 
+            white-space: nowrap;
+        }
+        .tab-btn:hover { color: var(--text); }
+        .tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
+        .tab-pane { display: none; animation: fadeIn 0.5s ease; }
+        .tab-pane.active { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* --- כרטיס תוכן פנימי --- */
+        .page-card {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 18px; box-shadow: var(--shadow);
+            padding: var(--s4); margin-bottom: var(--s4);
+            transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+        .page-card h3:first-child { margin-top: 0; }
+
+        /* --- רשימת פרטי שיעור --- */
+        .lesson-details-list {
+            list-style: none; padding: 0; margin: 0; font-size: 1.1rem;
+        }
+        .lesson-details-list li {
+            display: flex; justify-content: space-between;
+            padding: var(--s2) 0; border-bottom: 1px dashed var(--border);
+            flex-wrap: wrap;
+        }
+        .lesson-details-list li:last-child { border-bottom: none; }
+        .lesson-details-list strong { color: var(--muted); margin-left: var(--s4); flex-shrink: 0; }
+        .lesson-details-list span { font-weight: 500; }
+
+        /* --- אקורדיון --- */
+        .accordion details {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 12px; margin-bottom: var(--s2);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .accordion details[open] { box-shadow: var(--shadow); }
+        .accordion summary {
+            padding: var(--s3) var(--s4); font-size: 1.1rem; font-weight: 600;
+            cursor: pointer; list-style: none; display: flex;
+            justify-content: space-between; align-items: center;
+        }
+        .accordion summary::-webkit-details-marker, .accordion summary::marker { display: none; }
+        .accordion summary:after {
+            content: '\f078'; font-family: "Font Awesome 6 Free"; font-weight: 900;
+            font-size: 0.9rem; color: var(--muted);
+            transition: transform 0.2s ease-out;
+            margin-right: auto; padding-right: var(--s2);
+        }
+        .accordion details[open] summary:after { transform: rotate(180deg); }
+        .accordion-content {
+            padding: 0 var(--s4) var(--s4) var(--s4);
+            border-top: 1px solid var(--border);
+            animation: fadeIn 0.3s ease;
+        }
+        .accordion-content p:last-child { margin-bottom: 0; }
+        .accordion-content > *:first-child { margin-top: var(--s3); }
+        
+        /* --- הדגשות תוכן --- */
+        .example-highlight, .external-highlight, .verification-success, .verification-fail,
+        .personal-impression, .reading-material, .external-addition,
+        .example-bad, .example-good {
+            padding: var(--s3); border-radius: 8px;
+            margin-top: var(--s3); margin-bottom: var(--s3);
+            border-right: 4px solid;
+        }
+        .example-highlight p:last-child, .external-highlight p:last-child, 
+        .verification-success p:last-child, .verification-fail p:last-child,
+        .personal-impression p:last-child, .reading-material p:last-child, 
+        .external-addition p:last-child, .example-bad p:last-child, .example-good p:last-child {
+            margin-bottom: 0;
+        }
+
+        .example-highlight { background-color: var(--highlight-yellow-bg); border-color: var(--highlight-yellow-border); }
+        .external-highlight { background-color: var(--highlight-blue-bg); border-color: var(--highlight-blue-border); }
+        .verification-success, .example-good { background-color: var(--highlight-green-bg); border-color: var(--highlight-green-border); }
+        .verification-fail, .example-bad { background-color: var(--highlight-red-bg); border-color: var(--highlight-red-border); }
+        .personal-impression { background-color: var(--highlight-blue-bg); border-color: var(--highlight-blue-border); }
+        .reading-material { background-color: var(--highlight-orange-bg); border-color: var(--highlight-orange-border); }
+        .external-addition { background-color: var(--highlight-green-bg); border-color: var(--highlight-green-border); }
+        
+        /* --- הערות ומונחים --- */
+        #tab-sources ol { padding-right: 20px; }
+        #tab-sources li { margin-bottom: 8px; }
+        #tab-sources li::marker { font-weight: 600; color: var(--primary); }
+        
+        /* --- סגנונות מהדר מ-lesson_header_template.html --- */
+        .site-header {
+            position: sticky; top: 0; z-index: 10;
+            backdrop-filter: blur(10px);
+            background: var(--header-bg, #ffffff);
+            border-bottom: 1px solid var(--border, #e5e7eb);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 12px 16px;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .site-header .brand { display: flex; gap: 10px; align-items: center; text-align: right; }
+        .site-header .brand .dot {
+            width: 10px; height: 10px; border-radius: 50%;
+            background: var(--primary, #3b82f6);
+            transition: background-color 0.3s;
+            flex-shrink: 0;
+        }
+        .site-header .brand h1 { margin: 0; font-size: 1.0rem; font-weight: 600; line-height: 1.4; color: var(--text); }
+        
+        /* כפתורי מצב יום/לילה והדפסה בהדר */
+        .sa-actions {
+          display: flex;
+          gap: 12px;
+          align-items: center;
+          direction: ltr;
+          flex-wrap: wrap;
+        }
+        .sa-actions .sa-divider {
+          width: 1px;
+          height: 24px;
+          background: var(--border, #d0d5dd);
+          transition: background-color 0.3s;
+        }
+        .sa-btn {
+          font: inherit;
+          line-height: 1;
+          border: 1px solid var(--border, #d0d5dd);
+          background: var(--surface, #ffffff);
+          color: var(--text, #0f172a);
+          padding: 10px 12px;
+          border-radius: 12px;
+          cursor: pointer;
+          display: inline-flex;
+          gap: 10px;
+          align-items: center;
+          font-size: 15px;
+          transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+        }
+        .sa-btn.primary {
+          background: var(--primary, #0ea5e9);
+          color: var(--primary-ink, #ffffff); /* שונה מהתבנית המקורית לטובת ניגודיות במצב בהיר */
+          border-color: transparent;
+        }
+        :root.dark-mode .sa-btn.primary {
+           color: var(--text, #eeeeee); /* שומר על צבע טקסט בהיר במצב לילה */
+        }
+        
+        .sa-btn svg {
+          width: 20px;
+          height: 20px;
+          display: block;
+        }
+        .sa-btn .lbl {
+          display: none; /* אייקונים בלבד, ללא טקסט */
+        }
+        @media (max-width: 640px) {
+          .sa-actions { gap: 8px; }
+          .sa-actions .sa-divider { height: 20px; }
+          .sa-btn { padding: 8px 10px; font-size: 14px; }
+          .sa-btn svg { width: 18px; height: 18px; }
+          .site-header .brand h1 { font-size: 0.9rem; } /* הקטנת כותרת במובייל */
+        }
+
+        /* מצב כהה מ-JS */
+        html.sa-dark {
+          filter: invert(1) hue-rotate(180deg);
+          background: #000000;
+        }
+        html.sa-dark img,
+        html.sa-dark video,
+        html.sa-dark canvas,
+        html.sa-dark svg image,
+        html.sa-dark .no-dark-filter { /* מחלקה מותאמת אישית לפילטר נגדי */
+          filter: invert(1) hue-rotate(180deg);
+        }
+
+    </style>
+</head>
+<body>
+
+    <!--
+    ================================================================
+    הדר מ-lesson_header_template.html
+    ================================================================
+    -->
+    <header class="site-header" role="banner">
+        <div class="brand">
+            <!-- מחלקה .dot התווספה מהתבנית הקודמת לשמירה על עקביות עיצובית -->
+            <span class="dot" aria-hidden="true"></span>
+            <h1>הציונות המודרנית | שיעור 3: מדינה ועם</h1>
+        </div>
+        <!-- ה-JS יזרוק לכאן את הכפתורים -->
+        <div class="nav"></div>
+    </header>
+    <!-- 
+    ================================================================
+    סוף הדר
+    ================================================================
+    -->
+
+    <main class="container" role="main">
+        <nav class="tab-navigation" aria-label="ניווט בסיכום השיעור">
+            <button class="tab-btn active" data-tab="overview" role="tab" aria-selected="true" aria-controls="tab-overview">סקירה כללית</button>
+            <button class="tab-btn" data-tab="content" role="tab" aria-selected="false" aria-controls="tab-content">תוכן השיעור</button>
+            <button class="tab-btn" data-tab="qa" role="tab" aria-selected="false" aria-controls="tab-qa">שאלות ודיון</button>
+            <button class="tab-btn" data-tab="sources" role="tab" aria-selected="false" aria-controls="tab-sources">מקורות והערות</button>
+            <button class="tab-btn" data-tab="impressions" role="tab" aria-selected="false" aria-controls="tab-impressions">רשמים נוספים</button>
+        </nav>
+
+        <div class="tab-content">
+
+            <!-- ======================= -->
+            <!-- טאב 1: סקירה כללית -->
+            <!-- ======================= -->
+            <section id="tab-overview" class="tab-pane active" role="tabpanel" aria-labelledby="tab-overview">
+                
+                <article class="page-card" aria-labelledby="details-heading">
+                    <h3 id="details-heading">פרטי השיעור</h3>
+                    <ul class="lesson-details-list">
+                        <li>
+                            <strong>נושא:</strong>
+                            <span>מתודולוגיה, אקטואליה, מנהיגות, ומדינה ועם</span>
+                        </li>
+                        <li>
+                            <strong>מרצה:</strong>
+                            <span>ליאור (מנחה) ומירב לשם גונן (אורחת)</span>
+                        </li>
+                        <li>
+                            <strong>תאריך:</strong>
+                            <span>14.11.2025</span>
+                        </li>
+                        <li>
+                            <strong>שעה (מוערכת):</strong>
+                            <span>⚠️ (לא צוין באופן ברור בהקלטה)</span>
+                        </li>
+                    </ul>
+                </article>
+
+                <article class="page-card" aria-labelledby="summary-heading">
+                    <h3 id="summary-heading">תקציר ונושאים מרכזיים</h3>
+                    
+                    <h4>תקציר</h4>
+                    <p>השיעור נחלק לשניים. החלק הראשון, בהנחיית ליאור, עסק בחשיבות המתודולוגיה והסטנדרטים (כמו עמידה בזמנים) כבסיס לדיון אקדמי באקטואליה<sup><a href="#term-1">1</a></sup>. החלק השני היה שיחה אישית ומרגשת עם מירב לשם גונן, אמה של רומי שחזרה מהשבי<sup><a href="#term-7">7</a></sup>, אשר שיתפה בסיפור חטיפתה, במאבק להשבתה, ובתובנות שגיבשה על הקשר המורכב בין חלקי העם בישראל, על אחריות אישית ולאומית, ועל הצורך בתיקון חברתי.</p>
+                    
+                    <h4>נושאים מרכזיים שעלו</h4>
+                    <ul>
+                        <li>ההבדל בין דיון אקטואלי לניתוח אקדמי (דוגמת נאום רבין וספירת האות ר').</li>
+                        <li>חשיבות העמידה בסטנדרטים אישיים (דוגמת דייקנות ב"עולם האמיתי").</li>
+                        <li>סיכום ביניים של הקורס: חורבן<sup><a href="#term-3">3</a></sup>, גולה<sup><a href="#term-4">4</a></sup>, ראשית הציונות<sup><a href="#term-5">5</a></sup> (הרצל), והרצאות אורח קודמות.</li>
+                        <li>הצגת האורחת: מירב לשם גונן ("אשמה, אחראית, מתקנת"<sup><a href="#term-8">8</a></sup>).</li>
+                        <li>סיפור "שיר לשירה"<sup><a href="#term-9">9</a></sup> ורגע השחרור של רומי בשידור חי באולפן ההקלטות.</li>
+                        <li>הווידוי של מירב: ההתנתקות מאקטואליה ופוליטיקה לפני ה-7 באוקטובר כחלק מ"הרוב הדומם"<sup><a href="#term-13">13</a></sup>.</li>
+                        <li>תיעוד השיחות מה-7 באוקטובר (עם רומי, ירדן, ואופיר צרפתי ז"ל).</li>
+                        <li>הקמת מטה המשפחות והשפעתו על שינוי מטרות המלחמה.</li>
+                        <li>הבנת הפערים והמורכבות בחברה הישראלית דרך מפגשים (שבת עם יפה דרי, שיחה עם צביקה מור, הדילמה של עידית).</li>
+                        <li>הטרמינולוגיה של המאבק: "סוגיה" מול "משימה", "גופות" מול "חללים"<sup><a href="#term-12">12</a></sup>.</li>
+                    </ul>
+                </article>
+
+            </section>
+
+            <!-- ======================= -->
+            <!-- טאב 2: תוכן השיעור -->
+            <!-- ======================= -->
+            <section id="tab-content" class="tab-pane" role="tabpanel" aria-labelledby="tab-content">
+                
+                <div class="accordion">
+                    
+                    <details open>
+                        <summary>חלק 1: מתודולוגיה וסטנדרטים (הנחיית: ליאור)</summary>
+                        <div class="accordion-content">
+                            <h4>מדוע הקורס אינו עוסק רק באקטואליה?</h4>
+                            <p>המרצה פתח בהתייחסות לשאלת סטודנט מדוע הקורס אינו מתמקד רק באקטואליה. הוא הסביר שהמטרה אינה רק לדון באירועים שוטפים (דבר שכולנו עושים ממילא), אלא להעמיק ולספק ידע, שיטות וכלים (מתודולוגיה) לניתוח שלהם.</p>
+                            
+                            <div class="example-highlight">
+                                <p><strong>דוגמה: זיהוי קונטקסט מול משימה טכנית</strong></p>
+                                <p>המרצה הציג טקסט וביקש מהסטודנטים לזהות את ההקשר. הסטודנטים זיהו במהירות את נאומו של יצחק רבין בקונגרס (יולי 1994) לקראת הצהרת וושינגטון עם ירדן. לאחר מכן, ביקש מהם לספור כמה פעמים מופיעה האות ר' (ר) בטקסט. הסטודנטים התקשו מאוד וזרקו ניחושים רבים (התשובה הנכונה: 17).</p>
+                                <p><strong>המסקנה:</strong> זיהוי ההקשר היה קל כי יש לנו "סקריפט במוח" (ידע קודם, היסטוריה). ספירת האותיות הייתה קשה כי אין לנו מתודולוגיה לכך. דיון באקטואליה ללא כלים אקדמיים דומה לספירת אותיות – אנו נשארים ברמה השטחית. הקורס נועד לפתח את המתודולוגיה.</p>
+                            </div>
+                            
+                            <h4>חשיבות הסטנדרטים בעולם האמיתי</h4>
+                            <p>המרצה עבר לנושא שני: נורמות וסטנדרטים אישיים. הוא סיפר שבעולם ההייטק (בועדות השקעה<sup><a href="#term-2">2</a></sup>) ובעולם הצבאי או הציבורי הבכיר, אין דבר כזה איחור לפגישה. זוהי נורמה מוחלטת.</p>
+                            <p>הוא קרא לסטודנטים ליישם "כבר כאן" את הסטנדרטים הגבוהים שיידרשו מהם ב"עולם האמיתי" (כמו דייקנות), ולא לדחות את אימוץ הנורמות הללו.</p>
+
+                            <h4>סיכום ביניים: התקדמות הקורס</h4>
+                            <p>המרצה סיכם את הנושאים שנלמדו עד כה:</p>
+                            <ul>
+                                <li><strong>חורבן וגולה:</strong> הדיון בחורבן<sup><a href="#term-3">3</a></sup> ובגולה<sup><a href="#term-4">4</a></sup> נועד להראות שתהליך היציאה מישראל לא היה אירוע "כרשנדו" יחיד, אלא תהליך ארוך שבו במקביל התקיימו חיים יהודיים עשירים בארץ (פיתוח המשנה, הסנהדרין, מרד בר כוכבא).</li>
+                                <li><strong>ראשית הציונות:</strong> המעבר להרצל<sup><a href="#term-5">5</a></sup>, שהתחיל מחשבות אוניברסליות (ואף התנצרות המונית) ועבר (בעקבות פרשת דרייפוס) להבנה שנדרשת ריבונות יהודית. תהליך זה הוביל לקונגרס הציוני, למסע מדיני, וליצירת תנועה ששרדה אחרי מותו.</li>
+                                <li><strong>מהרצל למדינה:</strong> הרעיון הציוני עבר את השואה והגיע להסכמה בינלאומית (כ"ט בנובמבר<sup><a href="#term-6">6</a></sup>) ולהכרזת העצמאות.</li>
+                                <li><strong>הרצאות אורח:</strong> דיי מר-דור (ציונות ערכית), אבי דיכטר ועופר שלח (ציונות כמהפכה), ופרופ' אוזנאי (מגילת העצמאות כבסיס לדיוני דת ומדינה כיום).</li>
+                            </ul>
+                        </div>
+                    </details>
+                    
+                    <details>
+                        <summary>חלק 2: שיחה עם מירב לשם גונן</summary>
+                        <div class="accordion-content">
+                            <p>מירב פתחה ואמרה שהיא אינה מרצה, אלא באה "כאמא שיש לה מה להגיד" ולשתף במסע שעברה.</p>
+                            
+                            <div class="example-highlight">
+                                <p><strong>דוגמה: סיפור "שיר לשירה"</strong></p>
+                                <p>מירב סיפרה על צירוף מקרים סביב השיר "שיר לשירה"<sup><a href="#term-9">9</a></sup>. היא הוזמנה להקליט אותו עבור "פרויקט של תמרי"<sup><a href="#term-10">10</a></sup>. ההקלטה נדחתה ונקבעה מחדש ל-19 בינואר 2025.</p>
+                                <p>בדיוק ביום ובשעה שבהם הנגנים באולפן סיימו את הטייק הרביעי והאחרון של הקלטת הפלייבק (שמירב הייתה אמורה לשיר עליו), הם צפו בשידור חי באייפד שהיה בחדר (מבלי שידעו קודם) בתיעוד של העברת רומי ושתי בנות נוספות מידי חמאס לידי הצלב האדום וצה"ל. השיר הוקלט בדיוק ברגע השחרור.</p>
+                            </div>
+
+                            <h4>הווידוי: החיים לפני ה-7 באוקטובר</h4>
+                            <p>מירב שיתפה בכנות על חייה לפני האסון. היא תיארה את עצמה כמי שהייתה "צפונה" בביתה, עובדת מהבית (דבר שהתאפשר בזכות הקורונה) ומנותקת באופן מכוון מאקטואליה. "אני 20 שנה לא רואה חדשות," סיפרה (מהרגע שהבינה ש"חדשות מייבש ענקה").</p>
+                            <p>היא תיארה את עצמה כחלק מ"הרוב הדומם"<sup><a href="#term-13">13</a></sup>: "לא מבינה כלום במדינה... מה זה משנה מה דעתי... לא מתעמקת... גדול עליי." היא לא הלכה להפגנות (בשל חרדה קהל ותחושתיות יתר) וסיכמה: "לא עשיתי שום דבר אחר."</p>
+                            <p>היא התנצלה בפני הסטודנטים: "אני מתנצלת שלא הייתי שם... הייתי חלק מהרוב הדומם שאפילו חשב 'מתי אפשר לרדת מהארץ'."</p>
+                            
+                            <h4>השבעה באוקטובר: תיעוד השיחות</h4>
+                            <p>מירב שחזרה את רצף השיחות הדרמטי מאותו בוקר:</p>
+                            <ul>
+                                <li><strong>06:35:</strong> שיחה ראשונה מרומי מהמסיבה. "אמא, יש פה צבע אדום... אין מקלט."</li>
+                                <li>המשטרה מפנה אותם והם לא מוצאים את הרכב.</li>
+                                <li><strong>09:15:</strong> רומי מתקשרת מהשטח (ליד פטיש), תקועים בפקק. "יורים עלינו פה." מירב, בחוסר הבנה מוחלט של המצב, שואלת: "את רוצה שאני אבוא לקחת אותך?"</li>
+                                <li><strong>10:05:</strong> "ניצלנו, אנחנו ברכב." (ברכב של בן שמעוני ז"ל, שחזר לאסוף אותן).</li>
+                                <li><strong>10:14 (שיחה אחרונה):</strong> "אמא ירו בי, אני מדממת, אני חושבת שאני עומדת למות. גיא לא עונה לי, הנהג בטוח נהרג."</li>
+                                <li>קול נוסף בשיחה: <strong>אופיר צרפתי ז"ל</strong>, פצוע קשה, מבקש: "תגידי לאמא שלי שהייתי פה."</li>
+                                <li>מירב מנסה להדריך אותה לחבוש את עצמה או את אופיר, אך רומי לא מצליחה.</li>
+                                <li>השיחה מתנתקת לאחר צרור יריות וצעקות בערבית.</li>
+                            </ul>
+                            
+                            <h4>המאבק וההתפכחות</h4>
+                            <p>מירב תיארה את הקמת מטה המשפחות. היא ציינה שההצהרה הראשונה של ראש הממשלה (ב-8.10) כללה 5 מטרות למלחמה, אך החזרת החטופים לא הייתה אחת מהן. המשפט היחיד היה: "סוגית החטופים תבחן בסיום המלחמה."</p>
+                            <p>רק לאחר הלחץ הציבורי (כולל מסיבת העיתונאים של המשפחות) והפגישה עם רה"מ ב-15.10, שונתה ההגדרה ושתי המטרות הרשמיות הפכו למיטוט חמאס והחזרת החטופים.</p>
+                            <p>היא סיפרה על המפגש עם הנשיא הרצוג, ועל דבריו של <strong>שמחה גולדין</strong> (אביו של הדר גולדין ז"ל) באותו מפגש:</p>
+                            <div class="example-highlight">
+                                <p><strong>עצת משפחת גולדין:</strong> שמחה גולדין הזהיר את המשפחות החדשות: 1. אל תיתנו לזה להפוך ל"סוגיה" (מונח בירוקרטי). 2. אל תסכימו שידברו על "גופות" (טכני), תתעקשו על "חללים" (ערך מקודש). "אין שום דבר סקסי או הרואי בלהחזיר גופות."</p>
+                            </div>
+                            
+                            <h4>הבנת המורכבות של העם</h4>
+                            <p>מירב סיפרה שבעוד המטה בתל אביב הונע מהרבה כעס (מוצדק) על הממשלה, היא הרגישה צורך לצאת ולפגוש חלקים אחרים בעם, ונסעה ליישובי יהודה ושומרון.</p>
+                            <ul>
+                                <li><strong>שבת עם יפה דרי:</strong> היא תיארה את הכעס שלה כששמעה את יפה דרי אומרת "אם הייתם שומרים שבת זה לא היה קורה". אך לאחר שיחה, היא הבינה שכוונתה של יפה הייתה אמונית ("אם *כולנו* נשמור... נגאל") ולא האשמה ("אתם אשמים"). מירב הבינה ש"האוזניים החילוניות" שלה שמעו את מה שציפתה לשמוע.</li>
+                                <li><strong>הדילמה של עידית (אמא של אבינתן אור):</strong> מירב הציגה את המורכבות של משפחות מההתיישבות, שחוששות ששחרור מחבלים בעסקה יסכן אותן ישירות. "היא יודעת שיהיה פיגוע הבא... ושהוא עלול לפגוע בילד אחר שלה או בשכנים שלה. מה היא תגיד להם? שאבינתן היה חשוב יותר?"</li>
+                                <li><strong>השיחה עם צביקה מור:</strong> תיארה את תפיסתו האמונית, לפיה אם בנו איתן הוא הקורבן הנדרש למען עם ישראל, הוא יקבל זאת כחלק מתוכנית גדולה יותר שהוא לא מבין.</li>
+                            </ul>
+                            <p>מירב סיכמה שהמפגשים האלו לימדו אותה על המורכבות, ועל הצורך של הרוב הדומם, שאליו היא השתייכה, להתעורר, לדבר, ולהכיר בכאבים ובאמונות של כל חלקי העם.</p>
+                        </div>
+                    </details>
+                    
+                </div>
+            </section>
+
+            <!-- ======================= -->
+            <!-- טאב 3: שאלות ודיון -->
+            <!-- ======================= -->
+            <section id="tab-qa" class="tab-pane" role="tabpanel" aria-labelledby="tab-qa">
+                
+                <article class="page-card" aria-labelledby="qa-lecturer-heading">
+                    <h3 id="qa-lecturer-heading">שאלות המרצה (ליאור)</h3>
+                    
+                    <h5 style="margin-top: var(--s3);">שאלה 1: זיהוי הקשר הטקסט</h5>
+                    <p><strong>שאלה:</strong> המרצה הציג טקסט וביקש מהסטודנטים לזהות את ההקשר.</p>
+                    <p><strong>תשובת הסטודנטים:</strong> הקהל זיהה במהירות כי מדובר בנאום של רב אלוף יצחק רבין בקונגרס האמריקאי ביולי 1994, בהקשר של הצהרת וושינגטון עם ירדן.</p>
+
+                    <hr style="border: 0; border-top: 1px dashed var(--border); margin: var(--s4) 0;">
+                    
+                    <h5 style="margin-top: var(--s3);">שאלה 2: משימה טכנית</h5>
+                    <p><strong>שאלה:</strong> המרצה שאל כמה פעמים מופיעה האות ר' (ריש) באותו הטקסט.</p>
+                    <p><strong>תשובת הסטודנטים:</strong> הקהל התקשה מאוד, וסיפק ניחושים רבים ושונים (התשובה הנכונה הייתה 17).</p>
+                    <p><strong>מסקנת המרצה:</strong> קל לנו לנתח הקשר כשיש לנו "סקריפט במוח" (ידע היסטורי/פוליטי), אך אנו נכשלים במשימות טכניות שאין לנו מתודולוגיה עבורן. מטרת הקורס היא לספק מתודולוגיה לניתוח אקטואליה, ולא רק להישאר בדיון השטחי.</p>
+                </article>
+
+                <article class="page-card" aria-labelledby="qa-student-heading">
+                    <h3 id="qa-student-heading">שאלות משתתפים (למירב לשם גונן)</h3>
+                    
+                    <h5>שאלה: איך לא השתגעת בתקופה הזו?</h5>
+                    <p><strong>תשובת מירב (סיכום):</strong> "מי אמר שלא השתגעתי?... אני חושבת שמה שעזר לי זה העובדה שהסכמתי לצאת מדעתי... זה היה גדול ממני."</ט>
+
+                    <hr style="border: 0; border-top: 1px dashed var(--border); margin: var(--s4) 0;">
+                    
+                    <h5>שאלה: במבט לאחור, מה היית עושה אחרת?</h5>
+                    <p><strong>תשובת מירב (סיכום):</strong> "כנראה ששום דבר. בדיעבד קל להגיד, אבל בזמן אמת עשיתי את כל מה שיכולתי באותו הרגע. אני לא חושבת שהייתי יכולה לעשות משהו טוב יותר."</p>
+                    
+                    <hr style="border: 0; border-top: 1px dashed var(--border); margin: var(--s4) 0;">
+                    
+                    <h5>שאלה: אחרי כל מה שקרה, את אוהבת את ישראל או שונאת אותה?</h5>
+                    <p><strong>תשובת מירב (סיכום):</strong> "חולה על ישראל. אין מצב שאני זזה מפה, ולא רק זה, אני אשאיר את כל מי שאני יכולה פה לידי. זו אחת השליחויות שלי, לדבר עם החבר'ה בגילאים שלכם ולהסביר להם... לחבר אותם."</p>
+
+                    <hr style="border: 0; border-top: 1px dashed var(--border); margin: var(--s4) 0;">
+                    
+                    <h5>שאלה: איך את מצליחה להישאר אופטימית?</h5>
+                    <p><strong>תשובת מירב (סיכום):</strong> "יש לי מחלה שנקראת אופטימית חסרת תקנה... אבל זה לא רק זה... זה החיבור לעם, הכמות של האנשים שהיו איתנו... זה מה שחיזק אותי."</p>
+                    
+                    <hr style="border: 0; border-top: 1px dashed var(--border); margin: var(--s4) 0;">
+
+                    <h5>שאלה: האם ההפגנות עזרו או הזיקו למאבק?</h5>
+                    <p><strong>תשובת מירב (סיכום):</strong> (בקיצור) גם וגם. "ההפגנות עזרו, וההפגנות גם הפריעו." הן יצרו לחץ חיוני, אבל לפעמים גם יצרו פילוג וקושי. הנושא מורכב.</p>
+                </article>
+                
+            </section>
+
+            <!-- ======================= -->
+            <!-- טאב 4: מקורות והערות -->
+            <!-- ======================= -->
+            <section id="tab-sources" class="tab-pane" role="tabpanel" aria-labelledby="tab-sources">
+                
+                <article class="page-card" aria-labelledby="external-sources-heading">
+                    <h3 id="external-sources-heading">מקורות חיצוניים</h3>
+                    <p>לא נעשה שימוש במקורות חיצוניים להכנת סיכום זה. כל התוכן מבוסס על הרצאתם של ליאור ומירב לשם גונן.</p>
+                </article>
+                
+                <article class="page-card" aria-labelledby="terms-heading">
+                    <h3 id="terms-heading">הערות ומונחים</h3>
+                    <ol>
+                        <li id="term-1"><strong>אקטואליה:</strong> אירועים שוטפים, ענייני היום.</li>
+                        <li id="term-2"><strong>ועדות השקעה:</strong> פגישות בהן יזמים מציגים רעיונות למשקיעים (VC) לקבלת מימון.</li>
+                        <li id="term-3"><strong>חורבן:</strong> חורבן בית המקדש, משמש כנקודת מוצא סמלית לדיון על הגלות.</li>
+                        <li id="term-4"><strong>גולה:</strong> (Exile) - המרצה הדגיש כי היציאה לגלות לא הייתה אירוע יחיד אלא תהליך ארוך.</li>
+                        <li id="term-5"><strong>ראשית הציונות / הרצל:</strong> תחילת התנועה הציונית המודרנית בהובלת תיאודור הרצל.</li>
+                        <li id="term-6"><strong>כ"ט בנובמבר:</strong> 29 בנובמבר 1947, החלטת האו"ם על תוכנית החלוקה.</li>
+                        <li id="term-7"><strong>שבי:</strong> (Captivity) - המונח שבו השתמשה מירב לתיאור חטיפתה של בתה רומי.</li>
+                        <li id="term-8"><strong>אשמה, אחראית, מתקנת:</strong> האופן שבו מירב לשם גונן הציגה את עצמה, בהקשר לאחריותה האזרחית והצורך בתיקון חברתי.</li>
+                        <li id="term-9"><strong>שיר לשירה:</strong> שיר עברי מפורסם (מילים: יונתן גפן, לחן: קורין אלאל) שמירב התבקשה להקליט ונקשר באופן סמלי לרגע שחרורה של רומי.</li>
+                        <li id="term-10"><strong>פרויקט של תמרי:</strong> פרויקט מוזיקלי להנצחה שבו אמנים מקליטים שירים.</li>
+                        <li id="term-11"><strong>קד"צ:</strong> קורס קדם-צבאי.</li>
+                        <li id="term-12"><strong>סוגיה / חללים / גופות:</strong> הטרמינולוגיה של המאבק. שמחה גולדין הדריך את המשפחות להתעקש על "חללים" (מכובד) ולא "גופות" (טכני), ועל "משימה" ולא "סוגיה" (בירוקרטי).</li>
+                        <li id="term-13"><strong>רוב דומם:</strong> החלק הגדול באוכלוסייה שאינו מביע את דעתו בפומבי, ומירב שייכה את עצמה אליו לפני האסון.</li>
+                    </ol>
+                </article>
+
+            </section>
+
+            <!-- ======================= -->
+            <!-- טאב 5: רשמים נוספים -->
+            <!-- ======================= -->
+            <section id="tab-impressions" class="tab-pane" role="tabpanel" aria-labelledby="tab-impressions">
+                
+                <article class="page-card" aria-labelledby="impressions-heading">
+                    <h3 id="impressions-heading">רשמים אישיים</h3>
+                    <p><i>(טאב זה נותר ריק בכוונה. כאן תוכל/י להוסיף את הרשמים האישיים שלך מהשיעור, ניתוחים נוספים, או קישורים שברצונך לשמור.)</i></p>
+                    
+                    <!-- דוגמה לאופן הוספת כרטיסים (בטל את ההערה והשתמש):
+                    <div class="personal-impression">
+                        <h5>רשם אישי / מחשבה</h5>
+                        <p>הווידוי של מירב על היותה חלק מ"הרוב הדומם" היה חזק מאוד וגרם לי לחשוב על האחריות האזרחית שלי.</p>
+                    </div>
+                    -->
+                </article>
+
+            </section>
+
+        </div>
+    </main>
+
+    <!--
+    ================================================================
+    סקריפט אחיד מ-lesson_header_template.html
+    ================================================================
+    -->
+    <script>
+    (function(){
+      // בקר ה-Header מ-lesson_header_template.html
+      const HEADER_SELECTOR = '.site-header .nav, header .nav, .site-header nav, header nav';
+  
+      function makeBar(){
+        const ICON_PRINT = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 8H5a3 3 0 0 0-3 3v6h4v4h12v-4h4v-6a3 3 0 0 0-3-3zm-4 11H9v-3h6zm1-15H8v3h8z" fill="currentColor"/></svg>';
+        const ICON_SUN   = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4V1h0v3zm0 19v-3h0v3zM4 12H1v0h3zm22 0h-3v0h3zM5.64 5.64L3.51 3.51l0 0 2.13 2.13zM20.49 20.49l-2.13-2.13 0 0 2.13 2.13zM18.36 5.64l2.13-2.13 0 0-2.13 2.13zM3.51 20.49l2.13-2.13 0 0-2.13 2.13zM12 7a5 5 0 100 10 5 5 0 000-10z" fill="currentColor"/></svg>';
+        const ICON_MOON  = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 0111.21 3 7 7 0 1021 12.79z" fill="currentColor"/></svg>';
+  
+        const bar = document.createElement('div');
+        bar.className = 'sa-actions';
+  
+        const theme = document.createElement('button');
+        theme.className = 'sa-btn';
+        theme.type = 'button';
+        theme.title = 'מצב יום/לילה';
+        theme.id = 'theme-toggle'; // הוספת ID תואם לסקריפט השני
+        theme.dataset.sun = ICON_SUN;
+        theme.dataset.moon = ICON_MOON;
+  
+        const divider = document.createElement('div');
+        divider.className = 'sa-divider';
+  
+        const printBtn = document.createElement('button');
+        printBtn.className = 'sa-btn primary';
+        printBtn.type = 'button';
+        printBtn.title = 'הדפס';
+        printBtn.innerHTML = ICON_PRINT;
+  
+        bar.appendChild(theme);
+        bar.appendChild(divider);
+        bar.appendChild(printBtn);
+  
+        return {bar, theme, printBtn};
+      }
+  
+      function initThemeButton(btn){
+        const rootEl = document.documentElement;
+        // שינוי קל: במקום sa-dark, נשתמש במחלקות מהתבנית הראשית (dark-mode/light-mode)
+        
+        function isDark(){ 
+            // בודק העדפה שמורה או העדפת מערכת, או מצב קיים
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) return savedTheme === 'dark';
+            return window.matchMedia('(prefers-color-scheme: dark)').matches;
+        }
+        
+        function applyTheme(theme) {
+            localStorage.setItem('theme', theme);
+            if (theme === 'dark') {
+                rootEl.classList.remove('light-mode');
+                rootEl.classList.add('dark-mode');
+                rootEl.classList.add('sa-dark'); // הפעלת הפילטר
+            } else {
+                rootEl.classList.remove('dark-mode');
+                rootEl.classList.add('light-mode');
+                rootEl.classList.remove('sa-dark'); // כיבוי הפילטר
+            }
+            btn.innerHTML = isDark() ? btn.dataset.moon : btn.dataset.sun;
+        }
+  
+        btn.addEventListener('click', ()=>{
+            applyTheme(isDark() ? 'light' : 'dark');
+        });
+  
+        // סנכרון ראשוני
+        applyTheme(isDark() ? 'dark' : 'light');
+      }
+  
+      function injectButtons(){
+        let navs = document.querySelectorAll(HEADER_SELECTOR);
+        if(!navs.length){
+          const header = document.querySelector('.site-header') || document.querySelector('header');
+          if(header){
+            let aux = header.querySelector('.nav');
+            if(!aux){
+              aux = document.createElement('div');
+              aux.className = 'nav';
+              header.appendChild(aux);
+            }
+            navs = [aux];
+          }
+        }
+  
+        navs.forEach(nav=>{
+          if(nav.querySelector('.sa-actions')) return;
+          const {bar, theme, printBtn} = makeBar();
+          nav.appendChild(bar);
+          initThemeButton(theme);
+          printBtn.addEventListener('click', ()=> window.print());
+        });
+      }
+  
+      if(document.readyState === 'loading'){
+        document.addEventListener('DOMContentLoaded', injectButtons);
+      }else{
+        injectButtons();
+      }
+    })();
+
+    // --- בקר ניווט כרטיסיות (Tabs) ---
+    (function() {
+        'use strict';
+        
+        const tabContainer = document.querySelector('.tab-navigation');
+        
+        if (tabContainer) {
+            const tabButtons = tabContainer.querySelectorAll('.tab-btn');
+            const tabPanes = document.querySelectorAll('.tab-pane');
+
+            tabContainer.addEventListener('click', function(event) {
+                const clickedButton = event.target.closest('.tab-btn');
+                
+                if (!clickedButton || clickedButton.classList.contains('active')) return;
+                event.preventDefault();
+
+                tabButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    btn.setAttribute('aria-selected', 'false');
+                });
+                tabPanes.forEach(pane => {
+                    pane.classList.remove('active');
+                });
+
+                clickedButton.classList.add('active');
+                clickedButton.setAttribute('aria-selected', 'true');
+                
+                const tabId = clickedButton.getAttribute('data-tab');
+                const activePane = document.getElementById(`tab-${tabId}`);
+                if (activePane) {
+                    activePane.classList.add('active');
+                }
+            });
+        }
+    })();
+    </script>
+
+</body>
+</html>
