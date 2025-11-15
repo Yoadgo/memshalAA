@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <!-- 
+    ================================================================
+    מטא-תגיות חובה לזיהוי אוטומטי
+    ================================================================
+    -->
+    <meta name="lesson-title" content="שיעור 5 – ריאליזם (הגנתי והתקפי) וליברליזם">
+    <meta name="lesson-date" content="09.11.2025">
+    <meta name="lesson-teacher" content="לורנה אליאס לובובסקי">
+    <meta name="lesson-summary" content="השיעור סקר ריאליזם (קלאסי, הגנתי, התקפי), דן במודל 'רמות הניתוח' של וולץ, עבר לגישות ליברליות (אידיאליזם, שלום דמוקרטי, מוסדיות) וסיים בהגדרות המלחמה (קלאוזביץ ובול).">
+    <!-- 
+    ================================================================
+    סוף מטא-תגיות חובה
+    ================================================================
+    -->
+
+    <!-- קוד הגנה של Firebase (מתוך sec.html) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+        // 1. אותו Config בדיוק כמו בדף הכניסה
+        const firebaseConfig = {
+          apiKey: "AIzaSyDqxxf434N0wnn6C6AglEEIaqj5TVtoYLQ",
+          authDomain: "memshalaa.firebaseapp.com",
+          projectId: "memshalaa",
+          storageBucket: "memshalaa.firebasestorage.app",
+          messagingSenderId: "324187090365",
+          appId: "1:324187090365:web:8e4956d0d1370b5aab36d4",
+          measurementId: "G-2QHJF3SSJQ"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // 2. ה"שומר" - בודק אם יש משתמש מחובר
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // משתמש מחובר - הכל בסדר, מציגים את הדף
+                console.log("משתמש מורשה:", user.email);
+                
+                // --- אופציונלי: עדכון UI ---
+                const userInfo = document.getElementById('userInfo');
+                const loginLink = document.getElementById('loginLink');
+                const logoutButton = document.getElementById('logoutButton');
+
+                if (userInfo) userInfo.innerText = `מחובר כ: ${user.email}`;
+                if (loginLink) loginLink.style.display = 'none';
+                if (logoutButton) logoutButton.style.display = 'block';
+                // -------------------------
+
+                document.body.style.display = 'block'; // מציג את הגוף רק אחרי אימות
+            } else {
+                // אין משתמש מחובר - זרוק אותו לדף הכניסה
+                window.location.href = 'login.html'; 
+            }
+        });
+        
+        // פונקציית התנתקות גלובלית
+        window.logout = function() {
+            signOut(auth).then(() => {
+                window.location.href = 'login.html'; 
+            });
+        }
+    </script>
+    
+    <!-- הסתרת הדף עד שהבדיקה מסתיימת כדי למנוע הבהוב -->
+    <style> 
+        body { display: none; } 
+        /* הסתרת כפתור התנתקות כברירת מחדל */
+        #logoutButton { display: none; } 
+    </style>
+    <!-- סוף קוד הגנה -->
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מבוא ללימודי בטחון ולוחמה בטרור - שיעור 5 - 09.11.2025 - סיכום</title>
+    
+    <!-- קישורים לגופנים וסמלים (כפי שמופיע בתבניות) -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <style>
+        /* --- מערכת עיצוב (מבוסס על 'sample1.html') --- */
+        :root {
+            /* ערכי ברירת מחדל (מצב בהיר) */
+            --bg: #f6f8fa; /* רקע דף בהיר */
+            --surface: #ffffff; /* רקע כרטיסייה לבן */
+            --text: #202124;
+            --muted: #5f6368;
+            --primary: #3b82f6; 
+            --primary-ink: #174ea6;
+            --border: #e5e7eb;
+            --highlight: #e8f0fe;
+            --shadow: 0 10px 30px rgba(0, 0, 0, .06);
+            --header-bg: rgba(255, 255, 255, .8);
+            
+            /* מידות רווח */
+            --s1: 8px;
+            --s2: 12px;
+            --s3: 16px;
+            --s4: 24px;
+            --s5: 36px;
+            --content-width: 980px;
+
+            /* צבעים סמנטיים (עבור הדגשות תוכן) */
+            --highlight-yellow-bg: #fff9c4;
+            --highlight-yellow-border: #fdd835;
+            --highlight-blue-bg: #e0f7fa;
+            --highlight-blue-border: #00bcd4;
+            --highlight-green-bg: #e8f5e9;
+            --highlight-green-border: #4caf50;
+            --highlight-red-bg: #ffebee;
+            --highlight-red-border: #f44336;
+            --highlight-orange-bg: #fff3e0;
+            --highlight-orange-border: #ff9800;
+        }
+
+        /* --- מצב לילה (נשלט על ידי JS מה-header template) --- */
+        html.sa-dark {
+            --bg: #333333; 
+            --surface: #444444; 
+            --text: #eeeeee;
+            --muted: #bbbbbb;
+            --primary: #4b9bff;
+            --border: #555555; 
+            --highlight: #2a3a52;
+            --shadow: 0 0 0 1px var(--border);
+            --header-bg: rgba(51, 51, 51, .8); 
+
+            /* צבעים סמנטיים (מצב כהה) */
+            --highlight-yellow-bg: #4f4b23;
+            --highlight-yellow-border: #fdd835;
+            --highlight-blue-bg: #1a4a52;
+            --highlight-blue-border: #00bcd4;
+            --highlight-green-bg: #1e4620;
+            --highlight-green-border: #4caf50;
+            --highlight-red-bg: #5d1c18;
+            --highlight-red-border: #f44336;
+            --highlight-orange-bg: #593815;
+            --highlight-orange-border: #ff9800;
+        }
+
+        /* --- איפוס בסיסי ועיצוב גלובלי --- */
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Noto Sans Hebrew", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            font-weight: 400; 
+            line-height: 1.7;
+            text-align: right; 
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* --- טיפוגרפיה (מ-sample1) --- */
+        
+        h1, h2, h3, h4, h5, h6 {
+            margin-top: 0;
+            margin-bottom: var(--s3);
+            font-weight: 600; 
+        }
+        
+        h1 { 
+            font-size: 1.0rem; 
+            font-weight: 600;
+            margin: 0;
+            line-height: 1.4; 
+        }
+        h2 { 
+            font-size: 1.75rem; 
+            text-align: center; 
+            margin-bottom: var(--s5); 
+        }
+        h3 { 
+            font-size: 1.25rem; 
+            margin: 0 0 var(--s2) 0;
+            padding-bottom: var(--s2);
+            border-bottom: 1px solid var(--border);
+            transition: border-color 0.3s;
+        }
+        
+        h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-top: var(--s4);
+            margin-bottom: var(--s2);
+        }
+        
+        h5 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-top: var(--s3);
+            margin-bottom: var(--s1);
+        }
+
+        p {
+            margin-top: 0;
+            margin-bottom: var(--s3); 
+        }
+        
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.2s, background-color 0.2s;
+        }
+        
+        h1 a {
+            color: var(--text);
+            transition: color 0.3s;
+        }
+        
+        h1 a:hover {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+        
+        ul, ol {
+            padding-right: var(--s4); 
+        }
+        
+        ul li, ol li {
+            margin-bottom: var(--s2);
+            padding-right: var(--s2);
+        }
+        
+        sup {
+            font-size: 0.75em;
+            vertical-align: super;
+            margin-right: 2px;
+            color: var(--primary);
+            font-weight: 600;
+            line-height: 0; 
+        }
+
+        sup a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        sup a:hover {
+            text-decoration: underline;
+        }
+
+        /* --- מבנה וקומפוננטות (מ-sample1) --- */
+        
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            background: var(--header-bg);
+            border-bottom: 1px solid var(--border);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between; 
+            max-width: var(--content-width);
+            margin: 0 auto;
+            padding: var(--s3) var(--s4);
+        }
+
+        .brand {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            text-align: right; 
+        }
+
+        .brand .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--primary);
+            transition: background-color 0.3s;
+            flex-shrink: 0; 
+        }
+
+        .container {
+            max-width: var(--content-width);
+            margin: 0 auto;
+            padding: var(--s5) var(--s4);
+        }
+        
+        /* --- עיצוב כרטיסיות (Tabs מ-sample1) --- */
+        .tab-navigation {
+            display: flex;
+            gap: var(--s1);
+            border-bottom: 2px solid var(--border);
+            margin-bottom: var(--s4);
+            transition: border-color 0.3s;
+            flex-wrap: wrap; 
+        }
+
+        .tab-btn {
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--muted);
+            background: none;
+            border: none;
+            padding: var(--s2) var(--s3);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: color 0.3s, border-color 0.3s;
+            margin-bottom: -2px; 
+            white-space: nowrap; 
+        }
+
+        .tab-btn:hover {
+            color: var(--text);
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-pane {
+            display: none; 
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-pane.active {
+            display: block; 
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .page-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            box-shadow: var(--shadow);
+            padding: var(--s4);
+            margin-bottom: var(--s4);
+            transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+        
+        .page-card h3:first-child {
+            margin-top: 0;
+        }
+
+        .lesson-details-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 1.1rem;
+        }
+        .lesson-details-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: var(--s2) 0;
+            border-bottom: 1px dashed var(--border);
+            flex-wrap: wrap;
+        }
+        .lesson-details-list li:last-child {
+            border-bottom: none;
+        }
+        .lesson-details-list strong {
+            color: var(--muted);
+            margin-left: var(--s4);
+            flex-shrink: 0;
+        }
+        .lesson-details-list span {
+            font-weight: 500;
+        }
+
+        /* --- Accordion Styles (מ-sample1) --- */
+        .accordion details {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px; 
+            margin-bottom: var(--s2);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        
+        .accordion details[open] {
+            box-shadow: var(--shadow);
+        }
+
+        .accordion summary {
+            padding: var(--s3) var(--s4);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            list-style: none; /* Remove default marker */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .accordion summary::-webkit-details-marker {
+            display: none; 
+        }
+        
+        .accordion summary::marker {
+             display: none; 
+        }
+
+        .accordion summary:after {
+            content: '\f078'; /* Font Awesome chevron-down */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-size: 0.9rem;
+            color: var(--muted);
+            transition: transform 0.2s ease-out;
+            margin-right: auto; 
+            padding-right: var(--s2);
+        }
+
+        .accordion details[open] summary:after {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            padding: 0 var(--s4) var(--s4) var(--s4);
+            border-top: 1px solid var(--border);
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .accordion-content p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .accordion-content > *:first-child {
+            margin-top: var(--s3);
+        }
+        
+        /* --- Highlight Styles (מ-sample1 + תוספות) --- */
+        .example-highlight,
+        .external-highlight,
+        .verification-success,
+        .verification-fail,
+        .personal-impression,
+        .reading-material,
+        .external-addition,
+        .example-bad,
+        .example-good {
+            padding: var(--s3);
+            border-radius: 8px;
+            margin-top: var(--s3);
+            margin-bottom: var(--s3);
+            border-right: 4px solid;
+        }
+        
+        .example-highlight p:last-child,
+        .external-highlight p:last-child,
+        .verification-success p:last-child,
+        .verification-fail p:last-child,
+        .personal-impression p:last-child,
+        .reading-material p:last-child,
+        .external-addition p:last-child,
+        .example-bad p:last-child,
+        .example-good p:last-child {
+            margin-bottom: 0;
+        }
+
+        .example-highlight {
+            background-color: var(--highlight-yellow-bg); 
+            border-color: var(--highlight-yellow-border); 
+        }
+        
+        .external-highlight {
+            background-color: var(--highlight-blue-bg); 
+            border-color: var(--highlight-blue-border); 
+        }
+        
+        .verification-success, .example-good {
+            background-color: var(--highlight-green-bg); 
+            border-color: var(--highlight-green-border); 
+        }
+        
+        .verification-fail, .example-bad {
+            background-color: var(--highlight-red-bg); 
+            border-color: var(--highlight-red-border); 
+        }
+
+        .personal-impression {
+            background-color: var(--highlight-blue-bg); 
+            border-color: var(--highlight-blue-border); 
+        }
+        .reading-material {
+            background-color: var(--highlight-orange-bg); 
+            border-color: var(--highlight-orange-border); 
+        }
+        .external-addition {
+            background-color: var(--highlight-green-bg); 
+            border-color: var(--highlight-green-border); 
+        }
+
+        /* סגנון טקסט לאימות/הפרכה */
+        .verification-success small,
+        .verification-fail small {
+            font-weight: bold;
+        }
+        .verification-success small {
+            color: var(--highlight-green-border); 
+        }
+        .verification-fail small {
+            color: var(--highlight-red-border);
+        }
+        
+        /* --- רשימת הערות ומונחים (מ-sample1) --- */
+        #tab-sources ol {
+            padding-right: 20px;
+        }
+        #tab-sources li {
+            margin-bottom: 8px;
+        }
+        #tab-sources li::marker {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        /* --- טבלת השוואה --- */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: var(--s3);
+            margin-bottom: var(--s3);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            border-radius: 12px;
+            overflow: hidden; /*
+            כדי שהפינות העגולות יעבדו
+            */
+        }
+        .comparison-table th, 
+        .comparison-table td {
+            border: 1px solid var(--border);
+            padding: var(--s3);
+            text-align: right;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .comparison-table th {
+            background-color: var(--bg);
+            font-weight: 600;
+        }
+        .comparison-table tr:nth-child(even) {
+            background-color: var(--surface);
+        }
+        .comparison-table tr:nth-child(odd) {
+            background-color: var(--bg);
+        }
+        html.sa-dark .comparison-table tr:nth-child(even) {
+            background-color: var(--surface);
+        }
+        html.sa-dark .comparison-table tr:nth-child(odd) {
+            background-color: var(--bg);
+        }
+        .comparison-table td:first-child {
+            font-weight: 500;
+            color: var(--muted);
+        }
+        
+        /* --- סגנונות כפתורים (מ-lesson_header_template.html) --- */
+        .sa-actions {
+          display: flex;
+          gap: 12px;
+          align-items: center;
+          direction: ltr;
+          flex-wrap: wrap;
+        }
+        .sa-actions .sa-divider {
+          width: 1px;
+          height: 24px;
+          background: #d0d5dd;
+        }
+        html.sa-dark .sa-actions .sa-divider {
+            background: #555555;
+        }
+
+        .sa-btn {
+          font: inherit;
+          line-height: 1;
+          border: 1px solid #d0d5dd;
+          background: #ffffff;
+          color: #0f172a;
+          padding: 10px 12px;
+          border-radius: 12px;
+          cursor: pointer;
+          display: inline-flex;
+          gap: 10px;
+          align-items: center;
+          font-size: 15px;
+        }
+        html.sa-dark .sa-btn {
+            background: #444444;
+            color: #eeeeee;
+            border-color: #555555;
+        }
+
+        .sa-btn.primary {
+          background: #0ea5e9;
+          color: #00131d;
+          border-color: transparent;
+        }
+        html.sa-dark .sa-btn.primary {
+            background: #4b9bff;
+            color: #eeeeee;
+        }
+
+        .sa-btn svg {
+          width: 20px;
+          height: 20px;
+          display: block;
+        }
+        .sa-btn .lbl {
+          display: none; 
+        }
+        @media (max-width: 640px) {
+          .sa-actions {
+            gap: 8px;
+          }
+          .sa-actions .sa-divider {
+            height: 20px;
+          }
+          .sa-btn {
+            padding: 8px 10px;
+            font-size: 14px;
+          }
+          .sa-btn svg {
+            width: 18px;
+            height: 18px;
+          }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header" role="banner">
+        <div class="nav">
+            <div class="brand">
+                <span class="dot" aria-hidden="true"></span>
+                <h1>מבוא ללימודי בטחון ולוחמה בטרור | שיעור 5: ריאליזם וליברליזם</h1>
+            </div>
+            
+            <!-- הכפתורים יוזרקו לכאן על ידי הסקריפט (מ-lesson_header_template.html) -->
+        </div>
+    </header>
+
+    <main class="container" role="main">
+        <nav class="tab-navigation" aria-label="ניווט בסיכום השיעור">
+            <button class="tab-btn active" data-tab="overview" role="tab" aria-selected="true" aria-controls="tab-overview">סקירה כללית</button>
+            <button class="tab-btn" data-tab="content" role="tab" aria-selected="false" aria-controls="tab-content">תוכן השיעור</button>
+            <button class="tab-btn" data-tab="qa" role="tab" aria-selected="false" aria-controls="tab-qa">שאלות ודיון</button>
+            <button class="tab-btn" data-tab="sources" role="tab" aria-selected="false" aria-controls="tab-sources">מקורות והערות</button>
+            <button class="tab-btn" data-tab="impressions" role="tab" aria-selected="false" aria-controls="tab-impressions">רשמים נוספים</button>
+        </nav>
+
+        <div class="tab-content">
+
+            <!-- ======================= -->
+            <!-- טאב 1: סקירה כללית -->
+            <!-- ======================= -->
+            <section id="tab-overview" class="tab-pane active" role="tabpanel" aria-labelledby="tab-overview">
+                
+                <article class="page-card" aria-labelledby="details-heading">
+                    <h3 id="details-heading">פרטי השיעור</h3>
+                    <ul class="lesson-details-list">
+                        <li>
+                            <strong>נושא:</strong>
+                            <span>ריאליזם (הגנתי והתקפי), ליברליזם והגדרת המלחמה</span>
+                        </li>
+                        <li>
+                            <strong>מרצה:</strong>
+                            <span>לורנה אליאס לובובסקי</span>
+                        </li>
+                        <li>
+                            <strong>תאריך:</strong>
+                            <span>09.11.2025</span>
+                        </li>
+                        <li>
+                            <strong>שעה (מוערכת):</strong>
+                            <span>⚠️ Placeholder (זמן לא זוהה)</span>
+                        </li>
+                    </ul>
+                </article>
+
+                <article class="page-card" aria-labelledby="summary-heading">
+                    <h3 id="summary-heading">תקציר ונושאים מרכזיים</h3>
+                    
+                    <h4>תקציר</h4>
+                    <p>השיעור החל בסקירת עקרונות הליבה של פרדיגמת הריאליזם, והשווה אותה לליברליזם. לאחר מכן, הוצגה הבחנה בין ריאליזם הגנתי (וולץ), השואף לביטחון ואיזון, לבין ריאליזם התקפי (מירשהיימר), הגורס כי מדינות שואפות למקסום כוח. בהמשך, הוצג מודל "רמות הניתוח" של וולץ (הפרט, המדינה, המערכת) ככלי להבנת סיבות למלחמה. השיעור עבר לפרדיגמת הליברליזם, וסקר את שלוש גישות המרכזיות בתוכה: אידיאליזם (וילסון), תיאוריית השלום הדמוקרטי (קאנט) ומוסדיות ניאו-ליברלית. לבסוף, השיעור דן בהגדרת המלחמה, תוך השוואה בין קלאוזביץ ("המשך הפוליטיקה") להדלי בול.</p>
+                    
+                    <h4>נושאים מרכזיים שעלו</h4>
+                    <ul>
+                        <li>עקרונות הליבה של הריאליזם (פסימיזם, הישרדות, אנרכיה, מדינות).</li>
+                        <li>השוואה בין ריאליזם לליברליזם (תפיסת הרווח, שחקנים מרכזיים וכו').</li>
+                        <li>ההבחנה בין ריאליזם הגנתי (מקסום ביטחון) לריאליזם התקפי (מקסום כוח).</li>
+                        <li>רמות הניתוח של וולץ ("Man, the State, and War"): הפרט, המדינה, המערכת.</li>
+                        <li>מבוא לליברליזם: התמקדות בשיתוף פעולה ומוסדות.</li>
+                        <li>גישות ליברליות: אידיאליזם (וילסון), שלום דמוקרטי (קאנט), מוסדיות ניאו-ליברלית.</li>
+                        <li>ביקורת ריאליסטית על מוסדות ניאו-ליברליים.</li>
+                        <li>הגדרת המלחמה: "חיובי" מול "שלילי".</li>
+                        <li>הגדרות המלחמה של קלאוזביץ מול הדלי בול.</li>
+                    </ul>
+                </article>
+
+            </section>
+
+            <!-- ======================= -->
+            <!-- טאב 2: תוכן השיעור -->
+            <!-- ======================= -->
+            <section id="tab-content" class="tab-pane" role="tabpanel" aria-labelledby="tab-content">
+                
+                <div class="accordion">
+
+                    <details open>
+                        <summary>פרדיגמת הריאליזם (מבוא והשוואה)</summary>
+                        <div class="accordion-content">
+                            <h4>סיכום עקרונות הריאליזם</h4>
+                            <p>הריאליזם היא פרדיגמה מרכזית ביחסים בינלאומיים המבוססת על מספר הנחות יסוד:</p>
+                            <ul>
+                                <li><strong>גישה פסימית:</strong> נקודת המוצא היא פסימית לגבי טבע האדם (בריאליזם קלאסי) או לגבי מבנה המערכת (בניאו-ריאליזם).</li>
+                                <li><strong>הישרדות:</strong> המטרה העליונה של מדינות היא הישרדות וביטחון.</li>
+                                <li><strong>אנרכיה:</strong> המערכת הבינלאומית היא אנרכית – אין "ממשלה עולמית" או "שוטר" שיכול לכפות חוקים.</li>
+                                <li><strong>המדינה כשחקן מרכזי:</strong> מדינות הלאום הן השחקניות העיקריות והרציונליות בזירה הבינלאומית.</li>
+                                <li><strong>קונפליקט אפשרי תמיד:</strong> בגלל האנרכיה, קונפליקט ומלחמה הם מצב אפשרי תמידי.</li>
+                            </ul>
+
+                            <div class="external-highlight">
+                                <p><strong>הרחבה (מקור חיצוני): ריאליזם קלאסי מול ניאו-ריאליזם</strong></p>
+                                <p>אף ששתי הגישות פסימיות ומדגישות כוח ואנרכיה, ההבדל המהותי ביניהן הוא ב<strong>מקור הסכסוך</strong>:</p>
+                                <ul>
+                                    <li><strong>ריאליזם קלאסי (Classical Realism)</strong> (כמו מורגנטאו וקאר): רואה את שורש הסכסוך ב<strong>טבע האדם</strong> – האדם הוא יצור אנוכי, אגרסיבי ושואף לכוח ("הרצון לעוצמה"). המדינה פועלת כך כי היא מורכבת מבני אדם כאלה.</li>
+                                    <li><strong>ניאו-ריאליזם (Neorealism) / ריאליזם מבני (Structural Realism)</strong> (כמו וולץ ומירשהיימר): טוען שהסיבה לסכסוך היא לא טבע האדם (שיכול להיות טוב או רע), אלא <strong>מבנה המערכת הבינלאומית</strong>. ה<strong>אנרכיה</strong> (היעדר סמכות עולמית) היא שמאלצת מדינות רציונליות, שכל רצונן הוא לשרוד, להתנהג בתוקפנות ולצבור כוח, מכיוון שהן לעולם לא יכולות לבטוח בכוונות של מדינות אחרות.</li>
+                                </ul>
+                                <small>מקור: מעובד על בסיס Stanford Encyclopedia of Philosophy, 'Realism in International Relations'</small>
+                            </div>
+
+                            <h4>השוואה: ריאליזם מול ליברליזם</h4>
+                            <table class="comparison-table" aria-label="השוואה בין ריאליזם לליברליזם">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">מאפיין</th>
+                                        <th scope="col">ריאליזם</th>
+                                        <th scope="col">ליברליזם</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>הנחת יסוד</td>
+                                        <td>פסימיות (טבע האדם / מבנה המערכת)</td>
+                                        <td>אופטימיות (האדם רציונלי ושואף לשיתוף פעולה)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>שחקנים מרכזיים</td>
+                                        <td>מדינות בלבד</td>
+                                        <td>מדינות, מוסדות בינלאומיים (NGOs, IGOs), תאגידים</td>
+                                    </tr>
+                                    <tr>
+                                        <td>מצב המערכת</td>
+                                        <td>אנרכיה שמובילה לקונפליקט</td>
+                                        <td>אנרכיה שניתן לנהל ולמתן</td>
+                                    </tr>
+                                    <tr>
+                                        <td>מטרת המדינה</td>
+                                        <td>הישרדות, ביטחון, מקסום כוח</td>
+                                        <td>שגשוג, רווחה, ביטחון</td>
+                                    </tr>
+                                    <tr>
+                                        <td>תפיסת הרווח</td>
+                                        <td>רווח יחסי (Relative Gains)<sup><a href="#term-13">13</a></sup> - העיקר להרוויח יותר מהאחר</td>
+                                        <td>רווח מוחלט (Absolute Gains)<sup><a href="#term-14">14</a></sup> - העיקר שכולם מרוויחים</td>
+                                    </tr>
+                                    <tr>
+                                        <td>שיתוף פעולה</td>
+                                        <td>קשה להשגה, זמני ולא יציב</td>
+                                        <td>אפשרי, רצוי וניתן לביסוס באמצעות מוסדות</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </details>
+                    
+                    <details>
+                        <summary>ניאו-ריאליזם: הגנתי והתקפי</summary>
+                        <div class="accordion-content">
+                            <p>השיעור פתח בהצגת שתי גישות מרכזיות תחת הניאו-ריאליזם, אשר שתיהן מסכימות שהמערכת הבינלאומית היא אנרכית, אך נבדלות בהנחותיהן לגבי מטרות המדינות.</p>
+
+                            <h4>ריאליזם הגנתי (Defensive Realism)</h4>
+                            <ul>
+                                <li><strong>הוגים מרכזיים:</strong> קנת' וולץ (Kenneth Waltz)<sup><a href="#term-1">1</a></sup>, רוברט ג'רוויס (Robert Jervis)<sup><a href="#term-2">2</a></sup>.</li>
+                                <li><strong>הנחת יסוד:</strong> מדינות שואפות בעיקר ל<strong>ביטחון (Security Maximization)</strong> ולהישרדות, לא למקסום כוח.</li>
+                                <li>מלחמה אינה הכרחית. ניתן להשיג ביטחון באמצעות יצירת <strong>איזון כוחות (Balance of Power)</strong>.</li>
+                                <li>הרתעה גרעינית נתפסת ככלי שיכול לספק ביטחון וליצור יציבות.</li>
+                            </ul>
+
+                            <h4>ריאליזם התקפי (Offensive Realism)</h4>
+                            <ul>
+                                <li><strong>הוגה מרכזי:</strong> ג'ון מירשהיימר (John Mearsheimer)<sup><a href="#term-3">3</a></sup>.</li>
+                                <li><strong>הנחת יסוד:</strong> בגלל האנרכיה, מדינות לעולם לא יכולות להיות בטוחות בכוונות של מדינות אחרות.</li>
+                                <li>הדרך הטובה ביותר להבטיח הישרדות היא באמצעות <strong>מקסום כוח (Power Maximization)</strong>.</li>
+                                <li><strong>מטרה:</strong> להפוך ל<strong>הגמון אזורי</strong>. הדרך היחידה לעצור מדינה תוקפנית היא "כוח העצירה של המים" (קרי, קושי גיאוגרפי לחצות אוקיינוסים).</li>
+                            </ul>
+                        </div>
+                    </details>
+                    
+                    <details>
+                        <summary>רמות הניתוח של וולץ (שלוש התמונות)</summary>
+                        <div class="accordion-content">
+                            <p>בספרו "האדם, המדינה והמלחמה" (Man, the State, and War)<sup><a href="#term-10">10</a></sup>, הציג קנת' וולץ מודל של "רמות ניתוח" (Levels of Analysis) כמסגרת להבנת הסיבות לפרוץ מלחמות. הוא טען כי לא ניתן להסביר מלחמה על בסיס גורם יחיד, ויש לבחון שלוש "תמונות" שונות:</p>
+                                                        
+                            <h4>רמה 1: האינדיבידואל (הפרט)</h4>
+                            <ul>
+                                <li><strong>הסבר:</strong> מתמקדת בטבע האדם ובמנהיגים ספציפיים. הסיבה למלחמה נעוצה בתכונות פסיכולוגיות, אמונות, תפיסות עולם או חוויות אישיות של מקבלי ההחלטות.</li>
+                                <li>תחושת הביטחון היא סובייקטיבית ומושפעת מהקשר רחב ואירועי עבר.</li>
+                            </ul>
+                            <div class="external-highlight">
+                                <p><strong>הרחבה (מקור חיצוני):</strong> רמה זו מתחברת לריאליזם הקלאסי, שרואה את טבע האדם האנוכי והאגרסיבי כשורש הסכסוך. הניתוח ברמה זו יבחן את הפסיכולוגיה של מנהיגים ספציפיים (למשל, האגרסיביות של היטלר, החשדנות של סטאלין, או לחילופין, הנכונות של גורבצ'וב לרפורמות) כגורם הישיר לפרוץ מלחמה או לסיומה.</p>
+                                <small>מקור: מעובד על בסיס Kenneth N. Waltz, *Man, the State, and War* (1959)</small>
+                            </div>
+                            <div class="example-highlight">
+                                <p><strong>דוגמת המרצה:</strong> ההבדל בתפיסת הביטחון בין דור שגדל באינתיפאדה השנייה (וחונך לחפש חפצים חשודים) לבין דור שגדל עם אפליקציית פיקוד העורף להתראות על טילים. שתי הקבוצות חוות את המציאות הביטחונית באופן שונה לחלוטין ברמה האישית.</p>
+                            </div>
+                            
+                            <h4>רמה 2: המדינה</h4>
+                            <ul>
+                                <li><strong>הסבר:</strong> מתמקדת במאפיינים הפנימיים של המדינה. הסיבה למלחמה נעוצה במבנה המשטר, באידיאולוגיה הלאומית, בכלכלה או בתרבות הפוליטית.</li>
+                            </ul>
+                            <div class="external-highlight">
+                                <p><strong>הרחבה (מקור חיצוני):</strong> ניתוח ברמה זו יטען, למשל, שמדינות בעלות מבנה משטר אוטוריטרי-צבאי נוטות יותר לתוקפנות (כמו גרמניה הנאצית או יפן הקיסרית). גישות אחרות, כמו הליברליזם, ישתמשו ברמה זו כדי לטעון את ההיפך – שמדינות דמוקרטיות הן שוחרות שלום (תיאוריית "השלום הדמוקרטי"). גם גישות מרקסיסטיות ינתחו ברמה זו ויטענו שמלחמות נובעות מהצורך של מדינות קפיטליסטיות בשווקים חדשים.</p>
+                                <small>מקור: מעובד על בסיס Kenneth N. Waltz, *Man, the State, and War* (1959)</small>
+                            </div>
+                             <div class="example-highlight">
+                                <p><strong>דוגמת המרצה:</strong> אידיאולוגיה דומיננטית במדינה יכולה להשפיע. למשל, האידיאולוגיה האסלאמיסטית-שיעית של איראן משפיעה ישירות על מדיניות החוץ התוקפנית שלה באזור.</p>
+                            </div>
+
+                            <h4>רמה 3: המערכת הבינלאומית</h4>
+                            <ul>
+                                <li><strong>הסבר:</strong> זוהי הרמה שוולץ (כניאו-ריאליסט) רואה כחשובה והמסבירה ביותר. הסיבה למלחמה אינה בפרט או במדינה, אלא במבנה המערכת עצמה.</li>
+                                <li><strong>הגורם המרכזי: אנרכיה.</strong><sup><a href="#term-11">11</a></sup> היעדר "ממשלה עולמית" או "שוטר" שכופה חוקים, יוצר מצב של "עזרה עצמית" (Self-Help) ומאלץ מדינות לדאוג להישרדותן, מה שמוביל למרוצי חימוש וקונפליקטים.</li>
+                                <li><strong>חלוקת כוח (קוטביות):</strong><sup><a href="#term-12">12</a></sup> האופן שבו הכוח מחולק במערכת (חד-קוטבית, דו-קוטבית, רב-קוטבית) משפיע על היציבות ועל הסיכוי למלחמה (וולץ, למשל, טען שמערכת דו-קוטבית, כמו במלחמה הקרה, היא היציבה ביותר).</li>
+                            </ul>
+                        </div>
+                    </details>
+
+                    <details>
+                        <summary>מבוא לליברליזם</summary>
+                        <div class="accordion-content">
+                            <p>הליברליזם מוצג כפרדיגמה נגדית לריאליזם, המדגישה <strong>שיתוף פעולה</strong> על פני קונפליקט.</p>
+                            <ul>
+                                <li>הליברליזם מכיר בקיום <strong>אנרכיה</strong> במערכת הבינלאומית (בדומה לניאו-ריאליזם), אך טוען כי ניתן <strong>למתן</strong> את השפעותיה באמצעות מוסדות, נורמות וקשרים כלכליים.</li>
+                                <li>מדינות אינן השחקן היחיד; יש חשיבות גם לארגונים בינלאומיים (כמו האו"ם), ארגונים לא-ממשלתיים (NGOs) ותאגידים.</li>
+                                <li>מדינות אינן מתמקדות רק ב<strong>רווח יחסי (Relative Gains)</strong><sup><a href="#term-13">13</a></sup> (כמה הרווחתי *יותר* מהאחר), אלא גם ב<strong>רווח מוחלט (Absolute Gains)</strong><sup><a href="#term-14">14</a></sup> (עצם העובדה ששני הצדדים הרוויחו משיתוף הפעולה).</li>
+                            </ul>
+                        </div>
+                    </details>
+                    
+                    <details>
+                        <summary>שלוש גישות ליברליות מרכזיות</summary>
+                        <div class="accordion-content">
+                            <p>המרצה הציגה שלוש תתי-גישות עיקריות תחת המטריה הליברלית:</p>
+                            
+                            <h4>1. אידיאליזם ליברלי (Liberal Idealism)</h4>
+                            <ul>
+                                <li>גישה אוטופית שרווחה בעיקר בין שתי מלחמות העולם.</li>
+                                <li>מתבססת על האמונה בטבע האדם הטוב (בניגוד לריאליזם הקלאסי).</li>
+                                <li>מאמינה שניתן לבסס שלום על בסיס מוסר, חוק בינלאומי ודעת קהל.</li>
+                            </ul>
+                            <div class="example-highlight">
+                                <p><strong>דוגמה מרכזית:</strong> הנשיא האמריקאי <strong>וודרו וילסון (Woodrow Wilson)</strong><sup><a href="#term-4">4</a></sup> ויוזמת <strong>חבר הלאומים (League of Nations)</strong><sup><a href="#term-5">5</a></sup>, שנועד לפתור סכסוכים בדרכי שלום. הגישה נכשלה עם פרוץ מלחמת העולם השנייה.</p>
+                            </div>
+
+                            <h4>2. שלום דמוקרטי (Democratic Peace Theory)</h4>
+                            <ul>
+                                <li><strong>הטיעון המרכזי:</strong> מדינות דמוקרטיות אינן נלחמות זו בזו.</li>
+                                <li><strong>ההסבר:</strong> במערכות דמוקרטיות, האזרחים (הנושאים בנטל המלחמה) מרסנים את המנהיגים. כמו כן, תרבות של פתרון סכסוכים בדרכי שלום (פשרה, דיון) "מוחצנת" גם ליחסי החוץ.</li>
+                            </ul>
+                            <div class="external-highlight">
+                                <p><strong>מקור התיאוריה:</strong> הגישה מבוססת על כתביו של הפילוסוף הגרמני <strong>עמנואל קאנט (Immanuel Kant)</strong><sup><a href="#term-6">6</a></sup>.</p>
+                            </div>
+                            
+                            <h4>3. מוסדיות ניאו-ליברלית (Neoliberal Institutionalism)</h4>
+                            <ul>
+                                <li>הגישה הדומיננטית כיום בליברליזם.</li>
+                                <li><strong>הנחת יסוד:</strong> הגישה מקבלת את ההנחה הניאו-ריאליסטית שהמערכת אנרכית ומדינות פועלות מרציונליות.</li>
+                                <li><strong>אבל:</strong> היא טוענת ש<strong>מוסדות בינלאומיים (International Institutions)</strong> יכולים לקדם ולעודד שיתוף פעולה בין מדינות, גם בתנאי אנרכיה.</li>
+                                <li><strong>כיצד מוסדות מסייעים?</strong>
+                                    <ul>
+                                        <li>הם מגבירים <strong>שקיפות</strong> ומספקים <strong>מידע</strong> (מפחיתים חשש מרמייה).</li>
+                                        <li>הם יוצרים מנגנוני <strong>אכיפה ופיקוח</strong>.</li>
+                                        <li>הם מפחיתים "עלויות עסקה" (Transaction Costs) של שיתוף פעולה (קל יותר לנהל מו"מ תחת מטרייה קיימת).</li>
+                                        <li>הם יוצרים ציפייה לאינטראקציה מתמשכת (Shadow of the Future) - מדינות ימנעו מרמייה היום כדי להבטיח שיתוף פעולה רווחי מחר.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            
+                            <h4>ביקורת ריאליסטית על מוסדיות ניאו-ליברלית</h4>
+                            <p>הריאליסטים מבקרים גישה זו וטוענים כי:</p>
+                            <ul>
+                                <li>המוסדות חלשים והם רק משקפים את מאזן הכוחות הקיים.</li>
+                                <li>מדינות הגמוניות (כמו ארה"ב באו"ם, או גרמניה באיחוד האירופי) מקימות מוסדות כדי לקדם את האינטרסים שלהן.</li>
+                                <li>בסופו של דבר, מדינות תמיד יעדיפו רווח יחסי ואינטרס לאומי צר על פני שיתוף פעולה.</li>
+                            </ul>
+                            <div class="example-highlight">
+                                <p><strong>דוגמאות לדיון:</strong><br>
+                                • <strong>סבא"א (הסוכנות הבינלאומית לאנרגיה אטומית):</strong><sup><a href="#term-9">9</a></sup> הליברלים יגידו שהיא מוסד חיוני שמספק מידע ושקיפות (למשל על איראן). הריאליסטים יגידו שהיא רק "הכשר" שנותן לגיטימציה למעצמות לפעול כרצונן.<br>
+                                • <strong>הסכם הגרעין (JCPOA):</strong><sup><a href="#term-8">8</a></sup> הליברלים (כמו אירופה) ראו ערך בעצם קיום ההסכם כמנגנון פיקוח ושקיפות. הריאליסטים (כמו ממשל טראמפ) ראו בו הסכם רע לאינטרס הלאומי ופרשו ממנו, מה שמראה שברגע האמת - האינטרס הלאומי גובר על המוסד.</p>
+                            </div>
+                        </div>
+                    </details>
+                    
+                    <details>
+                        <summary>סיכום: עקרונות הליברליזם</summary>
+                        <div class="accordion-content">
+                            <p>המרצה סיכמה את עקרונות הליבה של הפרדיגמה הליברלית:</p>
+                            <ul>
+                                <li><strong>איסוף של תתי-גישות:</strong> הליברליזם אינו מקשה אחת, אלא אוסף גישות (אידיאליזם, שלום דמוקרטי, מוסדיות) בעלות מכנה משותף.</li>
+                                <li><strong>גישה אופטימית:</strong> בניגוד לפסימיזם הריאליסטי, הליברליזם מאמין ברציונליות האנושית וביכולת ליצור קדמה.</li>
+                                <li><strong>קונפליקט אפשרי, אך לא הכרחי:</strong> הליברליזם מכיר באנרכיה, אך טוען כי קונפליקט אינו גורל מוחלט וניתן למנוע אותו.</li>
+                                <li><strong>מנגנונים לקידום שלום:</strong> ניתן לקדם שלום באמצעות כלים שונים כמו קידום משטרים דמוקרטיים, הקמת מוסדות בינלאומיים, חיזוק החוק הבינלאומי ועידוד סחר וקשרים כלכליים.</li>
+                            </ul>
+                        </div>
+                    </details>
+
+                    <details>
+                        <summary>הגדרת המלחמה: קלאוזביץ ובול</summary>
+                        <div class="accordion-content">
+                            <h4>מלחמה: "חיובי" מול "שלילי"</h4>
+                            <p>המרצה הציגה את המורכבות של המושג "מלחמה", אשר נתפס באופן טבעי כדבר <strong>שלילי</strong> (אובדן חיים, מחלות, רעב, הרס כלכלי), אך לאורך ההיסטוריה היו לו גם <strong>"תוצאות לוואי חיוביות"</strong> (לא כמטרה, אלא כתוצאה):</p>
+                            <ul>
+                                <li><strong>קידום זכויות אדם:</strong> למשל, המאבק לזכויות האפרו-אמריקאים בארה"ב שהתעצם לאחר מלחמת וייטנאם.</li>
+                                <li><strong>התפתחות טכנולוגית:</strong> למשל, פיתוח פרוטזות בישראל כתוצאה מהצורך הצבאי.</li>
+                                <li><strong>תמריץ כלכלי:</strong> למשל, מלחמת העולם השנייה סייעה לארה"ב לצאת מ"השפל הגדול".</li>
+                                <li><strong>הקמת מדינות רווחה:</strong> מדינות אירופה פיתחו מנגנוני רווחה לאחר ההרס של מלחמת העולם השנייה.</li>
+                            </ul>
+                            
+                            <h4>מלחמה ופוליטיקה: קלאוזביץ</h4>
+                            <p>ההגדרה המכוננת של מלחמה שייכת לאסטרטג הפרוסי <strong>קרל פון קלאוזביץ (Carl von Clausewitz)</strong><sup><a href="#term-15">15</a></sup>:</p>
+                            <blockquote>
+                                <p><strong>"מלחמה היא המשך הפוליטיקה באמצעים אחרים."</strong></p>
+                            </blockquote>
+                            <p>המשמעות היא שמלחמה אינה סתם אלימות כאוטית, אלא כלי רציונלי שנועד להשיג מטרה פוליטית שהמדינאות לא הצליחה להשיג בדרכי שלום. היא קשורה לאינטרסים, אסטרטגיה ותהליכי קבלת החלטות.</p>
+                            
+                            <h4>הגדרת מלחמה: הדלי בול</h4>
+                            <p>המרצה הציגה הגדרה מודרנית ורחבה יותר של <strong>הדלי בול (Hedley Bull)</strong><sup><a href="#term-16">16</a></sup>:</p>
+                            <blockquote>
+                                <p><strong>"אלימות מאורגנת שמבוצעת על ידי יחידות פוליטיות זו נגד זו."</strong></p>
+                            </blockquote>
+                            <p>הגדרה זו רחבה יותר מזו של קלאוזביץ במספר מובנים:</p>
+                            <ul>
+                                <li>היא אינה מוגבלת ל<strong>מדינות</strong> בלבד ("יחידות פוליטיות" יכול לכלול גם ארגוני טרור, מיליציות וכו').</li>
+                                <li>היא אינה דורשת <strong>מטרות מסוימות</strong> (כמו אצל קלאוזביץ, שדרש מטרה פוליטית).</li>
+                                <li>היא אינה דורשת <strong>הכרזה רשמית</strong> על מלחמה.</li>
+                            </ul>
+                            <div class="example-highlight">
+                                <p><strong>דוגמה לשימוש יתר במושג:</strong> המרצה ציינה כי השימוש בביטויים כמו "מלחמה בסמים" (War on Drugs) או "מלחמה בטרור" (War on Terror) הוא שימוש רחב ושגוי לעיתים במונח, אשר מטשטש את הגדרתו.</p>
+                            </div>
+                        </div>
+                    </details>
+                    
+                </div>
+            </section>
+
+            <!-- ======================= -->
+            <!-- טאב 3: שאלות ודיון -->
+            <!-- ======================= -->
+            <section id="tab-qa" class="tab-pane" role="tabpanel" aria-labelledby="tab-qa">
+                
+                <article class="page-card" aria-labelledby="qa-lecturer-heading">
+                    <h3 id="qa-lecturer-heading">שאלות המרצה</h3>
+                    <p><i>לא הוצגו שאלות סקר מהמרצה בחלק זה של השיעור.</i></p>
+                </article>
+
+                <article class="page-card" aria-labelledby="qa-student-heading">
+                    <h3 id="qa-student-heading">שאלות משתתפים</h3>
+                    
+                    <h5>שאלה 1 (אלון ארז קרקאואר): האם האיחוד האירופי הוא דוגמה למוסדיות ליברלית?</h5>
+                    <p><strong>תשובת המרצה (סיכום):</strong> כן, בהחלט. האיחוד האירופי (וגם האו"ם) הוא דוגמה מרכזית למוסד שנועד לקדם שיתוף פעולה ולמתן את האנרכיה.</p>
+
+                    <hr style="border: 0; border-top: 1px dashed var(--border); margin: var(--s4) 0;">
+
+                    <h5>שאלה 2 (אלון ארז קרקאואר): האם מוסדות כמו האיחוד האירופי הם לא בעצם רק כלי בידי המדינות החזקות (כמו גרמניה וצרפת) לקידום האינטרסים שלהן?</h5>
+                    <div class="verification-success">
+                        <p><strong><small>אימות:</small></strong> <strong>תשובת המרצה (סיכום):</strong> זוהי בדיוק <strong>הביקורת הריאליסטית</strong> על הגישה הליברלית. הריאליסטים יטענו שמוסדות הם חלשים, והם רק משקפים את מאזן הכוחות הקיים. כלומר, ארה"ב שולטת באו"ם, וגרמניה וצרפת שולטות באיחוד האירופי. הליברלים, לעומתם, יטענו שלמוסד יש כוח ועצמאות משלו.</p>
+                    </div>
+
+                    <hr style="border: 0; border-top: 1px dashed var(--border); margin: var(--s4) 0;">
+
+                    <h5>שאלה 3 (יונתן): שאלה לגבי "כוח העצירה של המים" (מריאליזם התקפי) והעובדה שמדינות אירופה כן ניהלו קולוניות מעבר לים.</h5>
+                    <p><strong>תשובת המרצה (סיכום):</strong> המרצה הבהירה שהתיאוריה (של מירשהיימר) התמקדה בעיקר בקושי להשיג <strong>הגמוניה יבשתית (קונטיננטלית)</strong>, והסכימה שזו אכן נקודת ביקורת לגיטימית, והעולם מורכב יותר מכפי שהתיאוריה מציגה.</p>
+
+                    <hr style="border: 0; border-top: 1px dashed var(--border); margin: var(--s4) 0;">
+
+                    <h5>שאלה 4 (יונתן): מה ההבדל המהותי בין ריאליזם התקפי לריאליזם קלאסי?</h5>
+                    <p><strong>תשובת המרצה (סיכום):</strong> <strong>מקור הסכסוך.</strong>
+                        <br>
+                        • <strong>בריאליזם קלאסי:</strong> המקור הוא טבע האדם הפגום (רצון לשלוט, אנוכיות).
+                        <br>
+                        • <strong>בניאו-ריאליזם (הגנתי והתקפי):</strong> המקור הוא לא טבע האדם, אלא <strong>המבנה האנרכי</strong> של המערכת הבינלאומית, שמאלץ מדינות לפעול בצורה מסוימת כדי לשרוד.</p>
+
+                    <hr style="border: 0; border-top: 1px dashed var(--border); margin: var(--s4) 0;">
+
+                    <h5>שאלה 5 (יואב): איך גישת המוסדיות מסתדרת עם כישלונות כמו הסכם הגרעין (JCPOA) שארה"ב (טראמפ) פשוט פרשה ממנו?</h5>
+                    <p><strong>תשובת המרצה (סיכום):</strong> זו דוגמה מצוינת להתנגשות בין הגישות.
+                        <br>
+                        • <strong>החשיבה הריאליסטית</strong> (שטראמפ ייצג) אמרה: "ההסכם רע לאינטרס הלאומי שלי, אני פורש".
+                        <br>
+                        • <strong>החשיבה הליברלית</strong> (שאירופה ייצגה) אמרה: "המוסד/ההסכם עצמו חשוב, גם אם הוא לא מושלם, כי הוא יוצר שקיפות ומנגנון פיקוח".
+                        <br>
+                        המרצה הדגישה שמוסדות זה לא "הכל או כלום"; יש הסכמים רבים (כמו סחר או פיקוח נשק אחר) שכן עובדים ומחזיקים מעמד.</p>
+
+                    <hr style="border: 0; border-top: 1px dashed var(--border); margin: var(--s4) 0;">
+
+                    <h5>שאלה 6 (איתי): האם סבא"א (הסוכנות לאנרגיה אטומית) היא לא פשוט "הכשר" שנותן לגיטימציה למדינות חזקות (כמו ארה"ב) לפעול?</h5>
+                    <div class="verification-success">
+                        <p><strong><small>אימות:</small></strong> <strong>תשובת המרצה (סיכום):</strong> נקודה מצוינת. המרצה הסכימה שזה בדיוק אחד התפקידים המרכזיים של מוסד ניאו-ליברלי. המוסד (סבא"א) מספק את <strong>המידע, השקיפות והלגיטימציה</strong> הבינלאומית, שמאפשרים למדינות אחרות לפעול (למשל, להטיל סנקציות) בצורה מתואמת. זהו תפקוד ליברלי קלאסי.</p>
+                    </div>
+
+                    <hr style="border: 0; border-top: 1px dashed var(--border); margin: var(--s4) 0;">
+
+                    <h5>שאלה 7 (יואב): האם מודל רמות הניתוח של וולץ לא חסר? הוא לא מתייחס לגופים לא-מדינתיים כמו ארגוני טרור או מדינות שמשתמשות בפרוקסי.</h5>
+                    <div class="verification-success">
+                        <p><strong><small>אימות:</small></strong> <strong>תשובת המרצה (סיכום):</strong> נכון מאוד. זוהי ביקורת מרכזית על התיאוריה הריאליסטית הקלאסית (ושל וולץ בפרט). התיאוריה מתמקדת במדינות כשחקן היחיד (או לפחות המרכזי) ומתקשה להסביר את ההשפעה של שחקנים לא-מדינתיים.</p>
+                    </div>
+
+                    <hr style="border: 0; border-top: 1px dashed var(--border); margin: var(--s4) 0;">
+
+                    <h5>שאלה 8 (איתי): המודל לא מתייחס לדת כגורם למלחמה.</h5>
+                    <div class="verification-success">
+                        <p><strong><small>אימות:</small></strong> <strong>תשובת המרצה (סיכום):</strong> נכון. וולץ כנראה היה משייך את הדת לקטגוריית ה"אידיאולוגיה" ברמת המדינה, אך הוא לא נתן לה מקום מרכזי. כיום, ברור שהמרכיב הדתי הוא גורם משמעותי בסכסוכים רבים והתיאוריה הקלאסית אכן חסרה בהקשר זה.</p>
+                    </div>
+                    
+                    <hr style="border: 0; border-top: 1px dashed var(--border); margin: var(--s4) 0;">
+
+                    <h5>שאלה 9 (מהדיון): אם "אנרכיה" (רמה 3) היא הסיבה המרכזית למלחמה, למה יש אזורים (כמו המזרח התיכון) עם יותר מלחמות מאזורים אחרים (כמו אירופה)?</h5>
+                    <p><strong>תשובת המרצה (סיכום):</strong> זוהי ביקורת נוספת ומצוינת על התיאוריה. המודל של וולץ מתקשה להסביר שונות אזורית ושונות בזמן (למה יש תקופות עם יותר מלחמות). זה מראה שהמודל הוא כלי חשוב, אך לא מספק הסבר מלא למורכבות העולם.</p>
+                
+                    <hr style="border: 0; border-top: 1px dashed var(--border); margin: var(--s4) 0;">
+
+                    <h5>שאלה 10 (סטודנט): האם הכרזה על מלחמה היא לא תנאי הכרחי?</h5>
+                    <p><strong>תשובת המרצה (סיכום):</strong> לא בהכרח. בעבר זה היה נהוג יותר, גם כדי לתת סמכות חוקית (פנימית) להפעלת כוחות חירום, גיוס וכו'. כיום זה פחות נהוג, לעיתים כדי להימנע מהחלת המשפט הבינלאומי באופן מלא, או מסיבות פוליטיות. פוטין, למשל, מסרב לכנות את הפלישה לאוקראינה "מלחמה" וקורא לה "מבצע צבאי מיוחד" מסיבות פנימיות ובינלאומיות.</p>
+                </article>
+                
+            </section>
+
+            <!-- ======================= -->
+            <!-- טאב 4: מקורות והערות -->
+            <!-- ======================= -->
+            <section id="tab-sources" class="tab-pane" role="tabpanel" aria-labelledby="tab-sources">
+                
+                <article class="page-card" aria-labelledby="external-sources-heading">
+                    <h3 id="external-sources-heading">מקורות חיצוניים</h3>
+                    <ul>
+                        <li>המרצה ציינה את <strong>עמנואל קאנט (Immanuel Kant)</strong> כמקור הפילוסופי לתיאוריית "השלום הדמוקרטי".</li>
+                        <li>המרצה ציינה את <strong>וודרו וילסון (Woodrow Wilson)</strong> כדמות מפתח ב"אידיאליזם הליברלי" ובהקמת "חבר הלאומים".</li>
+                        <li>המרצה ציינה את <strong>קנת' וולץ (Kenneth Waltz)</strong> ו<strong>רוברט ג'רוויס (Robert Jervis)</strong> כאבות ה"ריאליזם ההגנתי".</li>
+                        <li>המרצה ציינה את <strong>ג'ון מירשהיימר (John Mearsheimer)</strong> כאבי ה"ריאליזם ההתקפי".</li>
+                        <li>המרצה הזכירה את <strong>מורגנטאו (Morgenthau)</strong> ו<strong>קאר (Carr)</strong> בהקשר של ריאליזם קלאסי (בשיעור קודם).</li>
+                        <li>המרצה ציינה את <strong>קרל פון קלאוזביץ (Carl von Clausewitz)</strong> בהקשר להגדרת המלחמה כהמשך הפוליטיקה.</li>
+                        <li>המרצה ציינה את <strong>הדלי בול (Hedley Bull)</strong> בהקשר להגדרה רחבה יותר של מלחמה.</li>
+                        <li><strong>מקור להרחבה (נוסף על ידי המערכת):</strong> Stanford Encyclopedia of Philosophy, 'Realism in International Relations'. (שימש להרחבת ההבחנה בין ריאליזם קלאסי לניאו-ריאליזם).</li>
+                        <li><strong>מקור להרחבה (נוסף על ידי המערכת):</strong> Kenneth N. Waltz, *Man, the State, and War* (1959). (שימש להרחבת ההסבר על "רמות הניתוח").</li>
+                    </ul>
+                </article>
+                
+                <article class="page-card" aria-labelledby="terms-heading">
+                    <h3 id="terms-heading">הערות ומונחים</h3>
+                    <ol>
+                        <li id="term-1"><strong>ריאליזם הגנתי (Defensive Realism):</strong> תת-גישה ניאו-ריאליסטית (וולץ, ג'רוויס) הגורסת כי מדינות שואפות למקסם את ביטחונן (ולא את כוחן) ומטרתן לשמור על איזון כוחות.</li>
+                        <li id="term-2"><strong>ריאליזם התקפי (Offensive Realism):</strong> תת-גישה ניאו-ריאליסטית (מירשהיימר) הגורסת כי הדרך היחידה לשרוד באנרכיה היא למקסם כוח, במטרה להפוך להגמון אזורי.</li>
+                        <li id="term-3"><strong>ליברליזם (Liberalism):</strong> פרדיגמה מרכזית ביחסים בינלאומיים המדגישה את האפשרות לשיתוף פעולה בין מדינות, באמצעות מוסדות, דמוקרטיה וכלכלה, כדי למתן את האנרכיה.</li>
+                        <li id="term-4"><strong>אידיאליזם ליברלי (Liberal Idealism):</strong> גישה (שרווחה אחרי מלחה"ע ה-1) שהאמינה כי ניתן להשיג שלום באמצעות חוק בינלאומי, מוסר ודעת קהל (למשל: חבר הלאומים של וודרו וילסון).</li>
+                        <li id="term-5"><strong>שלום דמוקרטי (Democratic Peace):</strong> תיאוריה ליברלית (שמבוססת על קאנט) הגורסת כי מדינות בעלות משטר דמוקרטי אינן נלחמות זו בזו.</li>
+                        <li id="term-6"><strong>מוסדיות ניאו-ליברלית (Neoliberal Institutionalism):</strong> הגישה הליברלית המרכזית כיום. מקבלת את הנחת האנרכיה, אך טוענת כי מוסדות בינלאומיים (כמו האו"ם, האיחוד האירופי, סבא"א) חיוניים לקידום שיתוף פעולה על ידי הגברת שקיפות, מתן מידע ואכיפה.</li>
+                        <li id="term-7"><strong>חבר הלאומים (League of Nations):</strong> ארגון בינלאומי שהוקם לאחר מלחמת העולם הראשונה ביוזמת וודרו וילסון, ונכשל במניעת מלחמת העולם השנייה.</li>
+                        <li id="term-8"><strong>JCPOA (הסכם הגרעין עם איראן):</strong> דוגמה למוסד/הסכם שנוי במחלוקת, המדגים את המתח בין גישות ריאליסטיות (אינטרס לאומי צר) לליברליות (ערך השקיפות והפיקוח).</li>
+                        <li id="term-9"><strong>סבא"א (IAEA):</strong> הסוכנות הבינלאומית לאנרגיה אטומית. דוגמה למוסד ניאו-ליברלי המספק מידע ופיקוח בתחום הגרעין.</li>
+                        <li id="term-10"><strong>רמות הניתוח (Levels of Analysis):</strong> מודל תיאורטי של קנת' וולץ ("האדם, המדינה והמלחמה") המסביר מלחמה בשלוש רמות: הפרט (מנהיגים, פסיכולוגיה), המדינה (משטר, אידיאולוגיה) והמערכת הבינלאומית (אנרכיה, מאזן כוחות).</li>
+                        <li id="term-11"><strong>אנרכיה (Anarchy):</strong> מושג יסוד בריאליזם וליברליזם. מתאר את המצב במערכת הבינלאומית שבו אין סמכות עליונה ("שוטר עולמי") מעל המדינות הריבוניות.</li>
+                        <li id="term-12"><strong>קוטביות (Polarity):</strong> מתאר את חלוקת הכוח במערכת הבינלאומית (חד-קוטבית: הגמון אחד; דו-קוטבית: שתי מעצמות-על; רב-קוטבית: מספר מעצמות).</li>
+                        <li id="term-13"><strong>רווח יחסי (Relative Gains):</strong> תפיסה ריאליסטית שלפיה מדינות מעריכות את רווחיהן ביחס לרווחים של מדינות אחרות (חשוב להן להרוויח "יותר" מהיריב).</li>
+                        <li id="term-14"><strong>רווח מוחלט (Absolute Gains):</strong> תפיסה ליברלית שלפיה מדינות מעריכות את רווחיהן באופן מוחלט, ללא קשר לרווחי האחר (העיקר ששיתוף הפעולה מועיל להן).</li>
+                        <li id="term-15"><strong>קרל פון קלאוזביץ (Carl von Clausewitz):</strong> אסטרטג והוגה דעות צבאי פרוסי (מאה ה-19), מפורסם בזכות אמרתו "מלחמה היא המשך הפוליטיקה באמצעים אחרים".</li>
+                        <li id="term-16"><strong>הדלי בול (Hedley Bull):</strong> תיאורטיקן יחסים בינלאומיים (מהאסכולה האנגלית) שהגדיר מלחמה כ"אלימות מאורגנת שמבוצעת על ידי יחידות פוליטיות זו נגד זו".</li>
+                    </ol>
+                </article>
+
+            </section>
+
+            <!-- ======================= -->
+            <!-- טאב 5: רשמים נוספים -->
+            <!-- ======================= -->
+            <section id="tab-impressions" class="tab-pane" role="tabpanel" aria-labelledby="tab-impressions">
+                
+                <article class="page-card" aria-labelledby="impressions-heading">
+                    <h3 id="impressions-heading">רשמים אישיים</h3>
+                    <p><i>(טאב זה נותר ריק בכוונה. כאן תוכל/י להוסיף את הרשמים האישיים שלך מהשיעור, ניתוחים נוספים, או קישורים שברצונך לשמור.)</i></p>
+                </article>
+
+            </section>
+
+        </div>
+    </main>
+
+    <!-- סקריפט לניהול טאבים (מ-sample1, ללא ניהול ערכת נושא) -->
+    <script>
+        (function() {
+            'use strict';
+            
+            // --- בקר ניווט כרטיסיות (Tabs) ---
+            const tabContainer = document.querySelector('.tab-navigation');
+            
+            if (tabContainer) {
+                const tabButtons = tabContainer.querySelectorAll('.tab-btn');
+                const tabPanes = document.querySelectorAll('.tab-pane');
+
+                tabContainer.addEventListener('click', function(event) {
+                    const clickedButton = event.target.closest('.tab-btn');
+                    
+                    if (!clickedButton || clickedButton.classList.contains('active')) return;
+                    event.preventDefault();
+
+                    // הסר 'active' מכל הכפתורים והחלוניות
+                    tabButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                        btn.setAttribute('aria-selected', 'false');
+                    });
+                    tabPanes.forEach(pane => {
+                        pane.classList.remove('active');
+                    });
+
+                    // הוסף 'active' לכפתור ולחלונית שנבחרו
+                    clickedButton.classList.add('active');
+                    clickedButton.setAttribute('aria-selected', 'true');
+                    
+                    const tabId = clickedButton.getAttribute('data-tab');
+                    const activePane = document.getElementById(`tab-${tabId}`);
+                    if (activePane) {
+                        activePane.classList.add('active');
+                    }
+                });
+            }
+
+        })();
+    </script>
+
+    <!-- סקריפט אחיד ללחצני הדר (מ-lesson_header_template.html) -->
+    <script>
+    (function(){
+      const HEADER_SELECTOR = '.site-header .nav, header .nav, .site-header nav, header nav';
+  
+      function makeBar(){
+        const ICON_PRINT = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 8H5a3 3 0 0 0-3 3v6h4v4h12v-4h4v-6a3 3 0 0 0-3-3zm-4 11H9v-3h6zm1-15H8v3h8z" fill="currentColor"/></svg>';
+        const ICON_SUN   = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4V1h0v3zm0 19v-3h0v3zM4 12H1v0h3zm22 0h-3v0h3zM5.64 5.64L3.51 3.51l0 0 2.13 2.13zM20.49 20.49l-2.13-2.13 0 0 2.13 2.13zM18.36 5.64l2.13-2.13 0 0-2.13 2.13zM3.51 20.49l2.13-2.13 0 0-2.13 2.13zM12 7a5 5 0 100 10 5 5 0 000-10z" fill="currentColor"/></svg>';
+        const ICON_MOON  = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 0111.21 3 7 7 0 1021 12.79z" fill="currentColor"/></svg>';
+  
+        const bar = document.createElement('div');
+        bar.className = 'sa-actions';
+  
+        const theme = document.createElement('button');
+        theme.className = 'sa-btn';
+        theme.type = 'button';
+        theme.title = 'מצב יום/לילה';
+        theme.dataset.sun = ICON_SUN;
+        theme.dataset.moon = ICON_MOON;
+  
+        const divider = document.createElement('div');
+        divider.className = 'sa-divider';
+  
+        const printBtn = document.createElement('button');
+        printBtn.className = 'sa-btn primary';
+        printBtn.type = 'button';
+        printBtn.title = 'הדפס';
+        printBtn.innerHTML = ICON_PRINT;
+  
+        bar.appendChild(theme);
+        bar.appendChild(divider);
+        bar.appendChild(printBtn);
+  
+        return {bar, theme, printBtn};
+      }
+  
+      function initThemeButton(btn){
+        function isDark(){ return document.documentElement.classList.contains('sa-dark'); }
+        function icon(){ return isDark() ? btn.dataset.moon : btn.dataset.sun; }
+  
+        btn.addEventListener('click', ()=>{
+          document.documentElement.classList.toggle('sa-dark');
+          btn.innerHTML = icon();
+          try{ localStorage.setItem('sa-theme', isDark() ? 'dark' : 'light'); }catch(e){}
+        });
+  
+        let t = 'light';
+        try{ t = localStorage.getItem('sa-theme') || t; }catch(e){}
+        
+        // סנכרון עם הגדרות מערכת אם אין העדפה שמורה
+        if (t === 'light' && !localStorage.getItem('sa-theme') && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            t = 'dark';
+        }
+
+        document.documentElement.classList.toggle('sa-dark', t === 'dark');
+        btn.innerHTML = icon();
+      }
+  
+      function injectButtons(){
+        let navs = document.querySelectorAll(HEADER_SELECTOR);
+        if(!navs.length){
+          const header = document.querySelector('.site-header') || document.querySelector('header');
+          if(header){
+            let aux = header.querySelector('.nav');
+            if(!aux){
+              aux = document.createElement('div');
+              aux.className = 'nav';
+              header.appendChild(aux);
+            }
+            navs = [aux];
+          }
+        }
+  
+        navs.forEach(nav=>{
+          if(nav.querySelector('.sa-actions')) return;
+          const {bar, theme, printBtn} = makeBar();
+          nav.appendChild(bar);
+          initThemeButton(theme);
+          printBtn.addEventListener('click', ()=> window.print());
+        });
+      }
+  
+      if(document.readyState === 'loading'){
+        document.addEventListener('DOMContentLoaded', injectButtons);
+      }else{
+        injectButtons();
+      }
+    })();
+    </script>
+</body>
+</html>
