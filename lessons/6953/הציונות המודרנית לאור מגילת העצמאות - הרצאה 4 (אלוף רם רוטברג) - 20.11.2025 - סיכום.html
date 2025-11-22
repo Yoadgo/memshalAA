@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <!-- 
+    ================================================================
+    מטא-תגיות חובה לזיהוי אוטומטי
+    ================================================================
+    -->
+    <meta name='lesson-title' content='הציונות המודרנית לאור מגילת העצמאות'>
+    <meta name='lesson-date' content='20.11.2025'>
+    <meta name='lesson-teacher' content='אלוף במיל. רם רוטברג / אל״מ ליאור לוטן'>
+    <meta name='lesson-summary' content='ניתוח מעמיק של מגילת העצמאות כמסמך אסטרטגי המעצב את הביטחון הלאומי, דיון במודל צבא העם, אתגרי הפיקוד והמנהיגות, וסוגיית הלגיטימציה הבינלאומית.'>
+    <!-- 
+    ================================================================
+    סוף מטא-תגיות חובה
+    ================================================================
+    -->
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>הציונות המודרנית לאור מגילת העצמאות - שיעור 4 - 20.11.2025 - סיכום מורחב</title>
+
+    <!-- קוד הגנה של Firebase (מתוך sec.html) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyDqxxf434N0wnn6C6AglEEIaqj5TVtoYLQ",
+          authDomain: "memshalaa.firebaseapp.com",
+          projectId: "memshalaa",
+          storageBucket: "memshalaa.firebasestorage.app",
+          messagingSenderId: "324187090365",
+          appId: "1:324187090365:web:8e4956d0d1370b5aab36d4",
+          measurementId: "G-2QHJF3SSJQ"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                console.log("משתמש מורשה:", user.email);
+                document.body.style.display = 'block'; 
+            } else {
+                window.location.href = 'login.html'; 
+            }
+        });
+        
+        window.logout = function() {
+            signOut(auth).then(() => {
+                window.location.href = 'login.html'; 
+            });
+        }
+    </script>
+    
+    <style> 
+        body { display: none; } 
+    </style>
+
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <style>
+        /* --- משתני עיצוב --- */
+        :root {
+            --bg: #f6f8fa; 
+            --surface: #ffffff; 
+            --text: #202124;
+            --muted: #5f6368;
+            --primary: #3b82f6; 
+            --primary-ink: #174ea6;
+            --border: #e5e7eb;
+            --highlight: #e8f0fe;
+            --shadow: 0 10px 30px rgba(0, 0, 0, .06);
+            --header-bg: rgba(255, 255, 255, .8);
+            
+            --s1: 8px; --s2: 12px; --s3: 16px; --s4: 24px; --s5: 36px;
+            --content-width: 980px;
+
+            /* צבעים סמנטיים להדגשות */
+            --highlight-yellow-bg: #fff9c4; --highlight-yellow-border: #fdd835;
+            --highlight-blue-bg: #e0f7fa; --highlight-blue-border: #00bcd4;
+            --highlight-green-bg: #e8f5e9; --highlight-green-border: #4caf50;
+            --highlight-red-bg: #ffebee; --highlight-red-border: #f44336;
+            --highlight-orange-bg: #fff3e0; --highlight-orange-border: #ff9800;
+        }
+
+        html.sa-dark {
+            --bg: #000000; 
+            filter: invert(1) hue-rotate(180deg);
+        }
+        html.sa-dark img, html.sa-dark video, html.sa-dark canvas, html.sa-dark svg image {
+            filter: invert(1) hue-rotate(180deg);
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: "Noto Sans Hebrew", system-ui, -apple-system, sans-serif;
+            background-color: var(--bg); color: var(--text); margin: 0;
+            font-weight: 400; line-height: 1.7; text-align: right; 
+        }
+
+        h1, h2, h3, h4, h5 { margin-top: 0; font-weight: 600; color: var(--text); }
+        h1 { font-size: 1.1rem; margin: 0; }
+        h2 { font-size: 1.75rem; text-align: center; margin-bottom: var(--s5); }
+        h3 { font-size: 1.3rem; margin-bottom: var(--s2); padding-bottom: var(--s2); border-bottom: 1px solid var(--border); }
+        h4 { font-size: 1.15rem; margin-top: var(--s4); margin-bottom: var(--s2); color: var(--primary-ink); }
+        h5 { font-size: 1rem; margin-top: var(--s3); font-weight: 700; }
+        
+        p { margin-bottom: var(--s3); }
+        ul, ol { padding-right: var(--s4); margin-bottom: var(--s3); }
+        li { margin-bottom: var(--s1); }
+        a { color: var(--primary); text-decoration: none; }
+        sup { color: var(--primary); font-weight: bold; cursor: help; }
+
+        /* Header */
+        .site-header {
+            position: sticky; top: 0; z-index: 100;
+            backdrop-filter: blur(10px); background: var(--header-bg);
+            border-bottom: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 12px 16px;
+        }
+        
+        .sa-actions { display: flex; gap: 12px; align-items: center; direction: ltr; }
+        .sa-btn {
+            border: 1px solid #d0d5dd; background: #fff; padding: 8px 10px; border-radius: 8px; cursor: pointer;
+            display: flex; align-items: center; gap: 6px; font-size: 14px;
+        }
+        .sa-btn.primary { background: #0ea5e9; color: #fff; border-color: transparent; }
+        .sa-btn svg { width: 18px; height: 18px; }
+
+        /* Main Layout */
+        .container { max-width: var(--content-width); margin: 0 auto; padding: var(--s4); }
+
+        /* Tabs */
+        .tab-navigation { display: flex; gap: var(--s1); border-bottom: 2px solid var(--border); margin-bottom: var(--s4); flex-wrap: wrap; }
+        .tab-btn {
+            font: inherit; background: none; border: none; padding: var(--s2) var(--s3); cursor: pointer;
+            color: var(--muted); border-bottom: 3px solid transparent; font-weight: 500; transition: 0.2s;
+        }
+        .tab-btn:hover { color: var(--text); }
+        .tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
+        
+        /* Special Task Tab */
+        .tab-btn.task-tab { color: var(--highlight-red-border); }
+        .tab-btn.task-tab.active { background: var(--highlight-red-bg); border-bottom-color: var(--highlight-red-border); }
+
+        .tab-pane { display: none; animation: fadeUp 0.4s ease; }
+        .tab-pane.active { display: block; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Cards */
+        .page-card {
+            background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+            box-shadow: var(--shadow); padding: var(--s4); margin-bottom: var(--s4);
+        }
+
+        .lesson-details-list li { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed var(--border); }
+        .lesson-details-list strong { color: var(--muted); margin-left: 10px; }
+
+        /* Accordion */
+        .accordion details {
+            background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+            margin-bottom: var(--s2); transition: all 0.2s;
+        }
+        .accordion details[open] { box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-color: var(--primary); }
+        .accordion summary {
+            padding: var(--s3); font-weight: 600; cursor: pointer; list-style: none;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .accordion summary:after { content: '\f078'; font-family: "Font Awesome 6 Free"; font-weight: 900; color: var(--muted); }
+        .accordion details[open] summary:after { transform: rotate(180deg); }
+        .accordion-content { padding: 0 var(--s4) var(--s4); border-top: 1px solid var(--border); margin-top: 0; }
+        .accordion-content > *:first-child { margin-top: var(--s3); }
+
+        /* Highlights */
+        .highlight-box { padding: var(--s3); border-radius: 8px; margin: var(--s3) 0; }
+        .example-highlight { background: var(--highlight-yellow-bg); border-right: 4px solid var(--highlight-yellow-border); }
+        .external-highlight { background: var(--highlight-blue-bg); border-right: 4px solid var(--highlight-blue-border); }
+        .verification-success { background: var(--highlight-green-bg); border-right: 4px solid var(--highlight-green-border); }
+        .task-card { background: var(--highlight-red-bg); border: 1px solid var(--highlight-red-border); }
+        
+        @keyframes pulse { 50% { opacity: 0.4; } }
+        .pulse { animation: pulse 1.5s infinite; color: red; font-weight: bold; }
+
+        /* Visuals */
+        figure { background: #f8fafc; padding: var(--s3); border-radius: 8px; text-align: center; margin: var(--s4) 0; border: 1px solid var(--border); }
+        figcaption { margin-top: var(--s2); font-size: 0.9em; color: var(--muted); font-style: italic; }
+
+    </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="brand">
+      <h1>הציונות המודרנית לאור מגילת העצמאות (שיעור 4)</h1>
+    </div>
+    <div class="nav"></div>
+  </header>
+
+  <main class="container">
+    
+    <nav class="tab-navigation">
+        <button class="tab-btn active" data-tab="overview">סקירה כללית</button>
+        <button class="tab-btn" data-tab="content">תוכן השיעור</button>
+        <button class="tab-btn" data-tab="qa">שאלות ודיון</button>
+        <button class="tab-btn" data-tab="sources">מקורות והערות</button>
+        <button class="tab-btn" data-tab="impressions">רשמים נוספים</button>
+        <button class="tab-btn task-tab" data-tab="assignment">מטלה <span class="pulse">!</span></button>
+    </nav>
+
+    <div class="tab-content">
+
+        <!-- Tab 1: Overview -->
+        <section id="tab-overview" class="tab-pane active">
+            <article class="page-card">
+                <h3>פרטי השיעור</h3>
+                <ul class="lesson-details-list">
+                    <li><strong>נושא:</strong> <span>הציונות המודרנית, מגילת העצמאות וביטחון לאומי</span></li>
+                    <li><strong>מרצים:</strong> <span>אל״מ ליאור לוטן (פתיחה), אלוף במיל׳ רם רוטברג (הרצאה מרכזית)</span></li>
+                    <li><strong>תאריך:</strong> <span>20.11.2025</span></li>
+                    <li><strong>מיקום בסילבוס:</strong> <span>מפגש 4 – מבט אסטרטגי</span></li>
+                </ul>
+            </article>
+
+            <article class="page-card">
+                <h3>תקציר מנהלים</h3>
+                <p>השיעור נפתח בסקירה קצרה של אל"מ ליאור לוטן, שהניח את התשתית לדיון בחיבור שבין מסמכי יסוד למציאות ביטחונית. חלקו המרכזי של השיעור הועבר ע"י אלוף רם רוטברג, שהציג תזה לפיה מגילת העצמאות אינה מסמך היסטורי שקפא בזמן, אלא "מצפן אסטרטגי" חיוני לקיומה של ישראל ב-2025.</p>
+                <p><strong>הטיעון המרכזי:</strong> עוצמתה של ישראל אינה נשענת רק על עליונות טכנולוגית או צבאית ("הברזלים"), אלא על <strong>חוסן ערכי</strong> הנגזר מתפיסת "צבא העם", שמירה על טוהר הנשק, ולגיטימציה בינלאומית. רוטברג טוען כי שחיקה בערכים אלו מהווה איום אסטרטגי ממשי.</p>
+            </article>
+        </section>
+
+        <!-- Tab 2: Content -->
+        <section id="tab-content" class="tab-pane">
+            <div class="accordion">
+                
+                <!-- Lior Lotan Section -->
+                <details>
+                    <summary>פתיחה: המסגרת האסטרטגית (אל"מ ליאור לוטן)</summary>
+                    <div class="accordion-content">
+                        <p>לוטן פתח את המפגש בהצגת הרציונל של הקורס: היכולת לקשור בין <strong>חזון לאומי</strong> (Grand Strategy) לבין <strong>פרקטיקה צבאית</strong>. הוא הדגיש כי מפקדים בכירים נדרשים להבנה רחבה שחורגת מהטקטיקה.</p>
+                        <ul>
+                            <li><strong>ההקשר הנוכחי:</strong> המלחמה הנוכחית מחדדת את הצורך בבירור ערכי עמוק, לא רק כעניין מוסרי אלא כצורך מבצעי (לכידות היחידה).</li>
+                            <li><strong>הצגת המרצה האורח:</strong> רוטברג הוצג כמי שמשלב ניסיון פיקודי בים וביבשה עם עיסוק מתמשך בחינוך ובערכים.</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <!-- Ram Rothberg: Declaration of Independence -->
+                <details open>
+                    <summary>מגילת העצמאות כמצפן אסטרטגי (אלוף רם רוטברג)</summary>
+                    <div class="accordion-content">
+                        <p>רוטברג ניתח את המגילה לא כטקסט משפטי, אלא כטקסט מכונן זהות. הוא התמקד בפסקה ה-13, המגדירה את אופיה של המדינה ("תשקוד על פיתוח הארץ לטובת כל תושביה... תקיים שוויון זכויות חברתי ומדיני גמור...").</p>
+                        
+                        <div class="example-highlight">
+                            <p><strong>ניתוח דוגמה מהטקסט:</strong> השימוש במילה "תושביה" ולא "אזרחיה" או "יהודיה" בלבד. רוטברג הדגיש כי בן גוריון הבין שבלי הכללה זו, המדינה תתקשה לשרוד במרחב ולזכות בתמיכת אומות העולם.</p>
+                        </div>
+
+                        <h4>המתח בין חזון למציאות</h4>
+                        <p>נדון הפער שבין השאיפה ל"חירות, צדק ושלום" לבין הצורך להפעיל כוח צבאי אגרסיבי להגנה. הטענה היא שהחזון אינו נאיבי, אלא משמש כ"כוכב הצפון" שמונע מהכוח להפוך לאלימות חסרת תכלית.</p>
+                        <div class="external-highlight">
+                            <p><strong>הרחבה תיאורטית:</strong> גישה זו מתכתבת עם תפיסת "העוצמה הרכה" (Soft Power) ביחסים בינלאומיים – היכולת להשיג יעדים דרך משיכה וערכים, ולא רק בכפייה.<sup>1</sup></p>
+                        </div>
+                    </div>
+                </details>
+
+                <!-- Purity of Arms -->
+                <details>
+                    <summary>טוהר הנשק: מוסר או חולשה?</summary>
+                    <div class="accordion-content">
+                        <p>אחת הסוגיות המרכזיות בשיעור. רוטברג יצא בתקיפות נגד הקולות הרואים במוסר הלחימה "משקולת" המפריעה לניצחון. לתפיסתו, <strong>המוסר הוא מכפיל כוח</strong>.</p>
+                        <ul>
+                            <li><strong>לכידות פנימית:</strong> חיילים שנאלצים לפעול בניגוד למצפונם (למשל ביזה או פגיעה מכוונת בחפים מפשע) מאבדים אמון במפקדים ובמערכת.</li>
+                            <li><strong>לגיטימציה חיצונית:</strong> "שעון החול המדיני" מתקצר משמעותית כאשר הצבא נתפס כפועל ללא רסן.</li>
+                        </ul>
+                        
+                        <div class="example-highlight">
+                            <p><strong>דוגמה מבצעית:</strong> תואר אירוע בו כוח נמנע מירי על חוליית מחבלים בשל הימצאות ילדים בקו האש. למרות המחיר המבצעי הנקודתי (המחבלים נמלטו), המסר הערכי חיזק את המשמעת והמקצועיות של היחידה לאורך זמן.</p>
+                        </div>
+                    </div>
+                </details>
+
+                <!-- The People's Army -->
+                <details>
+                    <summary>מודל "צבא העם" ב-2025</summary>
+                    <div class="accordion-content">
+                        <p>הדיון עסק בשחיקת המודל. האם ניתן לקיים "צבא עם" בחברה מקוטבת ושבטית? רוטברג טען כי אין לישראל פריבילגיה לוותר על המודל, שכן אין לה מספיק כוח אדם לצבא מקצועי בלבד.</p>
+                        
+                        <figure>
+                            <div style="padding: 15px; background: #fff; border-radius: 8px;">
+                                <svg width="100%" height="120" viewBox="0 0 400 120">
+                                    <!-- תרשים זרימה פשוט -->
+                                    <rect x="10" y="40" width="100" height="40" rx="5" fill="#e0f7fa" stroke="#00bcd4" stroke-width="2"/>
+                                    <text x="60" y="65" text-anchor="middle" font-size="12">חברה מקוטבת</text>
+                                    
+                                    <line x1="110" y1="60" x2="150" y2="60" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+                                    
+                                    <rect x="150" y="40" width="100" height="40" rx="5" fill="#fff9c4" stroke="#fdd835" stroke-width="2"/>
+                                    <text x="200" y="65" text-anchor="middle" font-size="12">אתגר הפיקוד</text>
+
+                                    <line x1="250" y1="60" x2="290" y2="60" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+
+                                    <rect x="290" y="40" width="100" height="40" rx="5" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/>
+                                    <text x="340" y="65" text-anchor="middle" font-size="12">יצירת "ממלכתיות"</text>
+                                    
+                                    <defs>
+                                        <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                                            <path d="M0,0 L0,6 L9,3 z" fill="#555" />
+                                        </marker>
+                                    </defs>
+                                </svg>
+                            </div>
+                            <figcaption>התהליך הנדרש מהמפקד: גישור על הפערים החברתיים בתוך היחידה ליצירת זהות משותפת.</figcaption>
+                        </figure>
+
+                        <p>הוא הגדיר את המפקד כ"סוכן חברתי" שתפקידו לייצר אינטגרציה, ולא רק לנהל קרב. "הממלכתיות" אינה מילה גסה, אלא כלי עבודה ניהולי.</p>
+                    </div>
+                </details>
+
+                <!-- Command and Acharai -->
+                <details>
+                    <summary>פיקוד, דוגמה אישית ו"אחריי"</summary>
+                    <div class="accordion-content">
+                        <p>החלק האחרון עסק בתרגום הערכים לשפת המעשה. רוטברג הדגיש את המושג "אחריי" לא רק כהובלה פיזית בראש הכוח, אלא כהובלה מוסרית.</p>
+                        <ul>
+                            <li><strong>אחריות המפקד:</strong> המפקד נדרש להיות "מגדלור ערכי" גם (ובעיקר) בערפל הקרב.</li>
+                            <li><strong>הכשרת הקצונה:</strong> ביקורת על כך שההכשרה הטכנית/מקצועית לעיתים באה על חשבון ההכשרה החינוכית וההיסטורית.</li>
+                        </ul>
+                    </div>
+                </details>
+
+            </div>
+        </section>
+
+        <!-- Tab 3: QA -->
+        <section id="tab-qa" class="tab-pane">
+            <article class="page-card">
+                <h3>שאלות המרצה (אלוף רוטברג)</h3>
+                
+                <div class="highlight-box">
+                    <h5>שאלה: "האם אנחנו צבא שיש לו מדינה, או מדינה שיש לה צבא?"</h5>
+                    <p>רוטברג הציג את הפרדוקס הישראלי: הביטחון הוא תנאי קיום, אך אסור לו להשתלט על הזהות האזרחית. הוא ביקש מהסטודנטים לחשוב היכן עובר הגבול בין צרכי הביטחון לבין ערכי הדמוקרטיה.</p>
+                    <p><strong>תובנה מרכזית:</strong> כפיפות הצבא לדרג המדיני היא עיקרון מקודש, אך על הצבא לשקף לדרג המדיני את המשמעויות המוסריות של החלטותיו.</p>
+                </div>
+
+                <div class="highlight-box">
+                    <h5>שאלה: "למה חשוב למפקד זוטר להכיר את מגילת העצמאות?"</h5>
+                    <div class="verification-success">
+                        <p><strong>תשובת המרצה:</strong> כי בשדה הקרב המודרני, המ"מ (מפקד המחלקה) הוא "הדרג האסטרטגי". החלטה שלו לפתוח באש או להימנע ממנה מצולמת ומופצת בשניות, ויכולה להשפיע על מעמדה של ישראל בעולם כולו. לכן, המצפן הערכי חייב להיות בכיס הווסט של כל מפקד.</p>
+                    </div>
+                </div>
+            </article>
+
+            <article class="page-card">
+                <h3>שאלות משתתפים</h3>
+                <h5>שאלה מהקהל: האם הדיבורים על "מוסר" לא מסכנים את חיילינו?</h5>
+                <p><strong>תגובת רוטברג:</strong> הוא דחה את הטענה מכל וכל. הוא הבדיל בין <strong>סיכון מיותר</strong> (שצריך להימנע ממנו) לבין <strong>ריסון הכוח</strong> (שהוא חיוני). הוא הדגיש: "חייל שיודע שאנחנו הורגים רק מי שצריך להרוג, יסתער באומץ רב יותר. חייל שמרגיש שאנחנו פועלים ככנופיה – יאבד את הרצון להילחם."</p>
+            </article>
+        </section>
+
+        <!-- Tab 4: Sources -->
+        <section id="tab-sources" class="tab-pane">
+            <article class="page-card">
+                <h3>מקורות והפניות בשיעור</h3>
+                <ol>
+                    <li id="ref1"><strong>מגילת העצמאות</strong> – מסמך היסוד (1948).</li>
+                    <li id="ref2"><strong>רוח צה"ל</strong> – הקוד האתי של צה"ל.</li>
+                    <li><strong>בן-גוריון, דוד</strong> – כתבים על "ייחוד וייעוד" ועל תפיסת הביטחון.</li>
+                </ol>
+            </article>
+            <article class="page-card">
+                <h3>הערות ומונחים</h3>
+                <ul>
+                    <li><strong>Grand Strategy:</strong> אסטרטגיה רבתי – תפיסה כוללת המשלבת עוצמה צבאית, מדינית, כלכלית וחברתית להשגת יעדים לאומיים.</li>
+                    <li><strong>ממלכתיות:</strong> מעבר מנאמנות סקטוריאלית לנאמנות למדינה ולמוסדותיה.</li>
+                </ul>
+            </article>
+        </section>
+
+        <!-- Tab 5: Impressions -->
+        <section id="tab-impressions" class="tab-pane">
+            <!-- Placeholder for user content -->
+        </section>
+
+        <!-- Tab 6: Task -->
+        <section id="tab-assignment" class="tab-pane">
+            <div class="page-card task-card">
+                <h2>מטלה <span class="pulse">!</span></h2>
+                <h3>נייר עמדה: חזון מול מציאות</h3>
+                
+                <ul>
+                    <li><strong>מטרת המטלה:</strong> בחינת הרלוונטיות של ערכי המגילה לאתגרי הביטחון העכשוויים.</li>
+                    <li><strong>הנחיות:</strong>
+                        <ol>
+                            <li>בחר סעיף אחד ממגילת העצמאות (למשל: שוויון זכויות, פיתוח הארץ, שלום).</li>
+                            <li>נתח אירוע ביטחוני או חברתי מהשנה האחרונה לאור הסעיף.</li>
+                            <li>האם האירוע מחזק את החזון או סותר אותו? מה ההשלכות על החוסן הלאומי?</li>
+                        </ol>
+                    </li>
+                    <li><strong>מועד הגשה:</strong> 04.12.2025</li>
+                    <li><strong>היקף:</strong> עד 2 עמודים (כ-800 מילים).</li>
+                </ul>
+            </div>
+        </section>
+
+    </div>
+  </main>
+
+  <script>
+  (function(){
+    // Header buttons logic (Theme / Print)
+    const HEADER_SELECTOR = '.site-header .nav';
+    function makeBar(){
+      const bar = document.createElement('div'); bar.className = 'sa-actions';
+      
+      const themeBtn = document.createElement('button'); themeBtn.className = 'sa-btn';
+      themeBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" fill="currentColor"/></svg><span>ערכת נושא</span>';
+      
+      const printBtn = document.createElement('button'); printBtn.className = 'sa-btn primary';
+      printBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M19 8H5a3 3 0 00-3 3v6h4v4h12v-4h4v-6a3 3 0 00-3-3zm-4 11H9v-3h6z" fill="currentColor"/></svg><span>הדפסה</span>';
+      
+      printBtn.onclick = () => window.print();
+      themeBtn.onclick = () => {
+          document.documentElement.classList.toggle('sa-dark');
+          const isDark = document.documentElement.classList.contains('sa-dark');
+          localStorage.setItem('sa-theme', isDark ? 'dark' : 'light');
+      };
+      
+      bar.append(themeBtn, printBtn);
+      return bar;
+    }
+
+    const nav = document.querySelector(HEADER_SELECTOR);
+    if(nav) nav.appendChild(makeBar());
+    
+    // Init theme
+    if(localStorage.getItem('sa-theme') === 'dark') document.documentElement.classList.add('sa-dark');
+
+    // Tabs Logic
+    const tabContainer = document.querySelector('.tab-navigation');
+    if (tabContainer) {
+        const tabButtons = tabContainer.querySelectorAll('.tab-btn');
+        const tabPanes = document.querySelectorAll('.tab-pane');
+
+        tabContainer.addEventListener('click', function(event) {
+            const clickedButton = event.target.closest('.tab-btn');
+            if (!clickedButton || clickedButton.classList.contains('active')) return;
+            
+            tabButtons.forEach(btn => { btn.classList.remove('active'); });
+            tabPanes.forEach(pane => { pane.classList.remove('active'); });
+
+            clickedButton.classList.add('active');
+            const tabId = clickedButton.getAttribute('data-tab');
+            document.getElementById(`tab-${tabId}`).classList.add('active');
+        });
+    }
+  })();
+  </script>
+
+</body>
+</html>
